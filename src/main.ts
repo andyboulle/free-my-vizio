@@ -24,6 +24,7 @@ export async function start(): Promise<ReturnType<typeof createHttpServer>> {
   void catalog.refreshIcons();
   const context = connection && client ? new DeviceContext(client, catalog, config, dir) : undefined;
   if (context) void context.ensureDevice();
+  let screensaverRequestedAt: number | null = null;
   const supervisor = client && context ? new TakeoverSupervisor({
     client, config, tvUiUrlPrefix: `${serverBaseUrl}/tv/`,
     tvUiToken: secrets.tvUiToken, nativeHome: context.profile.nativeHome, isNativeHome: app => context.profile.isNativeHome(app),
@@ -33,8 +34,10 @@ export async function start(): Promise<ReturnType<typeof createHttpServer>> {
   const server = createHttpServer({ config, secrets, version: '0.1.0', tv: { config, client, catalog, context,
     nativeHome: async () => { if (supervisor) await supervisor.suppressAndOpenNativeHome(); else if (client && context) await client.launchApp(context.profile.nativeHome); },
     takeoverStatus: () => supervisor?.status() ?? { state: 'IDLE', power: null, appClass: null, lastLaunchAt: null, lastError: null, suppressedUntil: 0, launchesInWindow: 0, lastTvContactAt: null },
+    screensaverRequestedAt: () => screensaverRequestedAt,
   }, admin: {
     client, connection, catalog, context, supervisor,
+    requestScreensaver: () => { screensaverRequestedAt = Date.now(); return screensaverRequestedAt; },
     onPaired: token => client?.updateConnection({ authToken: token }),
     openUi: async () => { if (client) await client.launchUrl(`${serverBaseUrl}/tv/#k=${secrets.tvUiToken}`, context?.profile.conjureAppId ?? '17'); },
   } });

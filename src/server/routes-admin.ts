@@ -26,6 +26,7 @@ export interface AdminRouteDeps {
   onPaired?: (token: string) => void;
   readBody: (req: IncomingMessage) => Promise<unknown>;
   pairState?: { challenge?: { pairingReqToken: number; challengeType: number } };
+  requestScreensaver?: () => number;
 }
 
 function reply(res: ServerResponse, status: number, value: unknown): void {
@@ -85,6 +86,40 @@ export async function handleAdminRoute(pathname: string, method: string, req: In
     if (pathname === '/api/admin/open-ui' && method === 'POST') {
       if (!deps.openUi) return void reply(res, 503, { ok: false, error: 'TV unavailable' });
       await deps.openUi(); return void reply(res, 200, { ok: true });
+    }
+    if (pathname === '/api/admin/activate' && method === 'POST') {
+      const value = await deps.readBody(req) as { shortcutId?: unknown };
+      if (typeof value.shortcutId !== 'string' || !value.shortcutId) return void reply(res, 400, { ok: false, error: 'invalid shortcutId' });
+      const shortcut = deps.config.home.sections.flatMap(section => section.shortcuts).find(item => item.id === value.shortcutId);
+      if (!shortcut) return void reply(res, 400, { ok: false, error: 'unknown shortcut' });
+      if (!deps.client) return void reply(res, 503, { ok: false, error: 'TV unavailable' });
+      if (shortcut.kind === 'input') await deps.client.setInput(shortcut.cname ?? '');
+      else if (shortcut.kind === 'system' && shortcut.action === 'power-off') await deps.client.sendKey('POWER_OFF');
+      else if (shortcut.kind === 'system' && shortcut.action === 'native-home') await deps.supervisor?.suppressAndOpenNativeHome();
+      else if (shortcut.kind === 'app') {
+        const device = deps.context ? await deps.context.ensureDevice() : deps.device;
+        const payload = shortcut.payload ?? (deps.context?.catalog ?? deps.catalog)?.resolvePayload(shortcut.catalogId ?? '', device ?? ({ chipsetKey: '*', firmware: '' } as DeviceInfo));
+        if (!payload) return void reply(res, 400, { ok: false, error: 'app is unavailable' });
+        await deps.client.launchApp(payload);
+      }
+      return void reply(res, 200, { ok: true });
+    }
+    if (pathname === '/api/admin/takeover/pause' && method === 'POST') {
+      const value = await deps.readBody(req) as { minutes?: unknown };
+      const mode = value.minutes === 'untilStandby' ? 'untilStandby' : typeof value.minutes === 'number' && Number.isInteger(value.minutes) && value.minutes > 0 && value.minutes <= 1440 ? value.minutes : null;
+      if (!mode) return void reply(res, 400, { ok: false, error: 'minutes must be a positive integer or untilStandby' });
+      if (!deps.supervisor) return void reply(res, 503, { ok: false, error: 'takeover unavailable' });
+      deps.supervisor.suppress(mode);
+      return void reply(res, 200, { ok: true, takeover: deps.supervisor.status() });
+    }
+    if (pathname === '/api/admin/takeover/resume' && method === 'POST') {
+      if (!deps.supervisor) return void reply(res, 503, { ok: false, error: 'takeover unavailable' });
+      deps.supervisor.resume();
+      return void reply(res, 200, { ok: true, takeover: deps.supervisor.status() });
+    }
+    if (pathname === '/api/admin/screensaver/preview' && method === 'POST') {
+      if (!deps.requestScreensaver) return void reply(res, 503, { ok: false, error: 'preview unavailable' });
+      return void reply(res, 200, { ok: true, screensaverRequestedAt: deps.requestScreensaver() });
     }
     if (pathname === '/api/admin/takeover' && method === 'POST') {
       const value = await deps.readBody(req) as { enabled?: unknown; mode?: unknown; suppressMinutes?: unknown };

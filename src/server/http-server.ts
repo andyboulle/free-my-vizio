@@ -46,7 +46,7 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
       if (pathname === '/api/tv/home' && req.method === 'GET' && options.tv) return json(res, 200, tvHome(options.tv));
       if (pathname === '/api/tv/activate' && req.method === 'POST' && options.tv) { const data = await body(req) as { shortcutId?: string }; await activateShortcut(options.tv, String(data.shortcutId ?? '')); return json(res, 200, { ok: true }); }
       if (pathname === '/api/tv/native-home' && req.method === 'POST' && options.tv) { await options.tv.nativeHome(); return json(res, 200, { ok: true }); }
-      if (pathname === '/api/tv/status' && req.method === 'GET') { const status = options.tv?.takeoverStatus?.(); return json(res, 200, status ? { ...status, takeoverState: status.state } : { power: null, appClass: null, takeoverState: 'IDLE' }); }
+      if (pathname === '/api/tv/status' && req.method === 'GET') { const status = options.tv?.takeoverStatus?.(); return json(res, 200, status ? { ...status, takeoverState: status.state, screensaverRequestedAt: options.tv?.screensaverRequestedAt?.() ?? null } : { power: null, appClass: null, takeoverState: 'IDLE', screensaverRequestedAt: null }); }
       return json(res, 404, { error: 'not found' });
     } catch (error) { const status = (error as { status?: number; code?: string }).status ?? ((error as { code?: string }).code === 'NOT_FOUND' ? 404 : 502); return json(res, status, { ok: false, error: { code: 'TV_ERROR', message: 'request failed' } }); }
   });

@@ -6,7 +6,7 @@ import type { DeviceInfo } from '../tv/smartcast-client.ts';
 import type { TakeoverStatus } from '../supervisor/takeover.ts';
 import type { DeviceContext } from '../tv/device-context.ts';
 
-export interface TvRouteDeps { config: Config; catalog?: Catalog; client?: SmartCastClient; profile?: TvProfile; device?: DeviceInfo; context?: DeviceContext; nativeHome: () => Promise<void>; takeoverStatus?: () => TakeoverStatus; }
+export interface TvRouteDeps { config: Config; catalog?: Catalog; client?: SmartCastClient; profile?: TvProfile; device?: DeviceInfo; context?: DeviceContext; nativeHome: () => Promise<void>; takeoverStatus?: () => TakeoverStatus; screensaverRequestedAt?: () => number | null; }
 export function tvHome(deps: TvRouteDeps) {
   const device = deps.context?.device ?? deps.device;
   return { title: deps.config.home.title, theme: deps.config.home.theme, accent: deps.config.home.accent, clock: deps.config.home.clock, appearance: deps.config.home.appearance, screensaver: deps.config.screensaver,

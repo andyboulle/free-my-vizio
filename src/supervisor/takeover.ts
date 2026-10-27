@@ -71,6 +71,16 @@ export class TakeoverSupervisor {
     await this.options.client.launchApp(this.options.nativeHome, { timeoutMs: this.options.config.takeover.requestTimeoutMs });
     this.markTvContact();
   }
+  suppress(minutes: number | 'untilStandby'): void {
+    this.suppressGeneration++;
+    this.suppressedUntil = minutes === 'untilStandby' ? Number.POSITIVE_INFINITY : this.clock.now() + minutes * 60_000;
+    this.state = 'PAUSED';
+  }
+  resume(): void {
+    this.suppressGeneration++;
+    this.suppressedUntil = 0;
+    if (this.state === 'PAUSED') this.state = 'RUNNING';
+  }
   async tick(): Promise<void> {
     const t = this.options.config.takeover;
     if (!t.enabled || t.mode === 'off' || this.state === 'NEEDS_PAIRING') { this.state = 'IDLE'; return; }
