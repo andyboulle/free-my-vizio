@@ -23,3 +23,18 @@ Run against a real TV; do not mark these passed from mocks.
 | MT-7.1 | 2026-10-27 | 86.910.19.2-1 | Pass | Docker Desktop bridge deployment survived Mac reboot; container restarted, pairing/config persisted, health and takeover passed. |
 | MT-7.2 |  |  | Not run | 48-hour soak: no crash, memory under 120 MB, and default info logs under 10 MB per 24 hours. |
 | MT-UI4.1 |  |  | Not run | Configure at least 12 app shortcuts in one rail. Focus row 1, then row 2: confirm the clock compresses to the upper-right, the focused row remains visible, and the rail scrolls right/left with one-card lead and a 48 px right-edge fade. |
+
+## Cinematic Lite performance (real M65Q6-L4)
+
+Run `fmv open --debug` for T1–T6. Run `fmv open --debug --baseline` for T0. Record the
+`tv_perf` lines from the server log; automated verification does not substitute for these TV measurements.
+
+| ID | Median FPS | Min 1-s FPS | p95 frame | >50 ms | Result | Notes |
+|---|---:|---:|---:|---:|---|---|
+| T0 baseline |  |  |  |  | Not run | Establish ceiling B with `fx=none`. |
+| T1 rapid horizontal |  |  |  |  | Not run | Lite; repeat Right/Left 3×. |
+| T2 vertical/focus |  |  |  |  | Not run | 20 Up/Down transitions. |
+| T3 brand changes |  |  |  |  | Not run | Six differently branded apps. |
+| T4 idle home |  |  |  |  | Not run | 60 seconds idle. |
+| T5 fireplace |  |  |  |  | Removed | Owner-approved removal after failed real-TV validation; no fireplace workload remains to measure. |
+| T6 enhanced |  |  |  |  | Informational | Admin label: “Enhanced (may stutter)”. |

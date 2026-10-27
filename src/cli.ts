@@ -26,7 +26,9 @@ async function main(args: string[]): Promise<void> {
     if (!config.tv.host) throw new Error('TV is not configured');
     const s = loadSecrets(dir); const client = new SmartCastClient({ connection: new TvConnection({ host: config.tv.host, port: config.tv.port, authToken: s.tvAuthToken }) });
     const base = config.server.publicBaseUrl ?? `http://${pickLanAddress(config.tv.host)}:${config.server.port}`;
-    await client.launchUrl(`${base}/tv/#k=${s.tvUiToken}`); console.log('opened'); return;
+    const debug = args.includes('--debug'); const baseline = args.includes('--baseline');
+    const query = [debug && 'debug=1', baseline && 'fx=none'].filter(Boolean).join('&');
+    await client.launchUrl(`${base}/tv/${query ? `?${query}` : ''}#k=${s.tvUiToken}`); console.log('opened'); return;
   }
   if (command === 'pair') {
     const host = args[args.indexOf('--host') + 1] || config.tv.host; if (!host) throw new Error('pair requires --host <ip>');

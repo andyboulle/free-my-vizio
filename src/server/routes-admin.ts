@@ -26,7 +26,6 @@ export interface AdminRouteDeps {
   onPaired?: (token: string) => void;
   readBody: (req: IncomingMessage) => Promise<unknown>;
   pairState?: { challenge?: { pairingReqToken: number; challengeType: number } };
-  requestScreensaver?: () => number;
 }
 
 function reply(res: ServerResponse, status: number, value: unknown): void {
@@ -116,10 +115,6 @@ export async function handleAdminRoute(pathname: string, method: string, req: In
       if (!deps.supervisor) return void reply(res, 503, { ok: false, error: 'takeover unavailable' });
       deps.supervisor.resume();
       return void reply(res, 200, { ok: true, takeover: deps.supervisor.status() });
-    }
-    if (pathname === '/api/admin/screensaver/preview' && method === 'POST') {
-      if (!deps.requestScreensaver) return void reply(res, 503, { ok: false, error: 'preview unavailable' });
-      return void reply(res, 200, { ok: true, screensaverRequestedAt: deps.requestScreensaver() });
     }
     if (pathname === '/api/admin/takeover' && method === 'POST') {
       const value = await deps.readBody(req) as { enabled?: unknown; mode?: unknown; suppressMinutes?: unknown };

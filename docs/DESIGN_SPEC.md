@@ -357,7 +357,7 @@ Goal: a polished control app you'd be happy to open on your phone every day. Sam
   [Apps | Inputs | System]:
   - Apps: search field + grid of catalog apps (icon + name), already-added ones show a check; tap to add/remove.
   - Inputs: from `/api/admin/inputs`, with the TV's names; tap to add.
-  - System: SmartCast Home (always present, cannot be removed/hidden — show a lock icon), Fireplace, Turn off TV.
+  - System: SmartCast Home (always present, cannot be removed/hidden — show a lock icon), Turn off TV.
 - **Saving**: autosave 600 ms after the last change (`PUT /api/admin/config`), status text "Saving… / Saved" in the app bar,
   Undo snackbar for remove/hide/move. On validation error, show inline errors and keep the unsaved draft.
 
@@ -374,8 +374,7 @@ Goal: a polished control app you'd be happy to open on your phone every day. Sam
 - Clock: 12h / 24h / Auto, Show date, Greeting.
 - Card labels: Focused only (default) · Always.
 - Reduce motion toggle.
-- Screensaver: Enabled, Start after (1/2/5/10/15/30 min), Intensity (Low/Medium/High), Show clock, Sound (disabled with
-  note "Requires TV test" until MT-UI5.5 passes), **Preview on TV** button (starts the fireplace on the TV via §8).
+- Fireplace screensaver: removed by the owner-approved T5 performance decision in §14.8.
 
 **Settings**
 - Takeover: mode as three radio cards with plain-language descriptions:
@@ -403,24 +402,21 @@ no layout shift on load (reserve skeleton space).
   "appearance": { "backdrop": "ambient" /* ambient|still|off */, "labels": "focused" /* focused|always */, "reduceMotion": false },
   "sections": [ /* unchanged shape; Shortcut gains optional "brandColor": "#RRGGBB" */ ]
 },
-"screensaver": { "enabled": true, "idleMinutes": 5, "style": "fireplace", "intensity": "medium" /* low|medium|high */,
-                 "showClock": true, "sound": false }
 ```
-- New system action `"fireplace"` (allowed in `system.action` enum).
+- Fireplace screensaver configuration and system action were removed after the owner-approved T5 performance decision
+  recorded in §14.8.
 - Migration v1→v2: `theme: dark→cinematic, oled→oled, light→light`; `showClock:false` → `clock` kept but the hero shows
   only the date and caption; add defaults for new blocks; write back on first load. Unit-test the migration.
 - `validateConfig` covers every new field (enums, `idleMinutes ∈ {1,2,5,10,15,30}`, `brandColor` `/^#[0-9a-f]{6}$/i`).
 
 ### 8.2 API
-- `GET /api/tv/home` adds: `clock`, `appearance`, `screensaver`, `accent`, and per shortcut `subtitle` (input port
+- `GET /api/tv/home` adds: `clock`, `appearance`, `accent`, and per shortcut `subtitle` (input port
   "HDMI 1" for inputs; description for system), `brandColor` (config override only), `available` (false if the app has
   no payload for this TV), `icon` (only when cached).
 - `POST /api/admin/activate {shortcutId}` — same as the TV route, for phone quick-launch.
 - `POST /api/admin/takeover/pause {minutes | "untilStandby"}` and `POST /api/admin/takeover/resume` — wrap supervisor
   suppression (reuse `suppressGeneration` semantics).
-- `POST /api/admin/screensaver/preview` — the server cannot inject into the page directly; implement by setting a
-  one-shot flag that the TV UI picks up on its next `/api/tv/status` poll (add `screensaverRequestedAt` to the status
-  response; TV UI polls `/api/tv/status` every 5 s while visible). Acceptable latency ≤ 6 s.
+- There is no fireplace preview endpoint or screensaver status payload.
 - `GET /api/admin/apps-summary` (optional) — or reuse `/api/admin/catalog` with icons for the add sheet.
 - **CSP for the preview**: `/tv/preview.html` must be served with `frame-ancestors 'self'` (all other TV/admin HTML keeps
   `frame-ancestors 'none'`). The preview page needs no token: it renders only the draft layout posted by the admin page via
@@ -503,3 +499,160 @@ stop and report if the home screen cannot reach ≥ 45 fps even with `fx-low` (t
 Weather, multiple profiles, quick-settings row, content recommendations/metadata, any remote images or fonts, any change
 to TV settings from the UI (screensaver tests ask the user to change Auto Power Off manually), video files for the
 fireplace (procedural only), new runtime dependencies.
+
+---
+
+## 14. Performance revision — "Cinematic Lite" (2026-10-27) — **supersedes conflicting parts of §3.3, §5.2, §5.5, §6.2, §10, §12 (UI2/UI5)**
+
+### 14.1 Decision
+
+**SIMPLIFY** (not preserve, not redesign). Keep the product direction — dark cinematic look, big clock + date, focus
+caption, square brand-art cards, brand-tinted background, fireplace — but render it as a **static, compositor-friendly
+scene**. The ambient *motion* is dropped; the ambient *colour* is kept. A single rendering tier ("lite") is the default
+and only required tier for the M65Q6-L4. The optional "enhanced" tier becomes an admin opt-in, not an automatic mode.
+
+### 14.2 Rationale (from the observed 12–13 FPS during rapid Left/Right)
+
+Code review of UI0–UI7 shows the drop is caused by **per-key-press repaint and forced layout**, not by an inherently slow
+device:
+
+| Cause in current build | Cost per key press / frame |
+|---|---|
+| `.tile` transitions `box-shadow` with a 40 px drop shadow **and** a 48 px `color-mix()` glow (`base.css .tile:focus`) | Two large blurred shadows re-rasterised every frame for 180 ms on two cards, at 1.5× DPR |
+| Backdrop = two full-screen (+60 px) layers with three `radial-gradient(color-mix())` each, drifting, plus scrim and grain | Each brand change (`backdrop.js` sets `--brand`) re-rasterises a ~2000×1170 px gradient layer, then cross-fades two full-screen layers (≥ 5 full-screen blended layers of overdraw) |
+| `.row[data-overflow] { mask-image }` on the **moving** track | The masked layer is re-rastered whenever the track translates |
+| `updateRailFocus()` on every key: sets custom properties on `#rails` (invalidates style for the whole subtree), toggles a class on every `.rail`, calls `getBoundingClientRect()` on all rows after style writes | Forced synchronous style + layout on every press |
+| `tile.focus()` without `preventScroll` | Browser scroll-into-view work on each move |
+| No key throttle (spec §5.6 asked for 90 ms; `keys.js` has none) | Auto-repeat (~15–30/s) queues more work than a frame can absorb |
+| Focus-mode animates `height` and `font-size` of the hero | Layout animation |
+| Fireplace sets `--glow` on the full-screen root each frame and `filter: blur()` on an upscaled canvas | Full-screen repaint + filter every frame |
+| Auto-downgrade samples average FPS over 5 s windows | Idle time masks interaction stalls → downgrade unreliable (matches the observed "stayed fx-high at 12 FPS") |
+
+Every one of these can be removed without changing the look meaningfully, so a redesign is unjustified. Preserving the
+current effects is not possible on this hardware.
+
+### 14.3 Effect classification
+
+| Effect | Status | Lite implementation |
+|---|---|---|
+| Visible focus (ring + scale) | **Mandatory** | `transform: scale(1.08)` + ring/glow on a `::before` pseudo-element whose **opacity** animates; shadows themselves never animate |
+| Activation feedback (spinner/arc), toasts, offline banner, confirm dialog, status chip | **Mandatory** | Opaque `--glass-strong` surfaces, no blur |
+| Brand-tinted background | **Mandatory (as colour)** | Two solid-colour layers cross-fading by opacity under one static shading layer (§14.4 item 2) |
+| Big clock, date, focus caption | **Mandatory** | Text only; caption updated at most once per frame |
+| Focus transitions | **Mandatory, simplified** | transform + opacity only, 140 ms |
+| Row scrolling | **Mandatory, simplified** | `translate3d` on the track only; offsets from cached geometry |
+| Right-edge fade | Optional | Static gradient overlay fixed at the rail edge (not a mask on the track) |
+| Entrance animation | Optional | Single opacity fade of `#app` 300 ms; no per-card stagger |
+| Focus-mode hero compression | Optional | Transform-only (`translateY`/`scale` on `#hero`), no height/font-size animation |
+| Brand-colour derivation from icons | Optional | Only via `requestIdleCallback` after first render, cached; never on the key path |
+| Ambient drift / breathing | **Expendable — removed** in lite | — |
+| Radial-gradient blobs / `color-mix()` at runtime | **Expendable — removed** from all per-frame/per-focus paths | Colours precomputed in JS as plain `rgb()` strings |
+| Film grain | **Expendable — removed** | — |
+| `backdrop-filter` / blur anywhere on the TV | **Expendable — removed** | — |
+| Large drop shadow (40 px) + 48 px glow | **Expendable — replaced** | Static ring 3 px + 16 px glow on the pseudo-element, rasterised once |
+
+### 14.4 Prioritised implementation changes (do in this order; measure after each with §14.6 test T1)
+
+1. **Input path** (`keys.js`, `main.js`):
+   - Coalesce moves: keep only the latest pending direction and process **at most one move per animation frame**, and
+     ignore repeats closer than **110 ms** (`e.repeat`). Enter ignores repeats.
+   - `tile.focus({ preventScroll: true })`.
+   - `focusAt()` does DOM **writes only**: update the two affected tiles (old/new), the caption (skip if unchanged), and
+     the focused row's track transform. Never touch all `.rail`s; never set custom properties on `#rails`/`:root` per key.
+2. **Focus styling** (`base.css`):
+   - Remove `box-shadow` from `.tile` and `.tile:focus` and from the `transition` list.
+   - Add `.tile::before { content:""; position:absolute; inset:-4px; border-radius:inherit; box-shadow: 0 0 0 3px var(--focus-ring), 0 0 16px var(--brand-glow); opacity:0; transition: opacity 140ms var(--ease-out); }`
+     and `.tile:focus::before { opacity:1 }`. `--brand-glow` is a precomputed `rgb(r g b / .55)` string set **once per tile
+     at render time** (no `color-mix()`).
+   - `.tile { transition: transform 140ms var(--ease-out) }`, `.tile:focus { transform: scale(1.08) }` (apps too; 1.12 dropped).
+   - `.tile` keeps `overflow:hidden` on an inner wrapper only (the `::before` ring must not be clipped).
+3. **Backdrop** (`index.html`, `base.css`, `backdrop.js`) — replace the whole layer stack with exactly three elements:
+   - `.bg-tint[data-layer=a|b]`: full-screen, **solid** `background-color` = brand mixed 22% into `--bg-0` (computed in JS
+     with simple RGB lerp). Change colour only on the inactive layer, then swap **opacity** (400 ms). Debounce 250 ms after
+     the last move so held keys never trigger it.
+   - `.bg-shade`: one static full-screen element painted once: `radial-gradient(70% 80% at 80% 15%, transparent 0%, rgb(7 8 11 / .55) 55%, rgb(7 8 11 / .96) 100%)`
+     followed by the existing bottom legibility gradient. Its colours never change, so it is rasterised once.
+   - Delete drift keyframes, grain, the third accent blob, and all runtime `color-mix()`.
+   - Result: the brand colour "glows" from the top right exactly as before, but changing it costs one solid fill + one
+     compositor opacity fade.
+4. **Rails** (`rails.js`, `base.css`):
+   - Remove `mask-image` from `.row`. Add one static `.rail-fade` element (absolute, right 0, width 64 px, full rail-area
+     height, gradient `transparent → rgb(7 8 11 / .9)`) shown only when the focused row overflows.
+   - Cache each card's `offsetLeft`/`offsetWidth` and the track width after render (and on resize); `scrollTrackToFocus`
+     uses the cache — **no `getBoundingClientRect()` on the key path**.
+   - Vertical row change: `#rails` gets an inline `transform: translate3d(0, Ypx, 0)` (not a custom property).
+   - `will-change: transform` on `#rails` and on each `.row` track only (not on every tile).
+5. **Hero focus-mode**: animate only `transform` on `#hero` (e.g. `translateY(-92px)`) and on `.hero-clock`
+   (`translate(...) scale(.55)` with `transform-origin: top right`); no `height`/`font-size` transitions. Final layout
+   positions may differ ±16 px from §5.1; that is accepted.
+6. **Overlays**: remove every `backdrop-filter` on the TV; use `--glass-strong`. Remove the `#app[aria-hidden]` scale-down
+   (use a 40% black dim overlay fading by opacity instead).
+7. **Entrance**: replace the per-card stagger with one 300 ms opacity fade of `#app`.
+8. **Brand derivation**: run `deriveBrandColor` for uncached icons in `requestIdleCallback` (fallback `setTimeout(…, 2000)`)
+   after first render, one icon per callback; apply to tiles not currently focused, else on next focus.
+9. **Tiers** (`fx.js`): delete the automatic FPS downgrade and the `fmv.fx` key. Body class is `fx-lite` by default.
+   New config field `home.appearance.effects: "lite" | "enhanced"` (default `"lite"`; schema v2 additive change with
+   validation + migration default). `enhanced` re-enables only: 140 ms caption cross-fade, entrance stagger, slow drift of
+   `.bg-shade` via transform (no gradient re-raster). Admin Appearance shows "Effects: Standard (recommended for this TV) /
+   Enhanced (may stutter)".
+10. **Fireplace** (`fireplace.js`, `fireplace.css`):
+    - Keep it; it is a separate full-screen mode with its own target (§14.5).
+    - Remove `filter: blur()` from the canvas. Simulate at **20 steps/s** on a 160×90 grid; render to the canvas and let CSS
+      upscale with smoothing (bilinear) — the softness replaces the blur.
+    - Glow: a separate static `.fire-glow` element (gradient painted once); animate its **opacity** from JS
+      (`el.style.opacity = …` at 20 Hz) — never `setProperty('--glow')` on the root.
+    - Embers: reduce to **12** CSS-animated elements (transform/opacity only).
+    - Logs: unchanged (static SVG).
+    - Draw/compute only when a simulation step is due; skip rAF callbacks otherwise.
+11. **Debug overlay** (`debug.js`): text updates at most **2×/s** (the overlay itself must not repaint every frame). Show:
+    current FPS (1 s), **min 1-s FPS since reset**, **p95 frame time** and **count of frames > 50 ms** over the last 10 s,
+    tier, first-render ms. Reset stats on `?debug=1` load and whenever the screensaver starts/stops. Also `POST` a summary
+    every 10 s to new `POST /api/tv/debug-metrics` (tvUiToken auth, accepted **only** when the TV UI was opened with debug;
+    body ≤ 1 KB; server logs it as `tv_perf` at info level). This makes results readable from `docker logs` without
+    eyeballing the TV.
+12. **Baseline page**: `?debug=1&fx=none` renders the home with backdrop, ring and transitions disabled (flat colours) —
+    used only to measure the device ceiling (T0).
+
+### 14.5 Revised acceptance criteria (replace UI2 and UI5 performance criteria and §10 FPS rows)
+
+All measurements on the real M65Q6-L4, TV UI opened with `fmv open --debug`, values read from the `tv_perf` log lines.
+
+| ID | Scenario | Pass |
+|---|---|---|
+| **T0** Baseline | `?fx=none`, hold Right on a row of ≥ 10 cards for 5 s, then Left for 5 s | Records the ceiling `B` = median FPS. If `B < 50`, **stop and report** (the platform, not the design, is limiting; thresholds below become relative: replace 45 with `0.85·B`) |
+| **T1** Rapid horizontal | Lite tier, ≥ 10 app cards, hold Right 5 s, hold Left 5 s, repeat 3× | Median FPS ≥ **50**; min 1-s FPS ≥ **40**; p95 frame ≤ **33 ms**; frames > 50 ms ≤ **3 per 10 s**; focus never lands on a stale card (visual check) |
+| **T2** Vertical + focus mode | Press Down/Up between all rows 20× at ~3 presses/s | Same thresholds as T1 |
+| **T3** Brand change | Move across 6 apps with different brand colours, pausing 1 s on each | No 10-s window with > 2 frames > 50 ms; background colour settles ≤ 700 ms after the pause |
+| **T4** Idle home | No input for 60 s | Median FPS ≥ **55** (should be ~display rate; nothing animates) |
+| **T5** Fireplace | Fireplace running 10 min | Median FPS ≥ **24**, min 1-s FPS ≥ **18**; simulation steps/s ≥ 19; no growth in `performance.memory.usedJSHeapSize` > 10 MB if available; exits within one frame of a key press |
+| **T6** Enhanced tier (informational) | Set `effects: enhanced`, run T1 | Recorded only; if it fails T1 the admin label must read "may stutter" (already planned) |
+
+Automated tests to add: key coalescing/throttle (fake clock), `focusAt` performs no `getBoundingClientRect` calls (spy),
+RGB lerp tint function, debug stats (min/p95/long-frame counting from synthetic frame times), `effects` schema validation and
+migration, `/api/tv/debug-metrics` auth + size limit + "debug only" gating.
+
+### 14.6 Test procedure (owner at the TV, agent reading logs)
+
+1. `docker compose … up -d --build`, then `docker exec docker-free-my-vizio-1 node src/cli.ts open --debug`.
+2. Ensure ≥ 10 visible app shortcuts (add via admin if needed).
+3. Run T0 (`open --debug` with the `fx=none` flag added by the CLI option `--baseline`), then T1–T4, then trigger the
+   Fireplace pill and wait 10 min for T5.
+4. Agent collects `docker logs docker-free-my-vizio-1 | grep tv_perf` and records the numbers per test in
+   `docs/MANUAL_TESTS.md` (scenario, median, min 1-s, p95, long frames, pass/fail).
+5. If T1 fails after all 12 changes: stop and report with the logs; do not add more effects or try new techniques without
+   design review.
+
+### 14.7 Governance
+
+- This section is recorded as a formal deviation in `docs/DEVIATIONS.md` (2026-10-27, "UI performance: Cinematic Lite").
+- It is a simplification within the approved direction and preserves all functional requirements (navigation, focus
+  visibility, activation feedback, offline behaviour, SmartCast Home reachability, no TV setting changes, no new
+  dependencies). **Owner approved 2026-10-27 — implementation may proceed immediately.**
+
+### 14.8 Owner-approved fireplace removal
+
+The T5 real-TV validation failed its sustained performance budget. **Owner approved removal of the fireplace
+screensaver on 2026-10-27.** The Fireplace system shortcut, idle trigger, preview endpoint/status payload, canvas
+simulation, embers, logs, fireplace styling, and optional sound setting are no longer part of the product. The normal
+Home screen remains the only FMV idle surface; Cinematic Lite and UI0–UI7 functionality are preserved. T5 is tracked as
+Removed (not Not run) in `docs/MANUAL_TESTS.md`, and the detailed deviation is recorded in `docs/DEVIATIONS.md`.

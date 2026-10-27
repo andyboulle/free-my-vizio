@@ -67,6 +67,9 @@ export function renderHome(home, activate, backdrop) {
       tile.dataset.kind = shortcut.kind || 'system';
       tile.dataset.available = String(shortcut.available !== false);
       tile.style?.setProperty('--brand', resolveBrandColor(shortcut, home?.accent || '#4aa8ff'));
+      const brand = resolveBrandColor(shortcut, home?.accent || '#4aa8ff').replace('#', '');
+      const rgb = [0,2,4].map(i => Number.parseInt(brand.slice(i, i + 2), 16)).join(' ');
+      tile.style?.setProperty('--brand-glow', `rgb(${rgb} / .55)`);
       if (shortcut.available === false) {
         tile.classList?.add('unavailable');
         tile.setAttribute?.('aria-label', `${shortcut.label}, unavailable`);
@@ -80,7 +83,7 @@ export function renderHome(home, activate, backdrop) {
         tile.append(icon);
       } else if (shortcut.kind === 'input' || shortcut.kind === 'system') {
         const icon = document.createElement('img');
-        const iconName = shortcut.kind === 'input' ? (shortcut.cname?.startsWith('av') ? 'icon-av' : shortcut.cname?.startsWith('cast') ? 'icon-cast' : 'icon-hdmi') : (shortcut.action === 'fireplace' ? 'icon-flame' : shortcut.action === 'power-off' ? 'icon-power' : 'icon-home');
+        const iconName = shortcut.kind === 'input' ? (shortcut.cname?.startsWith('av') ? 'icon-av' : shortcut.cname?.startsWith('cast') ? 'icon-cast' : 'icon-hdmi') : (shortcut.action === 'power-off' ? 'icon-power' : 'icon-home');
         icon.src = `/shared/icons/${iconName}.svg`;
         icon.alt = '';
         tile.append(icon);
@@ -99,6 +102,15 @@ export function renderHome(home, activate, backdrop) {
       track.append(tile);
     }
     row.append(track);
+    const fade = document.createElement('i');
+    fade.className = 'rail-fade';
+    fade.hidden = true;
+    row.append(fade);
     root.append(row);
+    track._fmvGeometry = {
+      width: track.clientWidth || 1152,
+      scrollWidth: track.scrollWidth || [...track.children].reduce((sum, item) => sum + item.offsetWidth, 0),
+      cards: [...track.children].map(card => ({ card, left: card.offsetLeft, right: card.offsetLeft + card.offsetWidth }))
+    };
   }
 }

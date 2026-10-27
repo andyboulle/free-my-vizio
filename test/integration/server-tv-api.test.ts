@@ -31,3 +31,17 @@ test('TV home omits uncached icons and includes cached icons', async () => {
     await fs.rm(cacheDir, { recursive: true, force: true });
   }
 });
+
+test('TV home preserves system actions for client-side confirmation', () => {
+  const config = structuredClone(DEFAULT_CONFIG);
+  config.home.sections[2].shortcuts.push({
+    id: 'power-off',
+    kind: 'system',
+    label: 'Turn off TV',
+    action: 'power-off',
+    hidden: false
+  });
+  const home = tvHome({ config, nativeHome: async () => {} });
+  const power = home.sections[2].shortcuts.find(shortcut => shortcut.id === 'power-off');
+  assert.equal(power?.action, 'power-off');
+});

@@ -5,8 +5,7 @@ export interface Config {
   tv: { host: string | null; port: number; deviceId: string | null };
   server: { port: number; bindHost: string; publicBaseUrl: string | null };
   takeover: { enabled: boolean; mode: 'always' | 'power-on-only' | 'off'; pollMs: number; requestTimeoutMs: number; confirmDelayMs: number; cooldownMs: number; suppressMinutes: number; suppressUntilStandby: boolean; loopGuard: { maxLaunches: number; windowMs: number; pauseMinutes: number } };
-  home: { title: string; theme: 'cinematic' | 'oled' | 'light'; accent: string; clock: { format: 'auto' | '12h' | '24h'; showDate: boolean; greeting: boolean }; appearance: { backdrop: 'ambient' | 'still' | 'off'; labels: 'focused' | 'always'; reduceMotion: boolean }; sections: Section[] };
-  screensaver: { enabled: boolean; idleMinutes: 1 | 2 | 5 | 10 | 15 | 30; style: 'fireplace'; intensity: 'low' | 'medium' | 'high'; showClock: boolean; sound: boolean };
+  home: { title: string; theme: 'cinematic' | 'oled' | 'light'; accent: string; clock: { format: 'auto' | '12h' | '24h'; showDate: boolean; greeting: boolean }; appearance: { backdrop: 'ambient' | 'still' | 'off'; labels: 'focused' | 'always'; reduceMotion: boolean; effects: 'lite' | 'enhanced' }; sections: Section[] };
   catalog: { refreshHours: number };
 }
 export interface Secrets { adminToken: string; tvUiToken: string; tvPairingDeviceId: string; tvAuthToken?: string }
@@ -14,12 +13,11 @@ export const DEFAULT_CONFIG: Config = {
   schemaVersion: 2, tv: { host: null, port: 7345, deviceId: null },
   server: { port: 8730, bindHost: '0.0.0.0', publicBaseUrl: null },
   takeover: { enabled: true, mode: 'always', pollMs: 1000, requestTimeoutMs: 2500, confirmDelayMs: 400, cooldownMs: 5000, suppressMinutes: 10, suppressUntilStandby: true, loopGuard: { maxLaunches: 3, windowMs: 60000, pauseMinutes: 10 } },
-  home: { title: 'Living Room', theme: 'cinematic', accent: '#4aa8ff', clock: { format: 'auto', showDate: true, greeting: false }, appearance: { backdrop: 'ambient', labels: 'focused', reduceMotion: false }, sections: [
+  home: { title: 'Living Room', theme: 'cinematic', accent: '#4aa8ff', clock: { format: 'auto', showDate: true, greeting: false }, appearance: { backdrop: 'ambient', labels: 'focused', reduceMotion: false, effects: 'lite' }, sections: [
     { id: 'apps', title: 'Apps', shortcuts: [{ id: 'netflix', kind: 'app', label: 'Netflix', catalogId: '34', hidden: false }, { id: 'youtube', kind: 'app', label: 'YouTube', catalogId: '44', hidden: false }] },
     { id: 'inputs', title: 'Inputs', shortcuts: [{ id: 'hdmi1', kind: 'input', label: 'HDMI 1', cname: 'hdmi1', hidden: false }] },
-    { id: 'system', title: 'System', shortcuts: [{ id: 'native-home', kind: 'system', label: 'SmartCast Home', action: 'native-home', hidden: false }, { id: 'fireplace', kind: 'system', label: 'Fireplace', action: 'fireplace', hidden: false }] },
+    { id: 'system', title: 'System', shortcuts: [{ id: 'native-home', kind: 'system', label: 'SmartCast Home', action: 'native-home', hidden: false }] },
   ] },
-  screensaver: { enabled: true, idleMinutes: 5, style: 'fireplace', intensity: 'medium', showClock: true, sound: false },
   catalog: { refreshHours: 24 },
 };
 export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
@@ -88,6 +86,7 @@ export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
       if (!['ambient', 'still', 'off'].includes(c.home.appearance.backdrop as string)) errors.push('home.appearance.backdrop is invalid');
       if (!['focused', 'always'].includes(c.home.appearance.labels as string)) errors.push('home.appearance.labels is invalid');
       if (typeof c.home.appearance.reduceMotion !== 'boolean') errors.push('home.appearance.reduceMotion must be boolean');
+      if (!['lite', 'enhanced'].includes(c.home.appearance.effects as string)) errors.push('home.appearance.effects is invalid');
     }
   }
   const ids = new Set<string>(); let native = false;
@@ -117,29 +116,31 @@ export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
         }
       } else if (shortcut.kind === 'input') {
         if (typeof shortcut.cname !== 'string' || !/^[a-z0-9_]+$/.test(shortcut.cname)) errors.push(`invalid cname: ${String(shortcut.cname)}`);
-      } else if (shortcut.kind === 'system' && !['native-home', 'power-off', 'blank-screen', 'fireplace'].includes(shortcut.action as string)) {
+      } else if (shortcut.kind === 'system' && !['native-home', 'power-off', 'blank-screen'].includes(shortcut.action as string)) {
         errors.push(`shortcut ${id}.action is invalid`);
       }
       if (shortcut.action === 'native-home' || shortcut.id === 'native-home') { native = true; if (shortcut.hidden) errors.push('native-home cannot be hidden'); }
     }
   }
   if (!native) errors.push('native-home shortcut is required');
-  if (!record(c.screensaver)) errors.push('screensaver is required');
-  else {
-    if (typeof c.screensaver.enabled !== 'boolean') errors.push('screensaver.enabled must be boolean');
-    if (![1, 2, 5, 10, 15, 30].includes(c.screensaver.idleMinutes as number)) errors.push('screensaver.idleMinutes is invalid');
-    if (c.screensaver.style !== 'fireplace') errors.push('screensaver.style is invalid');
-    if (!['low', 'medium', 'high'].includes(c.screensaver.intensity as string)) errors.push('screensaver.intensity is invalid');
-    if (typeof c.screensaver.showClock !== 'boolean') errors.push('screensaver.showClock must be boolean');
-    if (typeof c.screensaver.sound !== 'boolean') errors.push('screensaver.sound must be boolean');
-  }
   if (!record(c.catalog) || !Number.isInteger(c.catalog.refreshHours) || (c.catalog.refreshHours as number) < 1) errors.push('catalog.refreshHours must be a positive integer');
   return { ok: errors.length === 0, errors };
 }
 export function migrateConfig(x: unknown): Config {
   if (!x || typeof x !== 'object') return structuredClone(DEFAULT_CONFIG);
   const source = x as Record<string, unknown>;
-  if (source.schemaVersion === 2) return structuredClone(source) as unknown as Config;
+  if (source.schemaVersion === 2) {
+    const migrated = structuredClone(source) as unknown as Config;
+    migrated.home ??= structuredClone(DEFAULT_CONFIG.home);
+    migrated.home.appearance ??= structuredClone(DEFAULT_CONFIG.home.appearance);
+    migrated.home.appearance.effects ??= 'lite';
+    migrated.home.sections = migrated.home.sections.map(section => ({
+      ...section,
+      shortcuts: section.shortcuts.filter(shortcut => shortcut.action !== 'fireplace' && shortcut.id !== 'fireplace'),
+    }));
+    delete (migrated as Partial<Config> & Record<string, unknown>).screensaver;
+    return migrated;
+  }
   if (source.schemaVersion !== 1) return structuredClone(DEFAULT_CONFIG);
   const old = source.home as Record<string, unknown> | undefined;
   const migrated = structuredClone(DEFAULT_CONFIG);
@@ -151,5 +152,9 @@ export function migrateConfig(x: unknown): Config {
     migrated.home.sections = Array.isArray(old.sections) ? old.sections as Section[] : migrated.home.sections;
   }
   for (const key of ['tv', 'server', 'takeover', 'catalog'] as const) if (source[key] && typeof source[key] === 'object') Object.assign(migrated[key], source[key]);
+  migrated.home.sections = migrated.home.sections.map(section => ({
+    ...section,
+    shortcuts: section.shortcuts.filter(shortcut => shortcut.action !== 'fireplace' && shortcut.id !== 'fireplace'),
+  }));
   return migrated;
 }
