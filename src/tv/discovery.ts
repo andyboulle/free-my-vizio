@@ -6,7 +6,8 @@ function probe(host: string, port: number, timeoutMs: number): Promise<Discovere
 export async function scanSubnet(baseIp: string, options: DiscoveryOptions = {}): Promise<DiscoveredTv[]> {
   const [a, b, c] = baseIp.split('.').map(Number); const hosts = Array.from({ length: 254 }, (_, i) => `${a}.${b}.${c}.${i + 1}`); const out: DiscoveredTv[] = []; let next = 0;
   async function worker(): Promise<void> { while (next < hosts.length) { const host = hosts[next++]; const found = await probe(host, options.port ?? 7345, options.timeoutMs ?? 1500); if (found) out.push(found); } }
-  await Promise.all(Array.from({ length: Math.min(options.concurrency ?? 32, hosts.length) }, () => worker())); return out;
+  const concurrency = Math.min(options.concurrency ?? 32, 32, hosts.length);
+  await Promise.all(Array.from({ length: concurrency }, () => worker())); return out;
 }
 export function matchByDeviceId(tvs: DiscoveredTv[], deviceId: string): DiscoveredTv | undefined {
   return tvs.find(tv => tv.deviceId === deviceId);

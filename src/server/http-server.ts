@@ -24,7 +24,11 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
   return http.createServer(async (req, res) => {
     if (!hostAllowed(req.headers.host, allowed)) return json(res, 421, { error: 'misdirected request' });
     const rawPath = (req.url ?? '/').split('?')[0]; const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`); const pathname = rawPath;
-    if (pathname === '/healthz' && req.method === 'GET') return json(res, 200, { ok: true, version: options.version ?? 'dev', paired: Boolean(options.secrets.tvAuthToken), tvReachable: false, takeover: options.tv?.takeoverStatus?.() ?? { state: 'IDLE' } });
+    if (pathname === '/healthz' && req.method === 'GET') {
+      const takeover = options.tv?.takeoverStatus?.() ?? { state: 'IDLE' };
+      const tvReachable = takeover.state !== 'UNREACHABLE' && takeover.state !== 'NEEDS_PAIRING';
+      return json(res, 200, { ok: true, version: options.version ?? 'dev', paired: Boolean(options.secrets.tvAuthToken), tvReachable, takeover });
+    }
     if (pathname.startsWith('/tv/')) { if (serveStatic(res, roots.tv, pathname.slice(3) || '/index.html')) return; return json(res, pathname.includes('..') || pathname.includes('%') ? 400 : 404, { error: 'not found' }); }
     if (pathname.startsWith('/admin/')) { if (serveStatic(res, roots.admin, pathname.slice(6) || '/index.html')) return; return json(res, 404, { error: 'not found' }); }
     if (pathname.startsWith('/icons/')) { if (/^\/icons\/[0-9]+\.png$/.test(pathname) && serveStatic(res, roots.icons, pathname.slice(6))) return; return json(res, 404, { error: 'not found' }); }

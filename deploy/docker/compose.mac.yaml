@@ -1,0 +1,5 @@
+services:
+  free-my-vizio:
+    network_mode: bridge
+    ports:
+      - "8730:8730"

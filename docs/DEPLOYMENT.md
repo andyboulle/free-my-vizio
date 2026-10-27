@@ -56,6 +56,17 @@ docker compose -f deploy/docker/compose.yaml up -d --build
 docker compose -f deploy/docker/compose.yaml logs -f
 ```
 
+On Docker Desktop for macOS, use the bridge override instead of host networking.
+Set `server.publicBaseUrl` in the persistent config to the Mac's stable LAN URL
+so the TV can load the UI:
+
+```sh
+docker compose -f deploy/docker/compose.yaml -f deploy/docker/compose.mac.yaml up -d --build
+```
+
+Reserve the Mac's DHCP address and keep `server.publicBaseUrl` synchronized if
+the host address changes.
+
 The named volume contains pairing and configuration data. Back it up while stopped:
 
 ```sh
