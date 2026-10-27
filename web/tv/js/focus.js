@@ -1,0 +1,2 @@
+export function buildGrid(sections){return sections.map(s=>s.shortcuts.map(x=>x.id));}
+export function moveFocus(grid,pos,dir){const row=grid[pos.row]||[];if(dir==='left'||dir==='right'){if(!row.length)return pos;const column=Math.max(0,Math.min(row.length-1,pos.column+(dir==='left'?-1:1)));return {row:pos.row,column};}let r=pos.row+(dir==='up'?-1:1);const step=dir==='up'?-1:1;while(r>=0&&r<grid.length&&!(grid[r]||[]).length)r+=step;if(r<0||r>=grid.length)return pos;const target=grid[r];return {row:r,column:Math.min(pos.column,target.length-1)};}

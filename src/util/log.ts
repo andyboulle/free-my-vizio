@@ -1,6 +1,6 @@
 type Fields = Record<string, unknown>;
 const secrets = new Set<string>(); const ring: string[] = [];
-const sensitive = /auth|token|secret|password|authorization|cookie|key/i;
+const sensitive = /token|auth|pin|password|esn|serial|diid|ifa|mac|secret|cookie/i;
 function redact(value: unknown): unknown {
   if (typeof value === 'string') { let out = value; for (const s of secrets) if (s) out = out.split(s).join('[REDACTED]'); return out; }
   if (Array.isArray(value)) return value.map(redact);

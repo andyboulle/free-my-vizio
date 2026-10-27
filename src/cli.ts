@@ -22,6 +22,12 @@ async function main(args: string[]): Promise<void> {
     if (!process.stdout.isTTY) { process.exitCode = 1; return; }
     const s = loadSecrets(dir); const host = config.server.publicBaseUrl ?? `http://${pickLanAddress(config.tv.host ?? '0.0.0.0')}`; console.log(`${host}:${config.server.port}/admin/#t=${s.adminToken}`); return;
   }
+  if (command === 'open') {
+    if (!config.tv.host) throw new Error('TV is not configured');
+    const s = loadSecrets(dir); const client = new SmartCastClient({ connection: new TvConnection({ host: config.tv.host, port: config.tv.port, authToken: s.tvAuthToken }) });
+    const base = config.server.publicBaseUrl ?? `http://${pickLanAddress(config.tv.host)}:${config.server.port}`;
+    await client.launchUrl(`${base}/tv/#k=${s.tvUiToken}`); console.log('opened'); return;
+  }
   if (command === 'pair') {
     const host = args[args.indexOf('--host') + 1] || config.tv.host; if (!host) throw new Error('pair requires --host <ip>');
     const s = loadSecrets(dir); const connection = new TvConnection({ host, port: config.tv.port }); const client = new SmartCastClient({ connection }); const info = await client.getDeviceInfo(); let challenge: { pairingReqToken: number; challengeType: number } | undefined;

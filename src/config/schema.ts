@@ -1,4 +1,4 @@
-export interface Shortcut { id: string; kind: 'app' | 'input' | 'system'; label: string; catalogId?: string; cname?: string; action?: string; hidden: boolean }
+export interface Shortcut { id: string; kind: 'app' | 'input' | 'system'; label: string; catalogId?: string; payload?: { nameSpace: number; appId: string; message: string | null }; cname?: string; action?: string; hidden: boolean }
 export interface Section { id: string; title: string; shortcuts: Shortcut[] }
 export interface Config {
   schemaVersion: 1;

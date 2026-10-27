@@ -1,0 +1,1 @@
+export function api(token){return async (path,options={})=>{const response=await fetch(path,{...options,headers:{'Content-Type':'application/json','X-FMV-Token':token,...(options.headers||{})}});if(!response.ok)throw new Error('Request failed');return response.json();};}
