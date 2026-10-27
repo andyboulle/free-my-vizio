@@ -2,8 +2,8 @@
   --bg: #080b10; --surface: #111821; --text-1: #f5f7fb; --text-2: #b7c0cc; --text-3: #7e8997;
   --focus-ring: #4aa8ff; --accent: #4aa8ff; --stroke: rgb(255 255 255 / .14);
   --glass: rgb(20 29 40 / .72); --glass-strong: #172230;
-  --bg-0: #07080b; --bg-1: #0d0f14; --r-card: 18px; --r-wide: 16px; --r-pill: 999px;
-  --d-fast: 120ms; --d-focus: 180ms; --d-scroll: 280ms; --ease-out: cubic-bezier(.2,.8,.2,1); --ease-in-out: cubic-bezier(.65,0,.35,1);
+  --bg-0: #07080b; --bg-1: #0d0f14; --brand: #4aa8ff; --r-card: 18px; --r-wide: 16px; --r-pill: 999px;
+  --d-fast: 120ms; --d-focus: 180ms; --d-scroll: 280ms; --d-backdrop: 700ms; --ease-out: cubic-bezier(.2,.8,.2,1); --ease-in-out: cubic-bezier(.65,0,.35,1);
   --stroke-strong: rgb(255 255 255 / .16); --ok: #3ddc97; --warn: #ffb547; --err: #ff5d5d;
   --t-subtitle: 22px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;

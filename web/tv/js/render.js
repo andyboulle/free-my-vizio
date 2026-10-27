@@ -17,7 +17,25 @@ export function renderClock(home) {
   }
 }
 
-export function renderHome(home, activate) {
+import {cacheBrandColor,deriveBrandColor,getCachedBrandColor,resolveBrandColor} from '../../shared/brand-colors.js';
+
+function deriveIconColor(icon, shortcut, tile) {
+  const id = shortcut.catalogId ?? shortcut.appId;
+  const cached = getCachedBrandColor(id);
+  if (cached) { tile.style?.setProperty('--brand', cached); return; }
+  if (!id || typeof document.createElement !== 'function') return;
+  icon.addEventListener?.('load', () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 24;
+    const context = canvas.getContext?.('2d');
+    if (!context) return;
+    context.drawImage(icon, 0, 0, 24, 24);
+    const color = deriveBrandColor(context.getImageData(0, 0, 24, 24));
+    if (color) tile.style?.setProperty('--brand', cacheBrandColor(id, color));
+  }, {once: true});
+}
+
+export function renderHome(home, activate, backdrop) {
   document.body.className = home?.theme || 'cinematic';
   document.documentElement.style.setProperty('--accent', home?.accent || '#4aa8ff');
   const title = document.querySelector('#title');
@@ -48,7 +66,7 @@ export function renderHome(home, activate) {
       tile.dataset.id = shortcut.id;
       tile.dataset.kind = shortcut.kind || 'system';
       tile.dataset.available = String(shortcut.available !== false);
-      if (shortcut.brandColor) tile.style?.setProperty('--brand', shortcut.brandColor);
+      tile.style?.setProperty('--brand', resolveBrandColor(shortcut, home?.accent || '#4aa8ff'));
       if (shortcut.available === false) {
         tile.classList?.add('unavailable');
         tile.setAttribute?.('aria-label', `${shortcut.label}, unavailable`);
@@ -58,6 +76,7 @@ export function renderHome(home, activate) {
         icon.src = shortcut.icon;
         icon.alt='';
         icon.addEventListener('error',()=>icon.remove(),{once:true});
+        deriveIconColor(icon, shortcut, tile);
         tile.append(icon);
       } else if (shortcut.kind === 'input' || shortcut.kind === 'system') {
         const icon = document.createElement('img');
@@ -76,6 +95,7 @@ export function renderHome(home, activate) {
         tile.append(badge);
       }
       tile.onclick = () => activate(tile, shortcut.id);
+      tile.addEventListener?.('focus', () => backdrop?.setBrand(shortcut, home?.accent));
       track.append(tile);
     }
     row.append(track);
