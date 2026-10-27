@@ -11,7 +11,8 @@
     "test": "node --test \"test/**/*.test.ts\" \"test/**/*.test.js\"",
     "typecheck": "tsc -p .",
     "check:web": "node scripts/check-web.mjs",
-    "verify": "npm run typecheck && npm run check:web && npm test"
+    "size-report": "node scripts/size-report.mjs",
+    "verify": "npm run typecheck && npm run check:web && npm run size-report && npm test"
   },
   "devDependencies": {
     "@types/node": "^22",

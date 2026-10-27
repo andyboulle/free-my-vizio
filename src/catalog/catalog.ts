@@ -13,6 +13,11 @@ type RawAvailability = { id: string | null; chipsets: Record<string, Array<{ app
 const base = 'https://scfs.vizio.com/appservice/';
 const urls = ['vizio_apps_prod.json', 'app_availability_prod.json'] as const;
 const asEntries = fallback as CatalogEntry[];
+export function detectIconFormat(bytes: Uint8Array): 'webp' | 'png' | 'jpeg' | null {
+  return Buffer.from(bytes.subarray(0, 4)).toString('ascii') === 'RIFF' && Buffer.from(bytes.subarray(8, 12)).toString('ascii') === 'WEBP' ? 'webp'
+    : Buffer.from(bytes.subarray(0, 8)).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])) ? 'png'
+      : Buffer.from(bytes.subarray(0, 2)).equals(Buffer.from([0xff, 0xd8])) ? 'jpeg' : null;
+}
 
 async function readJson(file: string): Promise<unknown> { return JSON.parse(await fs.readFile(file, 'utf8')); }
 async function fetchJson(options: CatalogOptions, url: string): Promise<unknown> {
@@ -51,14 +56,26 @@ export class Catalog {
     await fs.mkdir(path.join(this.options.cacheDir, 'icons'), { recursive: true });
     for (const entry of this.entries) {
       if (!entry.iconUrl || !/^[0-9]+$/.test(entry.catalogId)) continue;
-      const file = path.join(this.options.cacheDir, 'icons', `${entry.catalogId}.png`);
-      try { await fs.access(file); continue; } catch { /* download */ }
-      try { const fetcher = this.options.fetch ?? ((input: string, init?: { signal: AbortSignal }) => fetch(input, init)); const response = await fetcher(entry.iconUrl, { signal: AbortSignal.timeout(5_000) }); if (!(response instanceof Response) || !response.ok) continue; await fs.mkdir(path.dirname(file), { recursive: true }); await fs.writeFile(file, Buffer.from(await response.arrayBuffer())); } catch { /* icons are optional */ }
+      if (['.webp', '.png', '.jpeg'].some(ext => fsSync.existsSync(path.join(this.options.cacheDir, 'icons', `${entry.catalogId}${ext}`)))) continue;
+      try {
+        const fetcher = this.options.fetch ?? ((input: string, init?: { signal: AbortSignal }) => fetch(input, init));
+        const response = await fetcher(entry.iconUrl, { signal: AbortSignal.timeout(5_000) });
+        if (!(response instanceof Response) || !response.ok) continue;
+        const bytes = Buffer.from(await response.arrayBuffer());
+        const ext = detectIconFormat(bytes);
+        if (!ext) continue;
+        await fs.mkdir(path.join(this.options.cacheDir, 'icons'), { recursive: true });
+        await fs.writeFile(path.join(this.options.cacheDir, 'icons', `${entry.catalogId}.${ext}`), bytes);
+      } catch { /* icons are optional */ }
     }
   }
   hasCachedIcon(catalogId: string): boolean {
     if (!/^[0-9]+$/.test(catalogId)) return false;
-    return fsSync.existsSync(path.join(this.options.cacheDir, 'icons', `${catalogId}.png`));
+    return this.iconExtension(catalogId) !== null;
+  }
+  iconExtension(catalogId: string): 'webp' | 'png' | 'jpeg' | null {
+    for (const ext of ['webp', 'png', 'jpeg'] as const) if (fsSync.existsSync(path.join(this.options.cacheDir, 'icons', `${catalogId}.${ext}`))) return ext;
+    return null;
   }
 }
 

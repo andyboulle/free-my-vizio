@@ -1,47 +1,67 @@
-export function formatClock(date = new Date()) {
-  return new Intl.DateTimeFormat(undefined, {hour: 'numeric', minute: '2-digit'}).format(date);
+export function formatClock(date = new Date(), format = 'auto') {
+  const options = { hour: 'numeric', minute: '2-digit', hour12: format === '12h' ? true : format === '24h' ? false : undefined };
+  return new Intl.DateTimeFormat(undefined, options).format(date);
 }
 
 export function renderClock(home) {
   const clock = document.querySelector('#clock');
   if (!clock) return;
-  clock.hidden = !home?.showClock;
-  if (home?.showClock) clock.textContent = formatClock();
+  const settings = home?.clock || {};
+  const visible = home && (settings.showClock ?? home.showClock ?? true);
+  clock.hidden = !visible;
+  if (visible) clock.textContent = formatClock(new Date(), settings.format || 'auto');
+  const date = document.querySelector('#date');
+  if (date) {
+    date.hidden = !visible || settings.showDate === false;
+    if (!date.hidden) date.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
+  }
 }
 
-export function renderHome(home,activate){
-  document.body.className=home.theme;
-  document.documentElement.style.setProperty('--accent',home.accent);
-  document.querySelector('#title').textContent=home.title;
+export function renderHome(home, activate) {
+  document.body.className = home?.theme || 'cinematic';
+  document.documentElement.style.setProperty('--accent', home?.accent || '#4aa8ff');
+  const title = document.querySelector('#title');
+  if (title) title.textContent = home?.title || 'Living Room';
   renderClock(home);
-  const root=document.querySelector('#sections');
+  const root = document.querySelector('#rails') || document.querySelector('#sections');
+  if (!root) return;
   root.replaceChildren();
-  for(const section of home.sections){
-    const row=document.createElement('section');
-    row.className='section';
-    const heading=document.createElement('h2');
-    heading.textContent=section.title;
+  const sections = (home?.sections || []).filter(section => section.shortcuts?.length);
+  if (!sections.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.textContent = home?.setup ? 'Finish setup on the admin page to add shortcuts.' : 'No shortcuts yet. Add one from the admin page.';
+    root.append(empty);
+  }
+  for (const section of sections) {
+    const row = document.createElement('section');
+    row.className = 'rail';
+    row.dataset.row = sections.indexOf(section);
+    const heading = document.createElement('h2');
+    heading.textContent = section.title;
     row.append(heading);
-    const tiles=document.createElement('div');
-    tiles.className='row';
-    for(const shortcut of section.shortcuts){
-      const tile=document.createElement('button');
-      tile.className='tile';
-      tile.dataset.id=shortcut.id;
+    const track = document.createElement('div');
+    track.className = 'row';
+    for (const shortcut of section.shortcuts) {
+      const tile = document.createElement('button');
+      tile.className = `tile tile-${shortcut.kind || 'system'}`;
+      tile.dataset.id = shortcut.id;
+      tile.dataset.kind = shortcut.kind || 'system';
+      tile.dataset.available = String(shortcut.available !== false);
       if(shortcut.icon){
-        const icon=document.createElement('img');
-        icon.src=shortcut.icon;
+        const icon = document.createElement('img');
+        icon.src = shortcut.icon;
         icon.alt='';
         icon.addEventListener('error',()=>icon.remove(),{once:true});
         tile.append(icon);
       }
-      const label=document.createElement('span');
+      const label = document.createElement('span');
       label.textContent=shortcut.label;
       tile.append(label);
-      tile.onclick=()=>activate(tile,shortcut.id);
-      tiles.append(tile);
+      tile.onclick = () => activate(tile, shortcut.id);
+      track.append(tile);
     }
-    row.append(tiles);
+    row.append(track);
     root.append(row);
   }
 }

@@ -1,30 +1,32 @@
-export interface Shortcut { id: string; kind: 'app' | 'input' | 'system'; label: string; catalogId?: string; payload?: { nameSpace: number; appId: string; message: string | null }; cname?: string; action?: string; hidden: boolean }
+export interface Shortcut { id: string; kind: 'app' | 'input' | 'system'; label: string; catalogId?: string; payload?: { nameSpace: number; appId: string; message: string | null }; cname?: string; action?: string; hidden: boolean; brandColor?: string }
 export interface Section { id: string; title: string; shortcuts: Shortcut[] }
 export interface Config {
-  schemaVersion: 1;
+  schemaVersion: 2;
   tv: { host: string | null; port: number; deviceId: string | null };
   server: { port: number; bindHost: string; publicBaseUrl: string | null };
   takeover: { enabled: boolean; mode: 'always' | 'power-on-only' | 'off'; pollMs: number; requestTimeoutMs: number; confirmDelayMs: number; cooldownMs: number; suppressMinutes: number; suppressUntilStandby: boolean; loopGuard: { maxLaunches: number; windowMs: number; pauseMinutes: number } };
-  home: { title: string; theme: 'dark' | 'light' | 'oled'; accent: string; showClock: boolean; sections: Section[] };
+  home: { title: string; theme: 'cinematic' | 'oled' | 'light'; accent: string; clock: { format: 'auto' | '12h' | '24h'; showDate: boolean; greeting: boolean }; appearance: { backdrop: 'ambient' | 'still' | 'off'; labels: 'focused' | 'always'; reduceMotion: boolean }; sections: Section[] };
+  screensaver: { enabled: boolean; idleMinutes: 1 | 2 | 5 | 10 | 15 | 30; style: 'fireplace'; intensity: 'low' | 'medium' | 'high'; showClock: boolean; sound: boolean };
   catalog: { refreshHours: number };
 }
 export interface Secrets { adminToken: string; tvUiToken: string; tvPairingDeviceId: string; tvAuthToken?: string }
 export const DEFAULT_CONFIG: Config = {
-  schemaVersion: 1, tv: { host: null, port: 7345, deviceId: null },
+  schemaVersion: 2, tv: { host: null, port: 7345, deviceId: null },
   server: { port: 8730, bindHost: '0.0.0.0', publicBaseUrl: null },
   takeover: { enabled: true, mode: 'always', pollMs: 1000, requestTimeoutMs: 2500, confirmDelayMs: 400, cooldownMs: 5000, suppressMinutes: 10, suppressUntilStandby: true, loopGuard: { maxLaunches: 3, windowMs: 60000, pauseMinutes: 10 } },
-  home: { title: 'Living Room', theme: 'dark', accent: '#4aa8ff', showClock: true, sections: [
+  home: { title: 'Living Room', theme: 'cinematic', accent: '#4aa8ff', clock: { format: 'auto', showDate: true, greeting: false }, appearance: { backdrop: 'ambient', labels: 'focused', reduceMotion: false }, sections: [
     { id: 'apps', title: 'Apps', shortcuts: [{ id: 'netflix', kind: 'app', label: 'Netflix', catalogId: '34', hidden: false }, { id: 'youtube', kind: 'app', label: 'YouTube', catalogId: '44', hidden: false }] },
     { id: 'inputs', title: 'Inputs', shortcuts: [{ id: 'hdmi1', kind: 'input', label: 'HDMI 1', cname: 'hdmi1', hidden: false }] },
-    { id: 'system', title: 'System', shortcuts: [{ id: 'native-home', kind: 'system', label: 'SmartCast Home', action: 'native-home', hidden: false }] },
+    { id: 'system', title: 'System', shortcuts: [{ id: 'native-home', kind: 'system', label: 'SmartCast Home', action: 'native-home', hidden: false }, { id: 'fireplace', kind: 'system', label: 'Fireplace', action: 'fireplace', hidden: false }] },
   ] },
+  screensaver: { enabled: true, idleMinutes: 5, style: 'fireplace', intensity: 'medium', showClock: true, sound: false },
   catalog: { refreshHours: 24 },
 };
 export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
   const errors: string[] = [];
   if (!x || typeof x !== 'object') return { ok: false, errors: ['config must be an object'] };
   const c = x as Partial<Config> & Record<string, unknown>;
-  if (c.schemaVersion !== 1) errors.push('schemaVersion must be 1');
+  if (c.schemaVersion !== 2) errors.push('schemaVersion must be 2');
   const record = (value: unknown): value is Record<string, unknown> => Boolean(value && typeof value === 'object' && !Array.isArray(value));
   const stringField = (value: unknown, name: string, nonEmpty = false) => {
     if (typeof value !== 'string' || (nonEmpty && value.trim() === '')) errors.push(`${name} must be a${nonEmpty ? ' non-empty' : ''} string`);
@@ -73,9 +75,20 @@ export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
   if (!record(c.home)) errors.push('home is required');
   else {
     stringField(c.home.title, 'home.title', true);
-    if (!['dark', 'light', 'oled'].includes(c.home.theme as string)) errors.push('home.theme is invalid');
+    if (!['cinematic', 'light', 'oled'].includes(c.home.theme as string)) errors.push('home.theme is invalid');
     if (typeof c.home.accent !== 'string' || !/^#[0-9a-f]{6}$/i.test(c.home.accent)) errors.push('home.accent is invalid');
-    if (typeof c.home.showClock !== 'boolean') errors.push('home.showClock must be boolean');
+    if (!record(c.home.clock)) errors.push('home.clock is required');
+    else {
+      if (!['auto', '12h', '24h'].includes(c.home.clock.format as string)) errors.push('home.clock.format is invalid');
+      if (typeof c.home.clock.showDate !== 'boolean') errors.push('home.clock.showDate must be boolean');
+      if (typeof c.home.clock.greeting !== 'boolean') errors.push('home.clock.greeting must be boolean');
+    }
+    if (!record(c.home.appearance)) errors.push('home.appearance is required');
+    else {
+      if (!['ambient', 'still', 'off'].includes(c.home.appearance.backdrop as string)) errors.push('home.appearance.backdrop is invalid');
+      if (!['focused', 'always'].includes(c.home.appearance.labels as string)) errors.push('home.appearance.labels is invalid');
+      if (typeof c.home.appearance.reduceMotion !== 'boolean') errors.push('home.appearance.reduceMotion must be boolean');
+    }
   }
   const ids = new Set<string>(); let native = false;
   const sections = record(c.home) && Array.isArray(c.home.sections) ? c.home.sections : [];
@@ -88,6 +101,7 @@ export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
       if (!record(shortcut)) { errors.push('shortcut must be an object'); continue; }
       stringField(shortcut.id, 'shortcut.id', true); stringField(shortcut.label, 'shortcut.label', true);
       if (typeof shortcut.hidden !== 'boolean') errors.push(`shortcut ${String(shortcut.id)}.hidden must be boolean`);
+      if (shortcut.brandColor !== undefined && (typeof shortcut.brandColor !== 'string' || !/^#[0-9a-f]{6}$/i.test(shortcut.brandColor))) errors.push(`shortcut ${String(shortcut.id)}.brandColor is invalid`);
       const id = typeof shortcut.id === 'string' ? shortcut.id : '';
       if (ids.has(id)) errors.push(`duplicate shortcut id: ${id}`); ids.add(id);
       if (!['app', 'input', 'system'].includes(shortcut.kind as string)) errors.push(`shortcut ${id}.kind is invalid`);
@@ -103,17 +117,39 @@ export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
         }
       } else if (shortcut.kind === 'input') {
         if (typeof shortcut.cname !== 'string' || !/^[a-z0-9_]+$/.test(shortcut.cname)) errors.push(`invalid cname: ${String(shortcut.cname)}`);
-      } else if (shortcut.kind === 'system' && !['native-home', 'power-off', 'blank-screen'].includes(shortcut.action as string)) {
+      } else if (shortcut.kind === 'system' && !['native-home', 'power-off', 'blank-screen', 'fireplace'].includes(shortcut.action as string)) {
         errors.push(`shortcut ${id}.action is invalid`);
       }
       if (shortcut.action === 'native-home' || shortcut.id === 'native-home') { native = true; if (shortcut.hidden) errors.push('native-home cannot be hidden'); }
     }
   }
   if (!native) errors.push('native-home shortcut is required');
+  if (!record(c.screensaver)) errors.push('screensaver is required');
+  else {
+    if (typeof c.screensaver.enabled !== 'boolean') errors.push('screensaver.enabled must be boolean');
+    if (![1, 2, 5, 10, 15, 30].includes(c.screensaver.idleMinutes as number)) errors.push('screensaver.idleMinutes is invalid');
+    if (c.screensaver.style !== 'fireplace') errors.push('screensaver.style is invalid');
+    if (!['low', 'medium', 'high'].includes(c.screensaver.intensity as string)) errors.push('screensaver.intensity is invalid');
+    if (typeof c.screensaver.showClock !== 'boolean') errors.push('screensaver.showClock must be boolean');
+    if (typeof c.screensaver.sound !== 'boolean') errors.push('screensaver.sound must be boolean');
+  }
   if (!record(c.catalog) || !Number.isInteger(c.catalog.refreshHours) || (c.catalog.refreshHours as number) < 1) errors.push('catalog.refreshHours must be a positive integer');
   return { ok: errors.length === 0, errors };
 }
 export function migrateConfig(x: unknown): Config {
-  const result = x as Config;
-  return result?.schemaVersion === 1 ? result : structuredClone(DEFAULT_CONFIG);
+  if (!x || typeof x !== 'object') return structuredClone(DEFAULT_CONFIG);
+  const source = x as Record<string, unknown>;
+  if (source.schemaVersion === 2) return structuredClone(source) as unknown as Config;
+  if (source.schemaVersion !== 1) return structuredClone(DEFAULT_CONFIG);
+  const old = source.home as Record<string, unknown> | undefined;
+  const migrated = structuredClone(DEFAULT_CONFIG);
+  if (old) {
+    migrated.home.title = typeof old.title === 'string' ? old.title : migrated.home.title;
+    migrated.home.theme = old.theme === 'dark' ? 'cinematic' : old.theme === 'oled' || old.theme === 'light' ? old.theme : migrated.home.theme;
+    migrated.home.accent = typeof old.accent === 'string' ? old.accent : migrated.home.accent;
+    migrated.home.clock.showDate = true;
+    migrated.home.sections = Array.isArray(old.sections) ? old.sections as Section[] : migrated.home.sections;
+  }
+  for (const key of ['tv', 'server', 'takeover', 'catalog'] as const) if (source[key] && typeof source[key] === 'object') Object.assign(migrated[key], source[key]);
+  return migrated;
 }

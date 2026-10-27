@@ -1,2 +1,47 @@
-export function buildGrid(sections){return sections.map(s=>s.shortcuts.map(x=>x.id));}
-export function moveFocus(grid,pos,dir){const row=grid[pos.row]||[];if(dir==='left'||dir==='right'){if(!row.length)return pos;const column=Math.max(0,Math.min(row.length-1,pos.column+(dir==='left'?-1:1)));return {row:pos.row,column};}let r=pos.row+(dir==='up'?-1:1);const step=dir==='up'?-1:1;while(r>=0&&r<grid.length&&!(grid[r]||[]).length)r+=step;if(r<0||r>=grid.length)return pos;const target=grid[r];return {row:r,column:Math.min(pos.column,target.length-1)};}
+const widths = { app: 148, input: 220, system: 180 };
+const gap = 24;
+
+export function buildGrid(sections = []) {
+  return sections.map(section => (section.shortcuts || []).map(shortcut => shortcut.id));
+}
+
+export function buildGeometry(sections = []) {
+  return sections.map((section, row) => {
+    let x = 0;
+    return (section.shortcuts || []).map((shortcut, column) => {
+      const width = widths[shortcut.kind] || widths.system;
+      const item = { id: shortcut.id, row, column, width, left: x, right: x + width, center: x + width / 2 };
+      x += width + gap;
+      return item;
+    });
+  });
+}
+
+/**
+ * D-pad focus is deliberately a pure calculation. Vertical moves choose the
+ * card whose centre is closest to the remembered horizontal centre; horizontal
+ * moves clamp at the rail edge and never wrap.
+ */
+export function moveFocus(grid, position, direction, memory = {}) {
+  const rows = Array.isArray(grid) ? grid : [];
+  const row = rows[position.row] || [];
+  if ((direction === 'left' || direction === 'right') && row.length) {
+    const column = Math.max(0, Math.min(row.length - 1, position.column + (direction === 'left' ? -1 : 1)));
+    memory[position.row] = column;
+    return { row: position.row, column };
+  }
+  if (direction !== 'up' && direction !== 'down') return position;
+  const step = direction === 'up' ? -1 : 1;
+  let targetRow = position.row + step;
+  while (targetRow >= 0 && targetRow < rows.length && !rows[targetRow]?.length) targetRow += step;
+  if (targetRow < 0 || targetRow >= rows.length || !rows[targetRow]?.length) return position;
+  const remembered = memory[targetRow];
+  const source = row[position.column] ?? row[Math.max(0, Math.min(row.length - 1, position.column))];
+  const sourceCenter = source?.center ?? (position.column + 0.5);
+  let column = remembered ?? rows[targetRow].reduce((best, item, index) =>
+    Math.abs((item.center ?? index + 0.5) - sourceCenter) <
+      Math.abs((rows[targetRow][best].center ?? best + 0.5) - sourceCenter) ? index : best, 0);
+  column = Math.max(0, Math.min(rows[targetRow].length - 1, column));
+  memory[targetRow] = column;
+  return { row: targetRow, column };
+}

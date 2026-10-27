@@ -11,12 +11,12 @@ export function safeStaticPath(root: string, requestPath: string): string | null
   const base = path.resolve(root), result = path.resolve(base, relative);
   return result === base || result.startsWith(base + path.sep) ? result : null;
 }
-const types: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.png': 'image/png', '.json': 'application/json' };
+const types: Record<string, string> = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpeg': 'image/jpeg', '.json': 'application/json' };
 export function serveStatic(res: ServerResponse, root: string, requestPath: string): boolean {
   const file = safeStaticPath(root, requestPath === '/' ? '/index.html' : requestPath); if (!file) return false;
   let stat: fs.Stats; try { stat = fs.statSync(file); } catch { return false; }
   if (!stat.isFile()) return false;
   const html = path.extname(file) === '.html';
-  res.writeHead(200, { 'Content-Type': types[path.extname(file)] ?? 'application/octet-stream', 'Content-Length': stat.size, 'X-Content-Type-Options': 'nosniff', ...(html ? { 'Cache-Control': 'no-store', 'Content-Security-Policy': `default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none' }` } : {}) });
+  res.writeHead(200, { 'Content-Type': types[path.extname(file)] ?? 'application/octet-stream', 'Content-Length': stat.size, 'X-Content-Type-Options': 'nosniff', ...(html ? { 'Cache-Control': 'no-store', 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'" } : {}) });
   res.end(fs.readFileSync(file)); return true;
 }

@@ -13,7 +13,9 @@ export function loadConfig(dir = resolveDataDir()): Config {
   ensureDataDir(dir); const file = configPath(dir);
   if (!fs.existsSync(file)) { saveConfig(DEFAULT_CONFIG, dir); return structuredClone(DEFAULT_CONFIG); }
   const parsed: unknown = JSON.parse(fs.readFileSync(file, 'utf8')); const migrated = migrateConfig(parsed); const check = validateConfig(migrated);
-  if (!check.ok) throw new Error(`Invalid config: ${check.errors.join('; ')}`); return migrated;
+  if (!check.ok) throw new Error(`Invalid config: ${check.errors.join('; ')}`);
+  if (typeof parsed === 'object' && parsed !== null && (parsed as { schemaVersion?: unknown }).schemaVersion === 1) saveConfig(migrated, dir);
+  return migrated;
 }
 export function saveConfig(config: Config, dir = resolveDataDir()): void { const check = validateConfig(config); if (!check.ok) throw new Error(`Invalid config: ${check.errors.join('; ')}`); atomic(configPath(dir), config); }
 export function loadSecrets(dir = resolveDataDir()): Secrets {

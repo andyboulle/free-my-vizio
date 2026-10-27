@@ -1,0 +1,1 @@
+Icons are simple ISC-compatible line placeholders for UI0; replace individual artwork without changing URLs.

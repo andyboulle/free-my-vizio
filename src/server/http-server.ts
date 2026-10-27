@@ -18,7 +18,7 @@ async function body(req: http.IncomingMessage): Promise<unknown> {
   try { return JSON.parse(Buffer.concat(chunks).toString()); } catch { throw Object.assign(new Error('invalid json'), { status: 400 }); }
 }
 export function createHttpServer(options: HttpServerOptions): http.Server {
-  const roots = { tv: path.resolve('web/tv'), admin: path.resolve('web/admin'), icons: path.resolve(process.env.FMV_DATA_DIR ?? path.join(process.env.HOME ?? '.', '.free-my-vizio'), 'cache/icons') };
+  const roots = { tv: path.resolve('web/tv'), admin: path.resolve('web/admin'), shared: path.resolve('web/shared'), icons: path.resolve(process.env.FMV_DATA_DIR ?? path.join(process.env.HOME ?? '.', '.free-my-vizio'), 'cache/icons') };
   const own = Object.values(os.networkInterfaces()).flat().filter(x => x && !x.internal).map(x => x!.address);
   const allowed = ['localhost', '127.0.0.1', '::1', ...own, ...(options.config.server.publicBaseUrl ? [new URL(options.config.server.publicBaseUrl).hostname] : [])];
   return http.createServer(async (req, res) => {
@@ -34,7 +34,8 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
     }
     if (pathname.startsWith('/tv/')) { if (serveStatic(res, roots.tv, pathname.slice(3) || '/index.html')) return; return json(res, pathname.includes('..') || pathname.includes('%') ? 400 : 404, { error: 'not found' }); }
     if (pathname.startsWith('/admin/')) { if (serveStatic(res, roots.admin, pathname.slice(6) || '/index.html')) return; return json(res, 404, { error: 'not found' }); }
-    if (pathname.startsWith('/icons/')) { if (/^\/icons\/[0-9]+\.png$/.test(pathname) && serveStatic(res, roots.icons, pathname.slice(6))) return; return json(res, 404, { error: 'not found' }); }
+    if (pathname.startsWith('/shared/')) { if (serveStatic(res, roots.shared, pathname.slice(7))) return; return json(res, 404, { error: 'not found' }); }
+    if (pathname.startsWith('/icons/')) { if (/^\/icons\/[0-9]+\.(?:png|webp|jpeg)$/.test(pathname) && serveStatic(res, roots.icons, pathname.slice(6))) return; return json(res, 404, { error: 'not found' }); }
     if (pathname.startsWith('/api/admin/')) { if (!adminAuthorized(req, options.secrets.adminToken)) return unauthorized(res); }
     if (pathname.startsWith('/api/tv/')) { if (!tvAuthorized(req, options.secrets.tvUiToken)) return unauthorized(res); }
     try {
