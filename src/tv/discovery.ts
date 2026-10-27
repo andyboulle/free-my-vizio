@@ -1,6 +1,13 @@
 import https from 'node:https';
 export interface DiscoveredTv { host: string; model: string; deviceId: string }
 export interface DiscoveryOptions { concurrency?: number; timeoutMs?: number; port?: number }
+export function scanBaseForHost(host: string): string {
+  const octets = host.split('.');
+  if (octets.length !== 4 || octets.some(octet => !/^\d+$/.test(octet) || Number(octet) > 255)) {
+    throw new Error(`TV host must be an IPv4 address: ${host}`);
+  }
+  return `${octets.slice(0, 3).join('.')}.0`;
+}
 function probe(host: string, port: number, timeoutMs: number): Promise<DiscoveredTv | null> {
   return new Promise(resolve => { const req = https.get({ host, port, path: '/state/device/deviceinfo', rejectUnauthorized: false, timeout: timeoutMs }, res => { const chunks: Buffer[] = []; res.on('data', c => chunks.push(Buffer.from(c))); res.on('end', () => { try { const root = JSON.parse(Buffer.concat(chunks).toString()) as Record<string, unknown>; const item = ((root.ITEMS as Record<string, unknown>[] | undefined)?.[0]?.VALUE ?? {}) as Record<string, unknown>; const sys = (item.SYSTEM_INFO ?? {}) as Record<string, unknown>; const model = String(item.MODEL_NAME ?? ''); resolve(model ? { host, model, deviceId: String(sys.DIID ?? '') } : null); } catch { resolve(null); } }); }); req.on('error', () => resolve(null)); req.on('timeout', () => req.destroy()); }); }
 export async function scanSubnet(baseIp: string, options: DiscoveryOptions = {}): Promise<DiscoveredTv[]> {

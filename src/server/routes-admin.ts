@@ -7,15 +7,20 @@ import type { DeviceInfo, InputInfo, SmartCastClient } from '../tv/smartcast-cli
 import type { TvProfile } from '../tv/profiles/types.ts';
 import type { TakeoverSupervisor } from '../supervisor/takeover.ts';
 import { log } from '../util/log.ts';
+import { KEY_CODES } from '../tv/keys.ts';
+import type { DeviceContext } from '../tv/device-context.ts';
+import type { TvConnection } from '../tv/transport.ts';
 
 export interface AdminRouteDeps {
   config: Config;
   secrets: Secrets;
   dataDir?: string;
   client?: SmartCastClient;
+  connection?: TvConnection;
   catalog?: Catalog;
   device?: DeviceInfo;
   profile?: TvProfile;
+  context?: DeviceContext;
   supervisor?: TakeoverSupervisor;
   openUi?: () => Promise<void>;
   onPaired?: (token: string) => void;
@@ -37,11 +42,20 @@ export async function handleAdminRoute(pathname: string, method: string, req: In
       const value = await deps.readBody(req);
       const check = validateConfig(value);
       if (!check.ok) return void reply(res, 400, { ok: false, errors: check.errors });
-      saveConfig(value as Config, deps.dataDir);
-      Object.assign(deps.config, value as Config);
+      const next = value as Config;
+      const patch: { host?: string; port?: number } = {};
+      if (deps.config.tv.host !== next.tv.host && next.tv.host !== null) patch.host = next.tv.host;
+      if (deps.config.tv.port !== next.tv.port) patch.port = next.tv.port;
+      if (Object.keys(patch).length) (deps.connection?.update(patch), deps.connection ? undefined : deps.client?.updateConnection(patch));
+      saveConfig(next, deps.dataDir);
+      Object.assign(deps.config, next);
       return void reply(res, 200, publicConfig(deps.config));
     }
-    if (pathname === '/api/admin/catalog' && method === 'GET') return void reply(res, 200, deps.catalog && deps.device ? deps.catalog.listAvailableApps(deps.device) : []);
+    if (pathname === '/api/admin/catalog' && method === 'GET') {
+      const device = deps.context ? await deps.context.ensureDevice() : deps.device;
+      const catalog = deps.context?.catalog ?? deps.catalog;
+      return void reply(res, 200, catalog ? catalog.listAvailableApps(device ?? ({ chipsetKey: '*', firmware: '' } as DeviceInfo)) : []);
+    }
     if (pathname === '/api/admin/inputs' && method === 'GET') {
       const inputs: InputInfo[] = deps.client ? await deps.client.getInputs() : [];
       return void reply(res, 200, inputs);
@@ -82,14 +96,14 @@ export async function handleAdminRoute(pathname: string, method: string, req: In
     }
     if (pathname === '/api/admin/diagnostics' && method === 'GET') {
       return void reply(res, 200, {
-        profile: deps.profile ? { id: deps.profile.id, verified: Boolean(deps.device && deps.profile.verifiedFirmware.includes(deps.device.firmware)), model: deps.device?.model, firmware: deps.device?.firmware } : null,
+        profile: (deps.context ?? deps.profile) ? { id: deps.context?.profile.id ?? deps.profile!.id, verified: deps.context?.verified ?? Boolean(deps.device && deps.profile!.verifiedFirmware.includes(deps.device.firmware)), model: deps.context?.device?.model ?? deps.device?.model, firmware: deps.context?.device?.firmware ?? deps.device?.firmware } : null,
         paired: Boolean(deps.secrets.tvAuthToken), takeover: deps.supervisor?.status() ?? null, events: log.getRing().slice(-200),
       });
     }
     if (pathname === '/api/admin/key' && method === 'POST') {
       const value = await deps.readBody(req) as { key?: string };
       const key = value.key;
-      if (!deps.client || typeof key !== 'string') return void reply(res, 400, { ok: false, error: 'invalid key' });
+      if (!deps.client || typeof key !== 'string' || !Object.prototype.hasOwnProperty.call(KEY_CODES, key)) return void reply(res, 400, { ok: false, error: 'invalid key' });
       await deps.client.sendKey(key as Parameters<SmartCastClient['sendKey']>[0]);
       return void reply(res, 200, { ok: true });
     }

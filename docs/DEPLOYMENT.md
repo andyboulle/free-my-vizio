@@ -64,8 +64,11 @@ so the TV can load the UI:
 docker compose -f deploy/docker/compose.yaml -f deploy/docker/compose.mac.yaml up -d --build
 ```
 
-Reserve the Mac's DHCP address and keep `server.publicBaseUrl` synchronized if
-the host address changes.
+Reserve both the Mac's DHCP address and the TV's DHCP lease. The TV reservation
+is especially important on Docker Desktop: rediscovery scans the `/24` containing
+the configured or last known TV address, rather than the container's Docker
+bridge network. Keep `server.publicBaseUrl` synchronized if the host address
+changes.
 
 The named volume contains pairing and configuration data. Back it up while stopped:
 

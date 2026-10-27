@@ -5,13 +5,13 @@ import type { AddressInfo } from 'node:net';
 
 export interface MockTv {
   connection: { host: string; port: number; authToken?: string };
-  controls: { power: 0 | 1; currentApp: unknown; currentInput: string; hashvals: Record<string, number>; pairedToken?: string; pin: string; unreachable: boolean; raceOnce: boolean };
+  controls: { power: 0 | 1; currentApp: unknown; currentInput: string; hashvals: Record<string, number>; pairedToken?: string; pin: string; unreachable: boolean; raceOnce: boolean; failSetting: boolean };
   requests: Array<{ method: string; path: string; body: unknown; headers: Record<string, string | string[] | undefined> }>;
   close(): Promise<void>;
 }
 const fixture = path.resolve(process.cwd(), 'docs/evidence/m65q6-l4_86.910.19.2-1_deviceinfo.json');
-export async function createMockTv(options: { pin?: string; raceOnce?: boolean } = {}): Promise<MockTv> {
-  const controls = { power: 1 as 0 | 1, currentApp: null as unknown, currentInput: 'hdmi1', hashvals: { current_input: 1001, setting: 2001 }, pairedToken: undefined as string | undefined, pin: options.pin ?? '1234', unreachable: false, raceOnce: options.raceOnce ?? false };
+export async function createMockTv(options: { pin?: string; raceOnce?: boolean; failSetting?: boolean } = {}): Promise<MockTv> {
+  const controls = { power: 1 as 0 | 1, currentApp: null as unknown, currentInput: 'hdmi1', hashvals: { current_input: 1001, setting: 2001 }, pairedToken: undefined as string | undefined, pin: options.pin ?? '1234', unreachable: false, raceOnce: options.raceOnce ?? false, failSetting: options.failSetting ?? false };
   const requests: MockTv['requests'] = [];
   const certDir = path.resolve(process.cwd(), 'test/fixtures/tls');
   const server = https.createServer({ key: fs.readFileSync(path.join(certDir, 'test-key.pem')), cert: fs.readFileSync(path.join(certDir, 'test-cert.pem')) }, (req, res) => {
@@ -43,12 +43,13 @@ export async function createMockTv(options: { pin?: string; raceOnce?: boolean }
         if (req.method === 'GET') return success([{ VALUE: controls.currentInput, HASHVAL: controls.hashvals.current_input }]);
         const b = (body ?? {}) as Record<string, unknown>;
         if (b.HASHVAL !== controls.hashvals.current_input) return send({ STATUS: { RESULT: 'HASHVAL_ERROR' }, URI: pathName });
-        if (String(b.VALUE) !== String(b.VALUE).toLowerCase()) return send({ STATUS: { RESULT: 'FAILURE', DETAIL: 'cname required' }, URI: pathName });
+        if (b.VALUE !== 'hdmi1') return send({ STATUS: { RESULT: 'FAILURE', DETAIL: 'cname required' }, URI: pathName });
         controls.currentInput = String(b.VALUE); controls.hashvals.current_input++; return success();
       }
       if (pathName.startsWith('/menu_native/dynamic/tv_settings/')) {
         if (req.method === 'GET') return success([{ CNAME: 'setting', TYPE: 'T_STRING', NAME: 'Setting', VALUE: 'value', HASHVAL: controls.hashvals.setting, READONLY: false, HIDDEN: false, ENABLED: true }]);
         const b = (body ?? {}) as Record<string, unknown>;
+        if (controls.failSetting) return send({ STATUS: { RESULT: 'FAILURE', DETAIL: 'forced failure' }, URI: pathName });
         if (controls.raceOnce) { controls.raceOnce = false; return send({ STATUS: { RESULT: 'HASHVAL_ERROR' }, URI: pathName }); }
         if (b.HASHVAL !== controls.hashvals.setting) return send({ STATUS: { RESULT: 'HASHVAL_ERROR' }, URI: pathName });
         controls.hashvals.setting++; return success();

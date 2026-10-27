@@ -4,18 +4,25 @@ import type { SmartCastClient } from '../tv/smartcast-client.ts';
 import type { TvProfile } from '../tv/profiles/types.ts';
 import type { DeviceInfo } from '../tv/smartcast-client.ts';
 import type { TakeoverStatus } from '../supervisor/takeover.ts';
+import type { DeviceContext } from '../tv/device-context.ts';
 
-export interface TvRouteDeps { config: Config; catalog?: Catalog; client?: SmartCastClient; profile?: TvProfile; device?: DeviceInfo; nativeHome: () => Promise<void>; takeoverStatus?: () => TakeoverStatus; }
+export interface TvRouteDeps { config: Config; catalog?: Catalog; client?: SmartCastClient; profile?: TvProfile; device?: DeviceInfo; context?: DeviceContext; nativeHome: () => Promise<void>; takeoverStatus?: () => TakeoverStatus; }
 export function tvHome(deps: TvRouteDeps) {
   return { title: deps.config.home.title, theme: deps.config.home.theme, accent: deps.config.home.accent, showClock: deps.config.home.showClock,
-    sections: deps.config.home.sections.map(section => ({ id: section.id, title: section.title, shortcuts: section.shortcuts.filter(s => !s.hidden).map(s => ({ id: s.id, label: s.label, kind: s.kind, icon: s.catalogId ? `/icons/${s.catalogId}.png` : undefined })) })) };
+    sections: deps.config.home.sections.map(section => ({ id: section.id, title: section.title, shortcuts: section.shortcuts.filter(s => !s.hidden).map(s => ({
+      id: s.id, label: s.label, kind: s.kind,
+      ...(s.catalogId && deps.catalog?.hasCachedIcon(s.catalogId) ? { icon: `/icons/${s.catalogId}.png` } : {}),
+    })) })) };
 }
 export async function activateShortcut(deps: TvRouteDeps, id: string): Promise<void> {
   const shortcut = deps.config.home.sections.flatMap(s => s.shortcuts).find(s => s.id === id);
   if (!shortcut) { const e = new Error('shortcut not found'); (e as Error & { code?: string }).code = 'NOT_FOUND'; throw e; }
   if (!deps.client) throw new Error('TV is not configured');
   if (shortcut.kind === 'app') {
-    const payload = shortcut.payload ?? deps.catalog?.resolvePayload(shortcut.catalogId ?? '', deps.device as DeviceInfo);
+    const context = deps.context;
+    const device = context ? await context.ensureDevice() : deps.device;
+    const catalog = context?.catalog ?? deps.catalog;
+    const payload = shortcut.payload ?? catalog?.resolvePayload(shortcut.catalogId ?? '', device ?? ({ chipsetKey: '*', firmware: '' } as DeviceInfo));
     if (!payload) throw new Error('app is unavailable');
     await deps.client.launchApp(payload);
   } else if (shortcut.kind === 'input') await deps.client.setInput(shortcut.cname ?? '');

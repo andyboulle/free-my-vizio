@@ -14,7 +14,7 @@ export type TakeoverClient = {
 export type TakeoverStatus = {
   state: SupervisorState; power: PowerState | null; appClass: AppClass | null;
   lastLaunchAt: number | null; lastError: string | null; suppressedUntil: number;
-  launchesInWindow: number;
+  launchesInWindow: number; lastTvContactAt: number | null;
 };
 
 export function classifyApp(power: PowerState, app: AppRef | null, tvUiUrlPrefix: string, isNativeHome: (app: AppRef) => boolean): AppClass {
@@ -30,6 +30,8 @@ export class TakeoverSupervisor {
   private readonly options: {
     client: TakeoverClient; config: Config; tvUiUrlPrefix: string; tvUiToken: string;
     nativeHome: AppRef; isNativeHome: (app: AppRef) => boolean; clock?: Clock;
+    onReachable?: () => void;
+    onTvContact?: (at: number) => void;
     log?: { warn?: (event: string, data?: unknown) => void };
   };
   private timer: ReturnType<typeof setTimeout> | undefined;
@@ -45,9 +47,12 @@ export class TakeoverSupervisor {
   private power: PowerState | null = null;
   private appClass: AppClass | null = null;
   private state: SupervisorState = 'IDLE';
+  private lastTvContactAt: number | null = null;
   constructor(options: {
     client: TakeoverClient; config: Config; tvUiUrlPrefix: string; tvUiToken: string;
     nativeHome: AppRef; isNativeHome: (app: AppRef) => boolean; clock?: Clock;
+    onReachable?: () => void;
+    onTvContact?: (at: number) => void;
     log?: { warn?: (event: string, data?: unknown) => void };
   }) { this.options = options; }
   start(): void { if (this.running) return; this.running = true; this.schedule(); }
@@ -56,22 +61,24 @@ export class TakeoverSupervisor {
     const now = this.clock.now();
     return { state: this.state, power: this.power, appClass: this.appClass, lastLaunchAt: this.lastLaunchAt,
       lastError: this.lastError, suppressedUntil: this.suppressedUntil,
-      launchesInWindow: this.launchAttempts.filter(x => now - x <= this.options.config.takeover.loopGuard.windowMs).length };
+      launchesInWindow: this.launchAttempts.filter(x => now - x <= this.options.config.takeover.loopGuard.windowMs).length,
+      lastTvContactAt: this.lastTvContactAt };
   }
   async suppressAndOpenNativeHome(): Promise<void> {
     const now = this.clock.now();
     this.suppressGeneration++;
     this.suppressedUntil = now + this.options.config.takeover.suppressMinutes * 60_000;
     await this.options.client.launchApp(this.options.nativeHome, { timeoutMs: this.options.config.takeover.requestTimeoutMs });
+    this.markTvContact();
   }
   async tick(): Promise<void> {
     const t = this.options.config.takeover;
     if (!t.enabled || t.mode === 'off' || this.state === 'NEEDS_PAIRING') { this.state = 'IDLE'; return; }
     let power: PowerState;
-    try { power = await this.options.client.getPowerState({ timeoutMs: t.requestTimeoutMs }); }
+    try { power = await this.options.client.getPowerState({ timeoutMs: t.requestTimeoutMs }); this.markTvContact(); }
     catch (error) { if (error instanceof TvAuthError) this.state = 'NEEDS_PAIRING'; else this.state = 'UNREACHABLE'; this.appClass = 'UNREACHABLE'; this.lastError = error instanceof Error ? error.message : String(error); return; }
     const previousPower = this.lastObservedPower;
-    this.power = power; this.lastObservedPower = power;
+    this.power = power; this.lastObservedPower = power; this.options.onReachable?.();
     if (power === 0) {
       this.appClass = 'STANDBY'; this.state = 'RUNNING'; this.launchedSincePowerOn = false;
       if (t.suppressUntilStandby) this.suppressedUntil = 0;
@@ -79,19 +86,20 @@ export class TakeoverSupervisor {
     }
     if (previousPower !== 1) { this.lastPowerOnAt = this.clock.now(); this.launchedSincePowerOn = false; }
     try {
-      const app = await this.options.client.getCurrentApp({ timeoutMs: t.requestTimeoutMs });
+      const app = await this.options.client.getCurrentApp({ timeoutMs: t.requestTimeoutMs }); this.markTvContact();
       this.appClass = classifyApp(power, app, this.options.tvUiUrlPrefix, this.options.isNativeHome);
       this.state = 'RUNNING';
       if (this.appClass !== 'NATIVE_HOME' || !this.eligible(this.clock.now())) return;
       const generation = this.suppressGeneration;
       await this.clock.sleep(t.confirmDelayMs);
-      const confirmedPower = await this.options.client.getPowerState({ timeoutMs: t.requestTimeoutMs });
+      const confirmedPower = await this.options.client.getPowerState({ timeoutMs: t.requestTimeoutMs }); this.markTvContact();
       const confirmedApp = confirmedPower === 1 ? await this.options.client.getCurrentApp({ timeoutMs: t.requestTimeoutMs }) : null;
+      if (confirmedPower === 1) this.markTvContact();
       if (confirmedPower !== 1 || classifyApp(confirmedPower, confirmedApp, this.options.tvUiUrlPrefix, this.options.isNativeHome) !== 'NATIVE_HOME' ||
           generation !== this.suppressGeneration || !this.eligible(this.clock.now())) return;
       const now = this.clock.now(); this.launchAttempts.push(now); this.lastLaunchAt = now; this.launchedSincePowerOn = true;
       this.pruneAttempts(now);
-      try { await this.options.client.launchApp({ nameSpace: 4, appId: '17', message: `${this.options.tvUiUrlPrefix}#k=${this.options.tvUiToken}` }, { timeoutMs: t.requestTimeoutMs }); }
+      try { await this.options.client.launchApp({ nameSpace: 4, appId: '17', message: `${this.options.tvUiUrlPrefix}#k=${this.options.tvUiToken}` }, { timeoutMs: t.requestTimeoutMs }); this.markTvContact(); }
       catch (error) { this.lastError = error instanceof Error ? error.message : String(error); }
       if (this.launchAttempts.length >= t.loopGuard.maxLaunches) {
         this.suppressedUntil = now + t.loopGuard.pauseMinutes * 60_000;
@@ -103,6 +111,11 @@ export class TakeoverSupervisor {
     }
   }
   private get clock(): Clock { return this.options.clock ?? systemClock; }
+  private markTvContact(): void {
+    const at = this.clock.now();
+    this.lastTvContactAt = at;
+    this.options.onTvContact?.(at);
+  }
   private pruneAttempts(now: number): void { const w = this.options.config.takeover.loopGuard.windowMs; this.launchAttempts = this.launchAttempts.filter(x => now - x <= w); }
   private eligible(now: number): boolean {
     const t = this.options.config.takeover; this.pruneAttempts(now);

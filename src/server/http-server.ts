@@ -25,8 +25,11 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
     if (!hostAllowed(req.headers.host, allowed)) return json(res, 421, { error: 'misdirected request' });
     const rawPath = (req.url ?? '/').split('?')[0]; const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`); const pathname = rawPath;
     if (pathname === '/healthz' && req.method === 'GET') {
-      const takeover = options.tv?.takeoverStatus?.() ?? { state: 'IDLE' };
-      const tvReachable = takeover.state !== 'UNREACHABLE' && takeover.state !== 'NEEDS_PAIRING';
+      const takeover = options.tv?.takeoverStatus?.() ?? { state: 'IDLE', lastTvContactAt: null };
+      const supervisorContact = 'lastTvContactAt' in takeover ? takeover.lastTvContactAt : null;
+      const contextContact = options.tv?.context?.lastTvContactAt ?? null;
+      const lastTvContactAt = Math.max(...[supervisorContact, contextContact].filter((value): value is number => typeof value === 'number'), -Infinity);
+      const tvReachable = Number.isFinite(lastTvContactAt) ? Date.now() - lastTvContactAt < 10_000 : null;
       return json(res, 200, { ok: true, version: options.version ?? 'dev', paired: Boolean(options.secrets.tvAuthToken), tvReachable, takeover });
     }
     if (pathname.startsWith('/tv/')) { if (serveStatic(res, roots.tv, pathname.slice(3) || '/index.html')) return; return json(res, pathname.includes('..') || pathname.includes('%') ? 400 : 404, { error: 'not found' }); }

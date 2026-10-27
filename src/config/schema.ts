@@ -23,21 +23,94 @@ export const DEFAULT_CONFIG: Config = {
 export function validateConfig(x: unknown): { ok: boolean; errors: string[] } {
   const errors: string[] = [];
   if (!x || typeof x !== 'object') return { ok: false, errors: ['config must be an object'] };
-  const c = x as Partial<Config>;
+  const c = x as Partial<Config> & Record<string, unknown>;
   if (c.schemaVersion !== 1) errors.push('schemaVersion must be 1');
-  if (!c.tv || typeof c.tv !== 'object' || (c.tv.port !== undefined && (!Number.isInteger(c.tv.port) || c.tv.port < 1 || c.tv.port > 65535))) errors.push('tv.port is invalid');
-  if (!c.takeover || typeof c.takeover !== 'object') errors.push('takeover is required');
+  const record = (value: unknown): value is Record<string, unknown> => Boolean(value && typeof value === 'object' && !Array.isArray(value));
+  const stringField = (value: unknown, name: string, nonEmpty = false) => {
+    if (typeof value !== 'string' || (nonEmpty && value.trim() === '')) errors.push(`${name} must be a${nonEmpty ? ' non-empty' : ''} string`);
+  };
+  const integerRange = (value: unknown, name: string, min: number, max: number) => {
+    if (!Number.isInteger(value) || (value as number) < min || (value as number) > max) errors.push(`${name} must be ${min}–${max}`);
+  };
+  if (!record(c.tv)) errors.push('tv is required');
+  else {
+    if (c.tv.host !== null) stringField(c.tv.host, 'tv.host', true);
+    if (c.tv.deviceId !== null) stringField(c.tv.deviceId, 'tv.deviceId', true);
+    integerRange(c.tv.port, 'tv.port', 1, 65535);
+  }
+  if (!record(c.server)) errors.push('server is required');
+  else {
+    integerRange(c.server.port, 'server.port', 1, 65535);
+    stringField(c.server.bindHost, 'server.bindHost', true);
+    if (c.server.publicBaseUrl !== null) {
+      if (typeof c.server.publicBaseUrl !== 'string') errors.push('server.publicBaseUrl must be null or an http(s) URL');
+      else {
+        try {
+          const url = new URL(c.server.publicBaseUrl);
+          if (!['http:', 'https:'].includes(url.protocol) || !url.hostname) throw new Error();
+        } catch { errors.push('server.publicBaseUrl must be null or an http(s) URL'); }
+      }
+    }
+  }
+  if (!record(c.takeover)) errors.push('takeover is required');
   else {
     const t = c.takeover;
-    if (!Number.isInteger(t.pollMs) || t.pollMs < 250 || t.pollMs > 10000) errors.push('takeover.pollMs must be 250–10000');
+    if (typeof t.enabled !== 'boolean') errors.push('takeover.enabled must be boolean');
+    if (!['always', 'power-on-only', 'off'].includes(t.mode as string)) errors.push('takeover.mode is invalid');
+    integerRange(t.pollMs, 'takeover.pollMs', 250, 10000);
+    integerRange(t.requestTimeoutMs, 'takeover.requestTimeoutMs', 500, 10000);
+    integerRange(t.confirmDelayMs, 'takeover.confirmDelayMs', 0, 5000);
+    integerRange(t.cooldownMs, 'takeover.cooldownMs', 0, 60000);
+    integerRange(t.suppressMinutes, 'takeover.suppressMinutes', 0, 1440);
+    if (typeof t.suppressUntilStandby !== 'boolean') errors.push('takeover.suppressUntilStandby must be boolean');
+    if (!record(t.loopGuard)) errors.push('takeover.loopGuard is required');
+    else {
+      integerRange(t.loopGuard.maxLaunches, 'takeover.loopGuard.maxLaunches', 1, 20);
+      integerRange(t.loopGuard.windowMs, 'takeover.loopGuard.windowMs', 1000, 3600000);
+      integerRange(t.loopGuard.pauseMinutes, 'takeover.loopGuard.pauseMinutes', 1, 1440);
+    }
+  }
+  if (!record(c.home)) errors.push('home is required');
+  else {
+    stringField(c.home.title, 'home.title', true);
+    if (!['dark', 'light', 'oled'].includes(c.home.theme as string)) errors.push('home.theme is invalid');
+    if (typeof c.home.accent !== 'string' || !/^#[0-9a-f]{6}$/i.test(c.home.accent)) errors.push('home.accent is invalid');
+    if (typeof c.home.showClock !== 'boolean') errors.push('home.showClock must be boolean');
   }
   const ids = new Set<string>(); let native = false;
-  for (const section of c.home?.sections ?? []) for (const s of section.shortcuts ?? []) {
-    if (ids.has(s.id)) errors.push(`duplicate shortcut id: ${s.id}`); ids.add(s.id);
-    if (s.action === 'native-home' || s.id === 'native-home') { native = true; if (s.hidden) errors.push('native-home cannot be hidden'); }
-    if (s.cname !== undefined && !/^[a-z0-9_]+$/.test(s.cname)) errors.push(`invalid cname: ${s.cname}`);
+  const sections = record(c.home) && Array.isArray(c.home.sections) ? c.home.sections : [];
+  if (!record(c.home) || !Array.isArray(c.home.sections)) errors.push('home.sections must be an array');
+  for (const section of sections) {
+    if (!record(section)) { errors.push('section must be an object'); continue; }
+    stringField(section.id, 'section.id', true); stringField(section.title, 'section.title', true);
+    if (!Array.isArray(section.shortcuts)) { errors.push('section.shortcuts must be an array'); continue; }
+    for (const shortcut of section.shortcuts) {
+      if (!record(shortcut)) { errors.push('shortcut must be an object'); continue; }
+      stringField(shortcut.id, 'shortcut.id', true); stringField(shortcut.label, 'shortcut.label', true);
+      if (typeof shortcut.hidden !== 'boolean') errors.push(`shortcut ${String(shortcut.id)}.hidden must be boolean`);
+      const id = typeof shortcut.id === 'string' ? shortcut.id : '';
+      if (ids.has(id)) errors.push(`duplicate shortcut id: ${id}`); ids.add(id);
+      if (!['app', 'input', 'system'].includes(shortcut.kind as string)) errors.push(`shortcut ${id}.kind is invalid`);
+      if (shortcut.kind === 'app') {
+        const hasCatalog = typeof shortcut.catalogId === 'string' && shortcut.catalogId.trim() !== '';
+        if (!hasCatalog) {
+          if (!record(shortcut.payload)) errors.push(`shortcut ${id} needs catalogId or payload`);
+          else {
+            if (!Number.isInteger(shortcut.payload.nameSpace)) errors.push(`shortcut ${id}.payload.nameSpace is invalid`);
+            stringField(shortcut.payload.appId, `shortcut ${id}.payload.appId`, true);
+            if (shortcut.payload.message !== null && typeof shortcut.payload.message !== 'string') errors.push(`shortcut ${id}.payload.message is invalid`);
+          }
+        }
+      } else if (shortcut.kind === 'input') {
+        if (typeof shortcut.cname !== 'string' || !/^[a-z0-9_]+$/.test(shortcut.cname)) errors.push(`invalid cname: ${String(shortcut.cname)}`);
+      } else if (shortcut.kind === 'system' && !['native-home', 'power-off', 'blank-screen'].includes(shortcut.action as string)) {
+        errors.push(`shortcut ${id}.action is invalid`);
+      }
+      if (shortcut.action === 'native-home' || shortcut.id === 'native-home') { native = true; if (shortcut.hidden) errors.push('native-home cannot be hidden'); }
+    }
   }
   if (!native) errors.push('native-home shortcut is required');
+  if (!record(c.catalog) || !Number.isInteger(c.catalog.refreshHours) || (c.catalog.refreshHours as number) < 1) errors.push('catalog.refreshHours must be a positive integer');
   return { ok: errors.length === 0, errors };
 }
 export function migrateConfig(x: unknown): Config {
