@@ -48,16 +48,33 @@ export function renderHome(home, activate) {
       tile.dataset.id = shortcut.id;
       tile.dataset.kind = shortcut.kind || 'system';
       tile.dataset.available = String(shortcut.available !== false);
+      if (shortcut.brandColor) tile.style?.setProperty('--brand', shortcut.brandColor);
+      if (shortcut.available === false) {
+        tile.classList?.add('unavailable');
+        tile.setAttribute?.('aria-label', `${shortcut.label}, unavailable`);
+      }
       if(shortcut.icon){
         const icon = document.createElement('img');
         icon.src = shortcut.icon;
         icon.alt='';
         icon.addEventListener('error',()=>icon.remove(),{once:true});
         tile.append(icon);
+      } else if (shortcut.kind === 'input' || shortcut.kind === 'system') {
+        const icon = document.createElement('img');
+        const iconName = shortcut.kind === 'input' ? (shortcut.cname?.startsWith('av') ? 'icon-av' : shortcut.cname?.startsWith('cast') ? 'icon-cast' : 'icon-hdmi') : (shortcut.action === 'fireplace' ? 'icon-flame' : shortcut.action === 'power-off' ? 'icon-power' : 'icon-home');
+        icon.src = `/shared/icons/${iconName}.svg`;
+        icon.alt = '';
+        tile.append(icon);
       }
       const label = document.createElement('span');
       label.textContent=shortcut.label;
       tile.append(label);
+      if (shortcut.available === false) {
+        const badge = document.createElement('small');
+        badge.className = 'unavailable-badge';
+        badge.textContent = 'Unavailable';
+        tile.append(badge);
+      }
       tile.onclick = () => activate(tile, shortcut.id);
       track.append(tile);
     }

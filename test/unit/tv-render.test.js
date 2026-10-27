@@ -38,3 +38,8 @@ test('renderHome applies the configured accent and clock visibility', () => {
   renderHome(home, () => {});
   assert.equal(elements['#clock'].hidden, true);
 });
+
+test('formatClock supports an explicit 24-hour format', () => {
+  const value = formatClock(new Date(2026, 9, 27, 22, 42), '24h');
+  assert.match(value, /22:42/);
+});

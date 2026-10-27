@@ -37,10 +37,16 @@ export function moveFocus(grid, position, direction, memory = {}) {
   if (targetRow < 0 || targetRow >= rows.length || !rows[targetRow]?.length) return position;
   const remembered = memory[targetRow];
   const source = row[position.column] ?? row[Math.max(0, Math.min(row.length - 1, position.column))];
-  const sourceCenter = source?.center ?? (position.column + 0.5);
-  let column = remembered ?? rows[targetRow].reduce((best, item, index) =>
-    Math.abs((item.center ?? index + 0.5) - sourceCenter) <
-      Math.abs((rows[targetRow][best].center ?? best + 0.5) - sourceCenter) ? index : best, 0);
+  const center = item => item && typeof item === 'object'
+  ? (item.center ?? ((item.x ?? item.left ?? 0) + (item.width ?? ((item.right ?? 0) - (item.left ?? 0))) / 2))
+  : undefined;
+  const sourceCenter = center(source) ?? (position.column + 0.5);
+  const geometric = rows[targetRow].reduce((best, item, index) =>
+  Math.abs((center(item) ?? index + 0.5) - sourceCenter) <
+    Math.abs((center(rows[targetRow][best]) ?? best + 0.5) - sourceCenter) ? index : best, 0);
+  // A remembered card is useful when it is still nearby, but must not defeat
+  // spatial navigation after a row has materially changed.
+  let column = remembered !== undefined && Math.abs(remembered - geometric) <= 1 ? remembered : geometric;
   column = Math.max(0, Math.min(rows[targetRow].length - 1, column));
   memory[targetRow] = column;
   return { row: targetRow, column };
