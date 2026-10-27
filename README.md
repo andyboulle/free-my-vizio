@@ -3,7 +3,8 @@
 A privacy-conscious, customizable home screen for Vizio SmartCast TVs — no firmware modification.
 Initial target: **Vizio M65Q6-L4**, firmware 86.910.19.2-1.
 
-**Status:** implementation scaffold complete; M1 TV client is next.
+**Status:** M7 deployment files are included; complete the manual host installation
+and resilience checklist before treating a deployment as validated.
 
 How it works: a small Node.js server on your home network serves a custom home screen that the TV opens in its
 built-in web runtime, launches your apps and inputs through the TV's local API, and brings the custom home back
@@ -31,6 +32,22 @@ unflagged TypeScript type stripping used by this project.
 npm install
 npm run verify
 ```
+
+### Running as a service
+
+Deployment templates for systemd, launchd, and optional Docker are in
+[`deploy/`](deploy/). Follow [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for
+installation, firewall, backup, upgrade, and pairing migration steps. The server
+stores configuration and pairing in `FMV_DATA_DIR` (or
+`~/.free-my-vizio`); keep that directory private. It listens on port 8730 by
+default and should only be reachable from the trusted LAN.
+
+M7 manual checklist:
+
+- [ ] Install on an always-on host, pair the TV, and enable the appropriate service.
+- [ ] Reboot the host and confirm the service starts and takeover works.
+- [ ] Observe the documented 48-hour soak, memory, and log limits; record results
+  in `docs/MANUAL_TESTS.md` (never infer this from mocks).
 
 The project has no runtime npm dependencies. Development dependencies are used
 only for TypeScript type checking. The test-only TLS certificate generated for

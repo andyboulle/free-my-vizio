@@ -5,7 +5,7 @@ import { log } from './util/log.ts';
 import { pickLanAddress } from './util/net.ts';
 import { TvConnection } from './tv/transport.ts';
 import { SmartCastClient } from './tv/smartcast-client.ts';
-import { selectProfile } from './tv/profiles/index.ts';
+import { genericSmartCast, selectProfile } from './tv/profiles/index.ts';
 import { loadCatalog } from './catalog/catalog.ts';
 import { TakeoverSupervisor } from './supervisor/takeover.ts';
 import { matchByDeviceId, scanSubnet } from './tv/discovery.ts';
@@ -17,7 +17,11 @@ export async function start(): Promise<ReturnType<typeof createHttpServer>> {
   const serverBaseUrl = config.server.publicBaseUrl ?? `http://${pickLanAddress(tvHost)}:${config.server.port}`;
   let client: SmartCastClient | undefined, profile: ReturnType<typeof selectProfile>['profile'] | undefined, device;
   const connection = config.tv.host ? new TvConnection({ host: tvHost, port: config.tv.port, authToken: secrets.tvAuthToken }) : undefined;
-  if (connection) { client = new SmartCastClient({ connection }); try { device = await client.getDeviceInfo(); profile = selectProfile(device).profile; } catch { /* server remains usable while TV is offline */ } }
+  if (connection) {
+    client = new SmartCastClient({ connection });
+    try { device = await client.getDeviceInfo(); profile = selectProfile(device).profile; }
+    catch { profile = config.tv.deviceId ? genericSmartCast : undefined; /* server remains usable while TV is offline */ }
+  }
   const catalog = device ? await loadCatalog({ cacheDir: `${dir}/cache` }) : undefined;
   const supervisor = client && profile ? new TakeoverSupervisor({
     client, config, tvUiUrlPrefix: `${serverBaseUrl}/tv/`,
@@ -35,15 +39,21 @@ export async function start(): Promise<ReturnType<typeof createHttpServer>> {
   let rediscoveryTimer: ReturnType<typeof setInterval> | undefined;
   let unreachableSince: number | undefined;
   let rediscoveryRunning = false;
-  if (client && connection && config.tv.deviceId) {
+  const configuredDeviceId = config.tv.deviceId;
+  if (client && connection && configuredDeviceId) {
     rediscoveryTimer = setInterval(async () => {
-      if (rediscoveryRunning || !supervisor) return;
-      if (supervisor.status().state !== 'UNREACHABLE') { unreachableSince = undefined; return; }
+      if (rediscoveryRunning) return;
+      let unreachable = supervisor?.status().state === 'UNREACHABLE';
+      if (!unreachable) {
+        try { await client!.getDeviceInfo({ timeoutMs: 2500 }); }
+        catch { unreachable = true; }
+      }
+      if (!unreachable) { unreachableSince = undefined; return; }
       unreachableSince ??= Date.now();
       if (Date.now() - unreachableSince < 10 * 60_000) return;
       rediscoveryRunning = true;
       try {
-        const found = matchByDeviceId(await scanSubnet(pickLanAddress('0.0.0.0'), { port: config.tv.port }), config.tv.deviceId);
+        const found = matchByDeviceId(await scanSubnet(pickLanAddress('0.0.0.0'), { port: config.tv.port }), configuredDeviceId);
         if (found && found.host !== connection.host) {
           connection.update({ host: found.host });
           config.tv.host = found.host;

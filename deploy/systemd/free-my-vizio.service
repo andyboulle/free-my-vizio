@@ -1,0 +1,23 @@
+[Unit]
+Description=Free My Vizio SmartCast home server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=fmv
+Group=fmv
+WorkingDirectory=/opt/free-my-vizio
+Environment=NODE_ENV=production
+Environment=FMV_DATA_DIR=/var/lib/free-my-vizio
+ExecStart=/usr/bin/node /opt/free-my-vizio/src/main.ts
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/free-my-vizio
+
+[Install]
+WantedBy=multi-user.target

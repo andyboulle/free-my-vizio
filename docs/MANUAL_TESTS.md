@@ -20,3 +20,5 @@ Run against a real TV; do not mark these passed from mocks.
 | MT-6.1 | 2026-10-27 | 86.910.19.2-1 | Pass | Hide and explicit Save removed Netflix from the TV UI; Unhide and Save restored it. |
 | MT-6.2 | 2026-10-27 | 86.910.19.2-1 | Pass | Reordered shortcuts in the admin UI, saved, and confirmed the TV UI order changed. |
 | MT-6.3 | 2026-10-27 | 86.910.19.2-1 | Pass | Edited layout persisted after restarting the server and reopening the TV UI. |
+| MT-7.1 |  |  | Not run | Install the selected service on an always-on host, reboot the host, and verify service startup and takeover. |
+| MT-7.2 |  |  | Not run | 48-hour soak: no crash, memory under 120 MB, and default info logs under 10 MB per 24 hours. |

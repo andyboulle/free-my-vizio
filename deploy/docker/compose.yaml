@@ -1,0 +1,14 @@
+services:
+  free-my-vizio:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    network_mode: host
+    environment:
+      FMV_DATA_DIR: /data
+    volumes:
+      - free-my-vizio-data:/data
+    restart: unless-stopped
+
+volumes:
+  free-my-vizio-data:
