@@ -1,0 +1,4587 @@
+{
+ "/menu_native/dynamic/tv_settings": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "picture",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Picture",
+    "HASHVAL": 2936396037
+   },
+   {
+    "CNAME": "audio",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Audio",
+    "HASHVAL": 2798953905
+   },
+   {
+    "CNAME": "hdmi_and_gaming",
+    "TYPE": "T_MENU_V1",
+    "NAME": "HDMI & Gaming",
+    "HASHVAL": 3567242277
+   },
+   {
+    "CNAME": "network",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Network",
+    "HASHVAL": 3515234811
+   },
+   {
+    "CNAME": "bluetooth_and_remote",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Bluetooth & Remote",
+    "HASHVAL": 3987488072
+   },
+   {
+    "CNAME": "channels",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Antenna Channels",
+    "HASHVAL": 364135601
+   },
+   {
+    "CNAME": "accessibility",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Accessibility",
+    "HASHVAL": 922195149
+   },
+   {
+    "CNAME": "system",
+    "TYPE": "T_MENU_V1",
+    "NAME": "System",
+    "HASHVAL": 1291680294
+   },
+   {
+    "CNAME": "support",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Support",
+    "HASHVAL": 1205292699
+   },
+   {
+    "CNAME": "privacy_and_legal",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Privacy & Legal",
+    "HASHVAL": 1600528423
+   }
+  ],
+  "NAME": "Display Settings",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "tv_settings",
+  "HASHLIST": [
+   3848012899
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "picture_mode",
+    "TYPE": "T_LIST_X_V1",
+    "NAME": "Picture Mode",
+    "VALUE": "Bright",
+    "HASHVAL": 1413100532,
+    "ELEMENTS": [
+     "Bright",
+     "Calibrated",
+     "Calibrated Dark",
+     "Sports"
+    ]
+   },
+   {
+    "CNAME": "backlight",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Brightness",
+    "VALUE": 100,
+    "HASHVAL": 1656752721
+   },
+   {
+    "CNAME": "tone_mapping",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Tone Mapping",
+    "VALUE": 100,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 3162425671
+   },
+   {
+    "CNAME": "brightness",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Black Level",
+    "VALUE": 50,
+    "HASHVAL": 3984542095
+   },
+   {
+    "CNAME": "contrast",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Contrast",
+    "VALUE": 50,
+    "HASHVAL": 3023247374
+   },
+   {
+    "CNAME": "color",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Color",
+    "HASHVAL": 3671109800
+   },
+   {
+    "CNAME": "clarity",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Clarity",
+    "HASHVAL": 117834995
+   },
+   {
+    "CNAME": "motion_control",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Motion Control",
+    "HASHVAL": 1492488100
+   },
+   {
+    "CNAME": "picture_mode_edit",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Picture Mode Edit",
+    "HASHVAL": 3890647605
+   },
+   {
+    "CNAME": "advanced_picture",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Advanced Picture",
+    "HASHVAL": 3337749518
+   },
+   {
+    "CNAME": "color_calibration",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Color Calibration",
+    "HASHVAL": 781984771
+   }
+  ],
+  "NAME": "Picture",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "picture",
+  "GROUP": "G_PICTURE",
+  "HASHLIST": [
+   2903525267,
+   3655039144
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "color",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Color",
+    "VALUE": 60,
+    "HASHVAL": 1619250198
+   },
+   {
+    "CNAME": "tint",
+    "TYPE": "T_VALUE_ABS_V1",
+    "NAME": "Tint",
+    "VALUE": 0,
+    "HASHVAL": 2775787760
+   },
+   {
+    "CNAME": "color_temperature",
+    "TYPE": "T_LIST_X_V1",
+    "NAME": "Color Temperature",
+    "VALUE": "Normal",
+    "HASHVAL": 3908250249,
+    "ELEMENTS": [
+     "Warm",
+     "Cool",
+     "Normal"
+    ]
+   }
+  ],
+  "NAME": "Color",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "color",
+  "GROUP": "G_PICTURE",
+  "HASHLIST": [
+   1906773438,
+   442268808,
+   2126924047
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/clarity": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/clarity",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "black_detail",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Contrast Enhancer",
+    "VALUE": "Medium",
+    "HASHVAL": 872028662,
+    "INDEX": 2
+   },
+   {
+    "CNAME": "dv_dark_detail",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Dark Detail",
+    "VALUE": "Disable",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 948245467
+   },
+   {
+    "CNAME": "super_resolution",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Super Resolution",
+    "VALUE": "Medium",
+    "HASHVAL": 3200602297,
+    "INDEX": 2
+   },
+   {
+    "CNAME": "sharpness",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Sharpness",
+    "VALUE": 30,
+    "HASHVAL": 712027864
+   },
+   {
+    "CNAME": "edge_enhancement",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Edge Enhancement",
+    "VALUE": "Off",
+    "HASHVAL": 4133013861,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "signal_noise",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Signal Noise",
+    "VALUE": "Medium",
+    "HASHVAL": 2108426102,
+    "INDEX": 2
+   },
+   {
+    "CNAME": "block_noise",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Block Noise",
+    "VALUE": "Medium",
+    "HASHVAL": 3947582315,
+    "INDEX": 2
+   },
+   {
+    "CNAME": "contour_smoothing",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Contour Smoothing",
+    "VALUE": "Medium",
+    "HASHVAL": 3352872156,
+    "INDEX": 2
+   }
+  ],
+  "NAME": "Clarity",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "clarity",
+  "GROUP": "G_PICTURE",
+  "HASHLIST": [
+   2939141266,
+   3314611700,
+   1416958213
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/motion_control": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/motion_control",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "judder_reduction",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Judder Reduction",
+    "VALUE": 0,
+    "HASHVAL": 3123371734
+   },
+   {
+    "STATUS": {
+     "RESULT": "FAILURE",
+     "DETAIL": "Failure"
+    },
+    "CNAME": "motion_blur_reduction",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Motion Blur Reduction"
+   }
+  ],
+  "NAME": "Motion Control",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "motion_control",
+  "GROUP": "G_PICTURE",
+  "HASHLIST": [
+   3396504318,
+   245355467,
+   3307089366
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/picture_mode_edit": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/picture_mode_edit",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "save_picture_mode",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Save Picture Mode",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2132157012
+   },
+   {
+    "CNAME": "reset_picture_mode",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Reset Picture Mode",
+    "VALUE": "T_ACTION_V1",
+    "ENABLED": "FALSE",
+    "HASHVAL": 638269344
+   },
+   {
+    "CNAME": "delete_picture_mode",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Delete Picture Mode",
+    "VALUE": "T_ACTION_V1",
+    "ENABLED": "FALSE",
+    "HASHVAL": 2351534406
+   }
+  ],
+  "NAME": "Picture Mode Edit",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "picture_mode_edit",
+  "GROUP": "G_PICTURE_MODE_EDIT",
+  "HASHLIST": [
+   3094149271,
+   3957646917,
+   2263422436
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/advanced_picture": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/advanced_picture",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "film_mode",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Film Mode",
+    "VALUE": "On",
+    "HASHVAL": 205222356,
+    "INDEX": 1
+   },
+   {
+    "CNAME": "local_contrast",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Active Pixel Tuning",
+    "VALUE": "Medium",
+    "HASHVAL": 455964498,
+    "INDEX": 2
+   },
+   {
+    "CNAME": "active_full_array",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Active Full Array™",
+    "VALUE": "Off",
+    "HASHVAL": 2735515970,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "ambient_light_sensor",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Ambient Light Sensor",
+    "VALUE": "Off",
+    "HASHVAL": 2877373478,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "aspect_ratio",
+    "TYPE": "T_LIST_X_V1",
+    "NAME": "Aspect Ratio",
+    "VALUE": "Normal",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 543417456,
+    "ELEMENTS": [
+     "Normal",
+     "Stretch",
+     "Wide",
+     "Zoom",
+     "Panoramic"
+    ]
+   }
+  ],
+  "NAME": "Advanced Picture",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "advanced_picture",
+  "GROUP": "G_PICTURE",
+  "HASHLIST": [
+   723961324,
+   2583365242,
+   1569512383
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "picture_mode_reference",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Picture Mode",
+    "VALUE": "Bright",
+    "READONLY": "TRUE",
+    "HASHVAL": 1545850242
+   },
+   {
+    "CNAME": "color_temperature",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Color Temperature",
+    "VALUE": "Normal",
+    "READONLY": "TRUE",
+    "HASHVAL": 1478762469
+   },
+   {
+    "CNAME": "dynamic_range_reference",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Dynamic Range",
+    "VALUE": "Bright",
+    "READONLY": "TRUE",
+    "HASHVAL": 2185984313
+   },
+   {
+    "CNAME": "color_tuner",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Color Tuner",
+    "HASHVAL": 377211173
+   },
+   {
+    "CNAME": "white_balance_tuner",
+    "TYPE": "T_MENU_V1",
+    "NAME": "White Balance Tuner",
+    "HASHVAL": 3733636096
+   },
+   {
+    "CNAME": "reset_color_temperature",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Reset Color Temperature",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3482923755
+   },
+   {
+    "CNAME": "gamma",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Gamma",
+    "VALUE": "2.2",
+    "HASHVAL": 2593051057,
+    "INDEX": 3
+   },
+   {
+    "CNAME": "calibration_tests",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Calibration Tests",
+    "HASHVAL": 3875247168
+   }
+  ],
+  "NAME": "Color Calibration",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "color_calibration",
+  "GROUP": "G_COLOR_CALIBRATION",
+  "HASHLIST": [
+   3428093127,
+   211697029,
+   2533830934
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "primary_color",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Primary Color Enabled",
+    "HASHVAL": 923554330
+   },
+   {
+    "CNAME": "hue",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Hue",
+    "HASHVAL": 2577402990
+   },
+   {
+    "CNAME": "saturation",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Saturation",
+    "HASHVAL": 711746023
+   },
+   {
+    "CNAME": "brightness",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Brightness",
+    "HASHVAL": 2942516277
+   }
+  ],
+  "NAME": "Color Tuner",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "color_tuner",
+  "GROUP": "G_COLOR_TUNER",
+  "HASHLIST": [
+   983625962,
+   3135038841,
+   1258743010,
+   293476816
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/primary_color": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/primary_color",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Red",
+    "VALUE": "On",
+    "HASHVAL": 3596853208,
+    "INDEX": 1
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Green",
+    "VALUE": "On",
+    "HASHVAL": 1486678804,
+    "INDEX": 1
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Blue",
+    "VALUE": "On",
+    "HASHVAL": 210463635,
+    "INDEX": 1
+   }
+  ],
+  "NAME": "Primary Color Enabled",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "primary_color",
+  "GROUP": "G_COLOR_TUNER",
+  "HASHLIST": [
+   2121457481,
+   3684605061,
+   293490928,
+   53698032,
+   1296945219
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/hue": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/hue",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 3612122591
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 299343075
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 1734497914
+   },
+   {
+    "CNAME": "cyan",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Cyan",
+    "VALUE": 0,
+    "HASHVAL": 2865829047
+   },
+   {
+    "CNAME": "magenta",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Magenta",
+    "VALUE": 0,
+    "HASHVAL": 839270139
+   },
+   {
+    "CNAME": "yellow",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Yellow",
+    "VALUE": 0,
+    "HASHVAL": 1893145978
+   }
+  ],
+  "NAME": "Hue",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hue",
+  "GROUP": "G_COLOR_TUNER",
+  "HASHLIST": [
+   3151699017,
+   3796253046,
+   3390372938,
+   1081127575,
+   2260203046
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/saturation": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/saturation",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2459792015
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 4222897939
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 2324437706
+   },
+   {
+    "CNAME": "cyan",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Cyan",
+    "VALUE": 0,
+    "HASHVAL": 748560647
+   },
+   {
+    "CNAME": "magenta",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Magenta",
+    "VALUE": 0,
+    "HASHVAL": 1802391595
+   },
+   {
+    "CNAME": "yellow",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Yellow",
+    "VALUE": 0,
+    "HASHVAL": 3359966314
+   }
+  ],
+  "NAME": "Saturation",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "saturation",
+  "GROUP": "G_COLOR_TUNER",
+  "HASHLIST": [
+   3865557249,
+   3442220753,
+   1343239839,
+   114433911,
+   4027274500
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/brightness": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/color_tuner/brightness",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 3784357278
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 4180524478
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 3393467433
+   },
+   {
+    "CNAME": "cyan",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Cyan",
+    "VALUE": 0,
+    "HASHVAL": 727859644
+   },
+   {
+    "CNAME": "magenta",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Magenta",
+    "VALUE": 0,
+    "HASHVAL": 2173065006
+   },
+   {
+    "CNAME": "yellow",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Yellow",
+    "VALUE": 0,
+    "HASHVAL": 311300761
+   }
+  ],
+  "NAME": "Brightness",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "brightness",
+  "GROUP": "G_COLOR_TUNER",
+  "HASHLIST": [
+   3548571543,
+   2869224149,
+   1719925368,
+   3953880455,
+   3605919389
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "offset",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Offset",
+    "HASHVAL": 699698666
+   },
+   {
+    "CNAME": "gain",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Gain",
+    "HASHVAL": 1988938460
+   },
+   {
+    "CNAME": "point_white_balance",
+    "TYPE": "T_MENU_V1",
+    "NAME": "IRE%",
+    "HASHVAL": 3923726826
+   }
+  ],
+  "NAME": "White Balance Tuner",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "white_balance_tuner",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   1555614719,
+   422103504,
+   960999233,
+   1484038871
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/offset": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/offset",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2372755607
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 924196651
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 1283337298
+   }
+  ],
+  "NAME": "Offset",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "offset",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   2439728687,
+   3333646228,
+   276601386,
+   635308283,
+   1382791867
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/gain": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/gain",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 3959064751
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 3669785139
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 1932133226
+   }
+  ],
+  "NAME": "Gain",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "gain",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   3805475056,
+   1155920363,
+   1230632975,
+   3587062086,
+   1608365844
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "5_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "5%",
+    "HASHVAL": 225129641
+   },
+   {
+    "CNAME": "10_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "10%",
+    "HASHVAL": 397601125
+   },
+   {
+    "CNAME": "15_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "15%",
+    "HASHVAL": 711072710
+   },
+   {
+    "CNAME": "20_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "20%",
+    "HASHVAL": 3251695484
+   },
+   {
+    "CNAME": "25_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "25%",
+    "HASHVAL": 2109519917
+   },
+   {
+    "CNAME": "30_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "30%",
+    "HASHVAL": 3054196811
+   },
+   {
+    "CNAME": "35_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "35%",
+    "HASHVAL": 1917600861
+   },
+   {
+    "CNAME": "40_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "40%",
+    "HASHVAL": 649522511
+   },
+   {
+    "CNAME": "45_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "45%",
+    "HASHVAL": 1171599891
+   },
+   {
+    "CNAME": "50_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "50%",
+    "HASHVAL": 1814711729
+   },
+   {
+    "CNAME": "55_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "55%",
+    "HASHVAL": 3751807240
+   },
+   {
+    "CNAME": "60_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "60%",
+    "HASHVAL": 770084728
+   },
+   {
+    "CNAME": "65_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "65%",
+    "HASHVAL": 3220241021
+   },
+   {
+    "CNAME": "70_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "70%",
+    "HASHVAL": 2631950276
+   },
+   {
+    "CNAME": "75_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "75%",
+    "HASHVAL": 3722318837
+   },
+   {
+    "CNAME": "80_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "80%",
+    "HASHVAL": 3788667652
+   },
+   {
+    "CNAME": "85_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "85%",
+    "HASHVAL": 3375300940
+   },
+   {
+    "CNAME": "90_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "90%",
+    "HASHVAL": 1171583215
+   },
+   {
+    "CNAME": "95_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "95%",
+    "HASHVAL": 626752005
+   },
+   {
+    "CNAME": "100_ire",
+    "TYPE": "T_MENU_V1",
+    "NAME": "100%",
+    "HASHVAL": 318443617
+   }
+  ],
+  "NAME": "IRE%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "point_white_balance",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   1184955211,
+   3784041742,
+   2240037622,
+   2610221092,
+   925286156
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/5_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/5_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2634269404
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 2459075436
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 348740403
+   }
+  ],
+  "NAME": "5%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "5_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   2946772801,
+   1583542555,
+   2725987934,
+   1038018022,
+   3382167065,
+   1657365314
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/10_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/10_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 292333890
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 854176722
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 344843005
+   }
+  ],
+  "NAME": "10%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "10_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   3601741621,
+   47969366,
+   768100445,
+   625216427,
+   198688943,
+   3029078779
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/15_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/15_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 77062263
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 1737784075
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 2807795122
+   }
+  ],
+  "NAME": "15%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "15_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   3317223741,
+   2779547523,
+   3901059110,
+   970379473,
+   700554393,
+   1800718479
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/20_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/20_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 1956748603
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 3889757311
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 521359478
+   }
+  ],
+  "NAME": "20%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "20_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   549645863,
+   1341067380,
+   1190625968,
+   1385760565,
+   2741701100,
+   2083350158
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/25_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/25_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2341604430
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 2799274478
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 3247783545
+   }
+  ],
+  "NAME": "25%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "25_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   2558888521,
+   850727640,
+   1110727988,
+   117227304,
+   206705101,
+   4102174655
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/30_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/30_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2723084136
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 1940215912
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 2364558399
+   }
+  ],
+  "NAME": "30%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "30_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   918454735,
+   2773854996,
+   2429466805,
+   113409898,
+   579839263,
+   3437897563
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/35_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/35_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 1961860301
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 4074626425
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 581665004
+   }
+  ],
+  "NAME": "35%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "35_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   1342203959,
+   1003472907,
+   2651475846,
+   1697382490,
+   3057134623,
+   2547580273
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/40_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/40_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2635372185
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 1236341109
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 3214035768
+   }
+  ],
+  "NAME": "40%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "40_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   658097028,
+   445810779,
+   1676209232,
+   2697715416,
+   1374207294,
+   932049994
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/45_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/45_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 4018427356
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 3579629164
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 4113613875
+   }
+  ],
+  "NAME": "45%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "45_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   268346304,
+   1111194452,
+   1907147790,
+   2147777739,
+   535870988,
+   509972768
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/50_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/50_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 798826318
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 1550996718
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 4278462329
+   }
+  ],
+  "NAME": "50%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "50_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   2240207177,
+   2572228707,
+   1850044931,
+   2611992133,
+   2583782155,
+   1571265231
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/55_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/55_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 413970491
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 2641479551
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 1552038262
+   }
+  ],
+  "NAME": "55%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "55_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   2915683790,
+   3702553990,
+   1102865488,
+   28143897,
+   920889332,
+   1091369173
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/60_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/60_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 1926947207
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 3756058459
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 1436960034
+   }
+  ],
+  "NAME": "60%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "60_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   1733694615,
+   2147673270,
+   3995690738,
+   2795735215,
+   1989840366,
+   102086407
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/65_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/65_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 334395858
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 1725323938
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 60893677
+   }
+  ],
+  "NAME": "65%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "65_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   977137640,
+   249725347,
+   3583313456,
+   2910590303,
+   2923687034,
+   3320941387
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/70_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/70_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 3390187412
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 3131285300
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 3154289995
+   }
+  ],
+  "NAME": "70%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "70_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   1992777059,
+   3438307260,
+   3702768827,
+   3881801080,
+   3461141077,
+   2160755775
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/75_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/75_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 1916577233
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 4034498141
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 3439864688
+   }
+  ],
+  "NAME": "75%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "75_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   3241430532,
+   4226242013,
+   2223019329,
+   1187312975,
+   2272054058,
+   2589929900
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/80_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/80_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2283773605
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 464765985
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 2235726884
+   }
+  ],
+  "NAME": "80%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "80_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   2965816230,
+   3543205413,
+   1560630329,
+   3041032633,
+   1284608147,
+   3713072296
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/85_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/85_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2762931904
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 3974390448
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 2539573335
+   }
+  ],
+  "NAME": "85%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "85_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   2258687221,
+   2471699656,
+   144769164,
+   1708766944,
+   14577556,
+   1488460277
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/90_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/90_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 839419242
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 2364925226
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 3442637541
+   }
+  ],
+  "NAME": "90%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "90_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   1135125111,
+   3042902377,
+   3706499746,
+   2468501351,
+   2743323567,
+   1871326279
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/95_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/95_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 2871780703
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 4018073699
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 1876944122
+   }
+  ],
+  "NAME": "95%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "95_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   3418055305,
+   3300287244,
+   3246421646,
+   571793982,
+   3964151977,
+   2974396247
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/100_ire": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/white_balance_tuner/point_white_balance/100_ire",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "red",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Red",
+    "VALUE": 0,
+    "HASHVAL": 3066349616
+   },
+   {
+    "CNAME": "green",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Green",
+    "VALUE": 0,
+    "HASHVAL": 81959520
+   },
+   {
+    "CNAME": "blue",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Blue",
+    "VALUE": 0,
+    "HASHVAL": 2878161639
+   }
+  ],
+  "NAME": "100%",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "100_ire",
+  "GROUP": "G_WHITE_BALANCE",
+  "HASHLIST": [
+   392253009,
+   3708347950,
+   1141008411,
+   1709199961,
+   2587363534,
+   2981135713
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/picture/color_calibration/calibration_tests": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/picture/color_calibration/calibration_tests",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "smpte_test_pattern",
+    "TYPE": "T_LIST_V1",
+    "NAME": "SMPTE Test Pattern",
+    "VALUE": "Off",
+    "HASHVAL": 2691155011,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "flat_test_pattern",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Flat Test Pattern",
+    "VALUE": "Off",
+    "HASHVAL": 1779481945,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "ramp_test_pattern",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Ramp Test Pattern",
+    "VALUE": "Off",
+    "HASHVAL": 2522936006,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "uniformity_analyzer_test_pattern",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Uniformity Analyzer Test Pattern",
+    "VALUE": "Off",
+    "HASHVAL": 2664662111,
+    "INDEX": 0
+   }
+  ],
+  "NAME": "Calibration Tests",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "calibration_tests",
+  "GROUP": "G_COLOR_CALIBRATION",
+  "HASHLIST": [
+   4171755982,
+   2344441065,
+   1487496843,
+   411499747
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/audio": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/audio",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "tv_speakers",
+    "TYPE": "T_LIST_X_V1",
+    "NAME": "Audio Out",
+    "VALUE": "TV speakers",
+    "HASHVAL": 1870563195,
+    "ELEMENTS": [
+     "TV speakers",
+     "Optical/Analog Audio Out"
+    ]
+   },
+   {
+    "CNAME": "surround_sound",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Surround Sound",
+    "VALUE": "Virtual:X",
+    "HASHVAL": 3073862060,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "dialogue_enhancer",
+    "TYPE": "T_LIST_V1",
+    "NAME": "ClearDialog",
+    "VALUE": "Off",
+    "HASHVAL": 4284435521,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "volume_leveling",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Volume Leveling",
+    "VALUE": "Off",
+    "HASHVAL": 1952348291,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "bass",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Bass",
+    "VALUE": 0,
+    "HASHVAL": 2636064362
+   },
+   {
+    "CNAME": "treble",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Treble",
+    "VALUE": 0,
+    "HASHVAL": 2027669657
+   },
+   {
+    "CNAME": "lip_sync",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Lip Sync",
+    "VALUE": 0,
+    "HASHVAL": 83475440
+   },
+   {
+    "CNAME": "digital_audio_out",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Digital Audio Out",
+    "VALUE": "Auto",
+    "HASHVAL": 2870599450,
+    "INDEX": 0
+   },
+   {
+    "STATUS": {
+     "RESULT": "FAILURE",
+     "DETAIL": "Failure"
+    },
+    "CNAME": "soundbar_settings",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Sound Bar Settings",
+    "READONLY": "TRUE",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE"
+   },
+   {
+    "CNAME": "soundbar_eq_mode",
+    "TYPE": "T_LIST_X_V1",
+    "NAME": "EQ",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null,
+    "ELEMENTS": []
+   },
+   {
+    "CNAME": "sounbar_bass",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Bass",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "soundbar_treble",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Treble",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "soundbar_dialogue",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Dialogue",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "soundbar_subwoofer",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Subwoofer",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "soundbar_night_mode",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Night Mode",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "soundbar_height",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Height Speakers",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "soundbar_virtual_x",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Virtual X",
+    "VALUE": null,
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "soundbar_speaker_test",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Speaker Test",
+    "VALUE": "T_ACTION_V1",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 679411624
+   },
+   {
+    "CNAME": "soundbar_info",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Info",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 2193052452
+   }
+  ],
+  "NAME": "Audio",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "audio",
+  "GROUP": "G_AUDIO",
+  "HASHLIST": [
+   1370477428,
+   1085064975
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/audio/soundbar_info": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/audio/soundbar_info",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "model",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Model Name",
+    "VALUE": "N/A",
+    "READONLY": "TRUE",
+    "HASHVAL": 3806230242
+   },
+   {
+    "CNAME": "serial_number",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Serial Number",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 3158259241
+   },
+   {
+    "CNAME": "firmware",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Firmware",
+    "VALUE": "N/A",
+    "READONLY": "TRUE",
+    "HASHVAL": 1798803828
+   },
+   {
+    "CNAME": "audio_out",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Audio Out",
+    "VALUE": " ",
+    "READONLY": "TRUE",
+    "HASHVAL": 185720264
+   }
+  ],
+  "NAME": "Info",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "soundbar_info",
+  "GROUP": "G_AUDIO",
+  "ENABLED": "FALSE",
+  "HASHLIST": [
+   456109167,
+   1115019682,
+   2035873730
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/hdmi_and_gaming": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/hdmi_and_gaming",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "game_low_latency",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Gaming/PC Mode",
+    "VALUE": "Off",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 382280602,
+    "INDEX": 2
+   },
+   {
+    "CNAME": "hdmi_settings",
+    "TYPE": "T_MENU_V1",
+    "NAME": "HDMI Settings",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 1228206200
+   },
+   {
+    "CNAME": "hdmi_device_info",
+    "TYPE": "T_MENU_V1",
+    "NAME": "HDMI Device Info",
+    "HASHVAL": 1684904449
+   }
+  ],
+  "NAME": "HDMI & Gaming",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hdmi_and_gaming",
+  "HASHLIST": [
+   518072780,
+   227286911
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "hdmi_mode",
+    "TYPE": "T_LIST_V1",
+    "NAME": "HDMI Mode",
+    "VALUE": "Compatibility",
+    "HASHVAL": 283133264,
+    "INDEX": 2
+   },
+   {
+    "CNAME": "color_space_range",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Color Space Range",
+    "VALUE": "Auto",
+    "HASHVAL": 3013376631,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "cec_function",
+    "TYPE": "T_LIST_V1",
+    "NAME": "CEC Device Control",
+    "VALUE": "Enabled",
+    "HASHVAL": 1262420255,
+    "INDEX": 1
+   },
+   {
+    "CNAME": "one_touch_play",
+    "TYPE": "T_LIST_V1",
+    "NAME": "One Touch Play",
+    "VALUE": "Disabled",
+    "HASHVAL": 347009759,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "device_discovery",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Device Discovery",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1013981316
+   },
+   {
+    "CNAME": "size_position",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Picture Size and Position",
+    "ENABLED": "FALSE",
+    "HIDDEN": "TRUE",
+    "HASHVAL": 2200349106
+   }
+  ],
+  "NAME": "HDMI Settings",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hdmi_settings",
+  "GROUP": "T_STRING_V1",
+  "ENABLED": "FALSE",
+  "HASHLIST": [
+   2482369642,
+   3963799635,
+   3659026165
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings/size_position": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings/size_position",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "size",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Picture Size",
+    "HASHVAL": 4003569441
+   },
+   {
+    "CNAME": "position",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Picture Position",
+    "HASHVAL": 3129655811
+   }
+  ],
+  "NAME": "Picture Size and Position",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "size_position",
+  "GROUP": "G_SIZE_POSITION",
+  "ENABLED": "FALSE",
+  "HASHLIST": [
+   1054010905,
+   3855505198,
+   2255013448,
+   3975921075
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings/size_position/size": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings/size_position/size",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "vertical",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Vertical Size",
+    "VALUE": 0,
+    "HASHVAL": 4170533718
+   },
+   {
+    "CNAME": "horizontal",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Horizontal Size",
+    "VALUE": 0,
+    "HASHVAL": 1983048948
+   }
+  ],
+  "NAME": "Picture Size",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "size",
+  "GROUP": "G_SIZE_POSITION",
+  "HASHLIST": [
+   2600174838,
+   2118263142,
+   2191007763,
+   101051085,
+   836322018
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings/size_position/position": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_settings/size_position/position",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "vertical",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Vertical Size",
+    "VALUE": 0,
+    "HASHVAL": 3992399548
+   },
+   {
+    "CNAME": "horizontal",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Horizontal Size",
+    "VALUE": 0,
+    "HASHVAL": 3904561162
+   }
+  ],
+  "NAME": "Picture Position",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "position",
+  "GROUP": "G_SIZE_POSITION",
+  "HASHLIST": [
+   2948563879,
+   3696504172,
+   683339540,
+   1506974876,
+   4020718732
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_device_info": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/hdmi_and_gaming/hdmi_device_info",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "current_input",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Current Input",
+    "VALUE": "SMARTCAST",
+    "READONLY": "TRUE",
+    "HASHVAL": 1064859643
+   },
+   {
+    "CNAME": "resolution",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Resolution",
+    "VALUE": "",
+    "READONLY": "TRUE",
+    "HASHVAL": 319111276
+   },
+   {
+    "CNAME": "frame_rate",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Frame Rate",
+    "VALUE": 60,
+    "READONLY": "TRUE",
+    "HASHVAL": 2990217188
+   },
+   {
+    "CNAME": "hdr",
+    "TYPE": "T_STRING_V1",
+    "NAME": "HDR",
+    "VALUE": "NO",
+    "READONLY": "TRUE",
+    "HASHVAL": 3992035875
+   },
+   {
+    "CNAME": "vrr",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Variable Refresh Rate",
+    "VALUE": "Off",
+    "READONLY": "TRUE",
+    "HASHVAL": 678590337
+   },
+   {
+    "CNAME": "audio_out",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Audio Out",
+    "VALUE": " ",
+    "READONLY": "TRUE",
+    "HASHVAL": 3203100045
+   }
+  ],
+  "NAME": "HDMI Device Info",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hdmi_device_info",
+  "GROUP": "T_STRING_V1",
+  "HASHLIST": [
+   905503634,
+   3579322644,
+   2114842796
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/network": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/network",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "current_access_point",
+    "TYPE": "T_AP_V1",
+    "NAME": "My Networks",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "connection_type",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Connection Type",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "wired_connection",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Ethernet Connected",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "wifi_networks",
+    "TYPE": "T_APS_V1",
+    "NAME": "More Wi-Fi Networks",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "set_wifi_password",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Set Wi-Fi password",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "hidden_network",
+    "TYPE": "T_AP_V1",
+    "NAME": "Add Network manually",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "manual_setup",
+    "TYPE": "G_NETWORK",
+    "NAME": "Manual Setup",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "network_information",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Network Information",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "test_connection",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Test Connection",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "hidden_network_info",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Add Network manually",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "manual_setup_info",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Advanced Network IP Setup",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "forget_saved_network",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Forget Saved Network",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "connection_status",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Connection Status",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "start_ap_search",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Start AP Search",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "stop_ap_search",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Stop AP Search",
+    "NOTE": "network subtree omitted for privacy"
+   },
+   {
+    "CNAME": "current_bss_stat",
+    "TYPE": "T_DATA_V1",
+    "NAME": "Current BSSID",
+    "NOTE": "network subtree omitted for privacy"
+   }
+  ],
+  "NAME": "Network",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "network",
+  "HASHLIST": [
+   67362787,
+   4094635315
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/bluetooth_and_remote": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/bluetooth_and_remote",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "voice_remote",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Voice Remote",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1511927952
+   },
+   {
+    "CNAME": "bluetooth_headphones",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Headphones",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2006697711
+   },
+   {
+    "CNAME": "game_controller",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Game Controller",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3818354946
+   }
+  ],
+  "NAME": "Bluetooth & Remote",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "bluetooth_and_remote",
+  "GROUP": "G_BLUETOOTH_AND_REMOTE",
+  "HASHLIST": [
+   829715754,
+   2906205435
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/channels": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/channels",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "find_channels",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Find Channels",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3891539534
+   },
+   {
+    "CNAME": "find_new_channels",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Find New Channels",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2862471511
+   },
+   {
+    "CNAME": "skip_channel",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Hide Channels",
+    "HASHVAL": 3455724468
+   },
+   {
+    "CNAME": "digital_audio",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Digital Audio",
+    "VALUE": "English",
+    "HASHVAL": 4287083492,
+    "INDEX": 0
+   }
+  ],
+  "NAME": "Antenna Channels",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "channels",
+  "GROUP": "G_CHANNELS",
+  "HASHLIST": [
+   3759959711,
+   3711131010
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/channels/skip_channel": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/channels/skip_channel",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [],
+  "NAME": "Hide Channels",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "skip_channel",
+  "GROUP": "G_CHANNELS",
+  "ENABLED": "FALSE",
+  "HASHLIST": [
+   3455724468,
+   3759959711,
+   3711131010
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/accessibility": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/accessibility",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "captions",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Captions",
+    "HASHVAL": 1688745782
+   },
+   {
+    "CNAME": "video_description",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Video Description",
+    "VALUE": "Off",
+    "HASHVAL": 1049344804,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "talkback",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Talk Back",
+    "VALUE": "Off",
+    "HASHVAL": 628155175,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "speech_rate",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Speech Rate",
+    "VALUE": "Normal",
+    "HASHVAL": 4016859067,
+    "INDEX": 1
+   },
+   {
+    "CNAME": "zoom_mode",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Zoom Mode",
+    "VALUE": "Off",
+    "HASHVAL": 3236801023,
+    "INDEX": 0
+   }
+  ],
+  "NAME": "Accessibility",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "accessibility",
+  "GROUP": "G_ACCESSIBILITY",
+  "HASHLIST": [
+   2210878274,
+   508375827
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/accessibility/captions": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/accessibility/captions",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "closed_captions",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Closed Captions",
+    "VALUE": "Off",
+    "HASHVAL": 3625198738,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "analog_closed_captions",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Analog Closed Captions",
+    "VALUE": "CC1",
+    "HASHVAL": 1840123597,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "digital_closed_captions",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Digital Closed Captions",
+    "VALUE": "CS1",
+    "HASHVAL": 1828101523,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "digital_style",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Digital Closed Captions",
+    "HASHVAL": 1973518981
+   }
+  ],
+  "NAME": "Captions",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "captions",
+  "GROUP": "G_ACCESSIBILITY",
+  "HASHLIST": [
+   3249578345,
+   3194736964,
+   1142585730
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/accessibility/captions/digital_style": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/accessibility/captions/digital_style",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "text_style",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Text Style",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 1489034112,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "text_size",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Text Size",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 844249060,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "text_color",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Text Color",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 881210170,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "text_opacity",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Text Opacity",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 3544519164,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "text_edges",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Text Edges",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 1024936959,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "text_edges_color",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Text Edges Color",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 1716270847,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "background_color",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Background Color",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 4042390305,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "background_opacity",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Background Opacity",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 2867945819,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "window_color",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Window Color",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 3082456189,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "window_opacity",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Window Opacity",
+    "VALUE": "As Broadcast",
+    "HASHVAL": 2331437791,
+    "INDEX": 0
+   }
+  ],
+  "NAME": "Digital Closed Captions",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "digital_style",
+  "GROUP": "G_ACCESSIBILITY",
+  "HASHLIST": [
+   2654763029,
+   2752408461,
+   3123248495,
+   1680805937
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "menu_language",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Menu Language",
+    "VALUE": "English",
+    "HASHVAL": 3154366262,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "tv_information",
+    "TYPE": "T_MENU_V1",
+    "NAME": "TV Information",
+    "HASHVAL": 3897929332
+   },
+   {
+    "CNAME": "tv_name",
+    "TYPE": "T_TEXT_ENTRY_V1",
+    "NAME": "TV Name",
+    "VALUE": "Living Room",
+    "HASHVAL": 538210736
+   },
+   {
+    "CNAME": "time",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Time",
+    "HASHVAL": 2394455912
+   },
+   {
+    "CNAME": "manage_input_list",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Manage Input List",
+    "HASHVAL": 2417498356
+   },
+   {
+    "CNAME": "sleep_timer",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Sleep Timer",
+    "VALUE": "Off",
+    "HASHVAL": 346577886,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "power",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Power",
+    "HASHVAL": 2482072016
+   },
+   {
+    "CNAME": "parental_controls",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Parental Controls",
+    "HASHVAL": 1167759132
+   }
+  ],
+  "NAME": "System",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "system",
+  "GROUP": "G_SYSTEM",
+  "HASHLIST": [
+   3486113441,
+   1318027450
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "tv",
+    "TYPE": "T_MENU_V1",
+    "NAME": "TV Information",
+    "HASHVAL": 4072950453
+   },
+   {
+    "CNAME": "network",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Network Information",
+    "HASHVAL": 1135207347
+   },
+   {
+    "CNAME": "video",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Video",
+    "HASHVAL": 2315727892
+   },
+   {
+    "CNAME": "application",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Application Information",
+    "HASHVAL": 1950245101
+   },
+   {
+    "CNAME": "remote",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Bluetooth Remote Status",
+    "HASHVAL": 3776860302
+   },
+   {
+    "CNAME": "uli",
+    "TYPE": "T_MENU_V1",
+    "NAME": "ULI Information",
+    "HASHVAL": 1923113420
+   },
+   {
+    "CNAME": "channel",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Channel Information",
+    "HASHVAL": 2054587140
+   }
+  ],
+  "NAME": "TV Information",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "tv_information",
+  "GROUP": "G_SYSTEM",
+  "HASHLIST": [
+   2631208598,
+   175127052,
+   2244585907
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information/tv": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information/tv",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "tv_name",
+    "TYPE": "T_STRING_V1",
+    "NAME": "TV Name",
+    "VALUE": "Living Room",
+    "READONLY": "TRUE",
+    "HASHVAL": 731095651
+   },
+   {
+    "CNAME": "serial_number",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Serial Number",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 3326562387
+   },
+   {
+    "CNAME": "model_name",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Model Name",
+    "VALUE": "M65Q6-L4",
+    "READONLY": "TRUE",
+    "HASHVAL": 3578212810
+   },
+   {
+    "CNAME": "firmware",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Firmware",
+    "VALUE": "86.910.19.2-1",
+    "READONLY": "TRUE",
+    "HASHVAL": 2765597102
+   },
+   {
+    "CNAME": "cast",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Cast ",
+    "VALUE": "mtk5586_sb-0.910.0.20|cast_20250829_0200_RC10",
+    "READONLY": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "vizios",
+    "TYPE": "T_STRING_V1",
+    "NAME": "VIZIOS",
+    "VALUE": "ViziOS 1.8.1657.1 f61e4e1",
+    "READONLY": "TRUE",
+    "HASHVAL": 4204359770
+   },
+   {
+    "CNAME": "conjure",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Conjure",
+    "VALUE": "N/A",
+    "READONLY": "TRUE",
+    "HASHVAL": 2446143257
+   },
+   {
+    "CNAME": "scpl",
+    "TYPE": "T_STRING_V1",
+    "NAME": "SCPL Version",
+    "VALUE": "3.7.2-2621.0005",
+    "READONLY": "TRUE",
+    "HASHVAL": 2314624174
+   },
+   {
+    "CNAME": "sc_config",
+    "TYPE": "T_STRING_V1",
+    "NAME": "SC Config",
+    "VALUE": "PROD v64.37",
+    "READONLY": "TRUE",
+    "HASHVAL": 2880018975
+   },
+   {
+    "CNAME": "last_update",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Last update",
+    "VALUE": "",
+    "READONLY": "TRUE",
+    "HASHVAL": 1152857541
+   },
+   {
+    "CNAME": "input",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Input",
+    "VALUE": "SMARTCAST",
+    "READONLY": "TRUE",
+    "HASHVAL": 175957757
+   }
+  ],
+  "NAME": "TV Information",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "tv",
+  "GROUP": "G_TV_INFORMATION",
+  "HASHLIST": [
+   1239588815,
+   4034112177,
+   3977756122,
+   1664120330
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information/network": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information/network",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "connection",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Connection",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 1260213474
+   },
+   {
+    "CNAME": "wifi_network",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Wi-Fi Network",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 1018746907
+   },
+   {
+    "CNAME": "ipv4_address",
+    "TYPE": "T_IP_ADDRESS_V1",
+    "NAME": "IPv4 IP Address",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2908340307
+   },
+   {
+    "CNAME": "ipv4_default_gateway",
+    "TYPE": "T_IP_ADDRESS_V1",
+    "NAME": "Default Gateway",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2715305843
+   },
+   {
+    "CNAME": "ipv4_subnet_mask",
+    "TYPE": "T_IP_ADDRESS_V1",
+    "NAME": "IPv4 Subnet Mask",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2561153309
+   },
+   {
+    "CNAME": "ipv6_address",
+    "TYPE": "T_IP_ADDRESS_V1",
+    "NAME": "IPv6 Address",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 1857825851
+   },
+   {
+    "CNAME": "ipv6_default_gateway",
+    "TYPE": "T_IP_ADDRESS_V1",
+    "NAME": "IPv6 Default Gateway",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 434223607
+   },
+   {
+    "CNAME": "ipv6_prefix_length",
+    "TYPE": "T_IP_ADDRESS_V1",
+    "NAME": "IPv6 Prefix Length",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 376766554
+   },
+   {
+    "CNAME": "pref_dns_server",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Pref. DNS Server",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 966030287
+   },
+   {
+    "CNAME": "alt_dns_server",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Alt. DNS Server",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 761364258
+   },
+   {
+    "CNAME": "rj45_mac_address",
+    "TYPE": "T_MAC_ADDRESS_V1",
+    "NAME": "RJ45 MAC",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 3173502121
+   },
+   {
+    "CNAME": "wlan_mac",
+    "TYPE": "T_MAC_ADDRESS_V1",
+    "NAME": "WLAN MAC",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 3478350027
+   },
+   {
+    "CNAME": "wifi_signal_strength",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Wi-Fi Signal Strength",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 1221799092
+   },
+   {
+    "CNAME": "wifi_security",
+    "TYPE": "T_STRING_V1",
+    "NAME": "WiFi Security",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2185328057
+   },
+   {
+    "CNAME": "wifi_module",
+    "TYPE": "T_STRING_V1",
+    "NAME": "WiFi Module",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 1534438593
+   }
+  ],
+  "NAME": "Network Information",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "network",
+  "GROUP": "G_NETWORK_INFORMATION",
+  "HASHLIST": [
+   2988229842,
+   1864738540,
+   1635874758,
+   2093933483
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information/video": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information/video",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "resolution",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Resolution",
+    "VALUE": "",
+    "READONLY": "TRUE",
+    "HASHVAL": 1302044322
+   },
+   {
+    "CNAME": "frame_rate",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Frame Rate",
+    "VALUE": 60,
+    "READONLY": "TRUE",
+    "HASHVAL": 2773254882
+   },
+   {
+    "CNAME": "audio_in",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Audio In",
+    "VALUE": "",
+    "READONLY": "TRUE",
+    "HASHVAL": 90225160
+   },
+   {
+    "CNAME": "audio_out",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Audio Out",
+    "VALUE": " ",
+    "READONLY": "TRUE",
+    "HASHVAL": 3800594051
+   },
+   {
+    "CNAME": "hdr",
+    "TYPE": "T_STRING_V1",
+    "NAME": "HDR",
+    "VALUE": "NO",
+    "READONLY": "TRUE",
+    "HASHVAL": 3211723605
+   },
+   {
+    "CNAME": "vrr",
+    "TYPE": "T_STRING_V1",
+    "NAME": "VRR",
+    "VALUE": "NO",
+    "READONLY": "TRUE",
+    "HASHVAL": 737392641
+   }
+  ],
+  "NAME": "Video",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "video",
+  "GROUP": "G_TV_INFORMATION",
+  "HASHLIST": [
+   1753855813,
+   3746305314,
+   3533279630,
+   2203797320
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information/application": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information/application",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "vizio_ndk",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Vizio NDK",
+    "VALUE": null,
+    "READONLY": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "airplay",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Airplay",
+    "VALUE": "40.00",
+    "READONLY": "TRUE",
+    "HASHVAL": 3779227231
+   },
+   {
+    "CNAME": "airplay_internal",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Airplay Internal",
+    "VALUE": "35.910.31-b46e9f1-35X\n",
+    "READONLY": "TRUE",
+    "HASHVAL": 202290596
+   },
+   {
+    "CNAME": "appletv",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Apple TV",
+    "VALUE": null,
+    "READONLY": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "cobalt",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Cobalt",
+    "VALUE": "25.lts.20.1034877",
+    "READONLY": "TRUE",
+    "HASHVAL": 1545536588
+   }
+  ],
+  "NAME": "Application Information",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "application",
+  "GROUP": "G_APPLICATION_INFORMATION",
+  "HASHLIST": [
+   2205278375,
+   4154235811,
+   672537806,
+   1169832697
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information/remote": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information/remote",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "remote_status",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Remote Status",
+    "VALUE": "Connected",
+    "READONLY": "TRUE",
+    "HASHVAL": 764575623
+   },
+   {
+    "CNAME": "battery_level",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Battery Level",
+    "VALUE": "100%",
+    "READONLY": "TRUE",
+    "HASHVAL": 928224007
+   },
+   {
+    "CNAME": "remote_firmware",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Remote Firmware",
+    "VALUE": "6.02.1",
+    "READONLY": "TRUE",
+    "HASHVAL": 2054421244
+   },
+   {
+    "CNAME": "bluetooth_firmware",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Bluetooth Firmware",
+    "VALUE": "VIZIO-9.0.003.8i",
+    "READONLY": "TRUE",
+    "HASHVAL": null
+   },
+   {
+    "CNAME": "bluetooth_mac_address",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Bluetooth MAC Address",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2407226969
+   }
+  ],
+  "NAME": "Bluetooth Remote Status",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "remote",
+  "GROUP": "G_REMOTE_INFORMATION",
+  "HASHLIST": [
+   98391522,
+   3318535558,
+   3156198708,
+   2142376461
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information/uli": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information/uli",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "esn",
+    "TYPE": "T_STRING_V1",
+    "NAME": "ESN",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 83583383
+   },
+   {
+    "CNAME": "sv",
+    "TYPE": "T_STRING_V1",
+    "NAME": "SV",
+    "VALUE": "86.910.19.2-1",
+    "READONLY": "TRUE",
+    "HASHVAL": 2230140660
+   },
+   {
+    "CNAME": "reg",
+    "TYPE": "T_LIST_V1",
+    "NAME": "REG",
+    "VALUE": "Yes",
+    "READONLY": "TRUE",
+    "HASHVAL": 4071407360,
+    "INDEX": 1
+   },
+   {
+    "CNAME": "np",
+    "TYPE": "T_STRING_V1",
+    "NAME": "NP",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 950815536
+   },
+   {
+    "CNAME": "netflix_esn",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Netflix ESN",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2125796995
+   },
+   {
+    "CNAME": "uid",
+    "TYPE": "T_STRING_V1",
+    "NAME": "UID",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2715146554
+   },
+   {
+    "CNAME": "dev_id",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Dev ID",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 2995637061
+   },
+   {
+    "CNAME": "prov_id",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Prov ID",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 4086705460
+   },
+   {
+    "CNAME": "da",
+    "TYPE": "T_STRING_V1",
+    "NAME": "DA",
+    "VALUE": "REDACTED",
+    "READONLY": "TRUE",
+    "HASHVAL": 1794244792
+   },
+   {
+    "CNAME": "country",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Country",
+    "VALUE": "USA",
+    "READONLY": "TRUE",
+    "HASHVAL": 325072812
+   }
+  ],
+  "NAME": "ULI Information",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "uli",
+  "GROUP": "G_ULI_INFORMATION",
+  "HASHLIST": [
+   2106184053,
+   1366154038,
+   2720109197,
+   68238355
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/tv_information/channel": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/tv_information/channel",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "physical_channel",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Physical Channel",
+    "VALUE": 0,
+    "READONLY": "TRUE",
+    "HASHVAL": 3266297315
+   },
+   {
+    "CNAME": "frequency",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Frequency",
+    "VALUE": 0,
+    "READONLY": "TRUE",
+    "HASHVAL": 2655716770
+   },
+   {
+    "CNAME": "modulation",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Modulation",
+    "VALUE": "UNKNOWN",
+    "READONLY": "TRUE",
+    "HASHVAL": 2908468344
+   },
+   {
+    "CNAME": "status",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Status",
+    "VALUE": "UNKNOWN",
+    "READONLY": "TRUE",
+    "HASHVAL": 1235120300
+   },
+   {
+    "CNAME": "signal_strength",
+    "TYPE": "T_VALUE_V1",
+    "NAME": "Signal Strength",
+    "VALUE": 0,
+    "READONLY": "TRUE",
+    "HASHVAL": 1265556456
+   },
+   {
+    "CNAME": "tuner_module",
+    "TYPE": "T_STRING_V1",
+    "NAME": "Tuner Module",
+    "VALUE": "R842",
+    "READONLY": "TRUE",
+    "HASHVAL": 1834743073
+   }
+  ],
+  "NAME": "Channel Information",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "channel",
+  "GROUP": "G_CHANNEL_INFORMATION",
+  "HASHLIST": [
+   2622890300,
+   1760518166,
+   846193175,
+   1719885875
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/time": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/time",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "time_and_date",
+    "TYPE": "T_IETF_2822_STRING_V1",
+    "NAME": "Date & Time",
+    "VALUE": "",
+    "ENABLED": "FALSE",
+    "HASHVAL": 4954233
+   },
+   {
+    "CNAME": "automatic_time",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Automatic Time",
+    "VALUE": "Enabled",
+    "HASHVAL": 2026878004,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "time_zone",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Time Zone",
+    "VALUE": "EST (GMT-5)",
+    "HASHVAL": 3993247875,
+    "INDEX": 5
+   },
+   {
+    "CNAME": "daylight_saving_time",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Daylight Savings Time",
+    "VALUE": "Auto",
+    "HASHVAL": 2807000014,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "time_format",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Time Format",
+    "VALUE": "12 hour",
+    "HASHVAL": 1383576274,
+    "INDEX": 0
+   }
+  ],
+  "NAME": "Time",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "time",
+  "GROUP": "G_SYSTEM",
+  "HASHLIST": [
+   1645632111,
+   1700465815,
+   2750864408
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/manage_input_list": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/manage_input_list",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "rename",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Rename",
+    "HASHVAL": 1239876081
+   },
+   {
+    "CNAME": "hide",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Hide From Input List",
+    "HASHVAL": 757125366
+   }
+  ],
+  "NAME": "Manage Input List",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "manage_input_list",
+  "GROUP": "G_MANAGE_INPUT_LIST",
+  "HASHLIST": [
+   2842556351,
+   637123639,
+   334923017
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/manage_input_list/rename": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/manage_input_list/rename",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "hdmi1",
+    "TYPE": "T_MENU_V1",
+    "NAME": "HDMI-1",
+    "HASHVAL": 4049718971
+   },
+   {
+    "CNAME": "hdmi2",
+    "TYPE": "T_MENU_V1",
+    "NAME": "HDMI-2",
+    "HASHVAL": 3954833980
+   },
+   {
+    "CNAME": "hdmi3",
+    "TYPE": "T_MENU_V1",
+    "NAME": "HDMI-3",
+    "HASHVAL": 3274736286
+   }
+  ],
+  "NAME": "Rename",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "rename",
+  "GROUP": "G_MANAGE_INPUT_LIST",
+  "HASHLIST": [
+   2031068211,
+   3303368154,
+   2727793842,
+   573348688
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/manage_input_list/rename/hdmi1": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/manage_input_list/rename/hdmi1",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "hdmi1",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "HDMI-1",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2090618365
+   },
+   {
+    "CNAME": "bluray",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Blu-ray",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1196821485
+   },
+   {
+    "CNAME": "cablebox",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Cable Box",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1800822230
+   },
+   {
+    "CNAME": "computer",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Computer",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 972040411
+   },
+   {
+    "CNAME": "dvd",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "DVD",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2397779012
+   },
+   {
+    "CNAME": "dvr",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "DVR",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2784826198
+   },
+   {
+    "CNAME": "game",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Game",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2808526918
+   },
+   {
+    "CNAME": "satellite",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Satellite",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1189887409
+   },
+   {
+    "CNAME": "xbox",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Xbox",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3602663319
+   },
+   {
+    "CNAME": "custom",
+    "TYPE": "T_DEVICE_V1",
+    "NAME": "Custom",
+    "VALUE": "HDMI-1",
+    "HASHVAL": 901166188
+   }
+  ],
+  "NAME": "HDMI-1",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hdmi1",
+  "GROUP": "G_SYSTEM",
+  "HASHLIST": [
+   990978913,
+   1874132624,
+   3270419914,
+   3900345720,
+   1206837968
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/manage_input_list/rename/hdmi2": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/manage_input_list/rename/hdmi2",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "hdmi2",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "HDMI-2",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3146118593
+   },
+   {
+    "CNAME": "bluray",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Blu-ray",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 678310716
+   },
+   {
+    "CNAME": "cablebox",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Cable Box",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1965122347
+   },
+   {
+    "CNAME": "computer",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Computer",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3631612402
+   },
+   {
+    "CNAME": "dvd",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "DVD",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3135185475
+   },
+   {
+    "CNAME": "dvr",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "DVR",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3458708457
+   },
+   {
+    "CNAME": "game",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Game",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2357629279
+   },
+   {
+    "CNAME": "satellite",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Satellite",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1565123778
+   },
+   {
+    "CNAME": "xbox",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Xbox",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2087898674
+   },
+   {
+    "CNAME": "custom",
+    "TYPE": "T_DEVICE_V1",
+    "NAME": "Custom",
+    "VALUE": "HDMI-2",
+    "HASHVAL": 3549276658
+   }
+  ],
+  "NAME": "HDMI-2",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hdmi2",
+  "GROUP": "G_SYSTEM",
+  "HASHLIST": [
+   1632189072,
+   321659739,
+   3679003993,
+   1083982917,
+   3438444657
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/manage_input_list/rename/hdmi3": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/manage_input_list/rename/hdmi3",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "hdmi3",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "HDMI-3",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2515402349
+   },
+   {
+    "CNAME": "bluray",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Blu-ray",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2581821063
+   },
+   {
+    "CNAME": "cablebox",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Cable Box",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 4006045312
+   },
+   {
+    "CNAME": "computer",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Computer",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3597240409
+   },
+   {
+    "CNAME": "dvd",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "DVD",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1036602334
+   },
+   {
+    "CNAME": "dvr",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "DVR",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3557121836
+   },
+   {
+    "CNAME": "game",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Game",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2349797468
+   },
+   {
+    "CNAME": "satellite",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Satellite",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3822678731
+   },
+   {
+    "CNAME": "xbox",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Xbox",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3121295609
+   },
+   {
+    "CNAME": "custom",
+    "TYPE": "T_DEVICE_V1",
+    "NAME": "Custom",
+    "VALUE": "HDMI-3",
+    "HASHVAL": 712116764
+   }
+  ],
+  "NAME": "HDMI-3",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hdmi3",
+  "GROUP": "G_SYSTEM",
+  "HASHLIST": [
+   1511514951,
+   232535538,
+   4033941312,
+   2340250494,
+   2408738570
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/manage_input_list/hide": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/manage_input_list/hide",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "hdmi1",
+    "TYPE": "T_LIST_V1",
+    "NAME": "HDMI-1",
+    "VALUE": "Visible",
+    "HASHVAL": 2553187010,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "hdmi2",
+    "TYPE": "T_LIST_V1",
+    "NAME": "HDMI-2",
+    "VALUE": "Visible",
+    "HASHVAL": 2056531721,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "hdmi3",
+    "TYPE": "T_LIST_V1",
+    "NAME": "HDMI-3",
+    "VALUE": "Visible",
+    "HASHVAL": 3915404596,
+    "INDEX": 0
+   }
+  ],
+  "NAME": "Hide From Input List",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "hide",
+  "GROUP": "G_SYSTEM",
+  "HASHLIST": [
+   3611413582,
+   2838476800,
+   3695261808,
+   910402971
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/power": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/power",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "input_at_power_on",
+    "TYPE": "T_LIST_X_V1",
+    "NAME": "Input at Power On",
+    "VALUE": "SmartCast",
+    "HASHVAL": 1592061903,
+    "ELEMENTS": [
+     "SmartCast",
+     "Last Used TV Input"
+    ]
+   },
+   {
+    "CNAME": "usb_power",
+    "TYPE": "T_LIST_V1",
+    "NAME": "USB Power",
+    "VALUE": "Always On",
+    "HASHVAL": 4196348948,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "power_indicator",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Power Indicator",
+    "VALUE": "Off",
+    "HASHVAL": 3970862790,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "auto_power_off",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Auto Power Off",
+    "VALUE": "10 minutes",
+    "HASHVAL": 3839154957,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "blank_screen",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Blank Screen",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1398349914
+   }
+  ],
+  "NAME": "Power",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "power",
+  "GROUP": "G_POWER",
+  "HASHLIST": [
+   1946125808,
+   158332746,
+   338729182
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/system/parental_controls": {
+  "STATUS": {
+   "RESULT": "REQUIRES_NEW_SYSTEM_PIN",
+   "DETAIL": "Must set new System PIN"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/system/parental_controls"
+ },
+ "/menu_native/dynamic/tv_settings/support": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/support",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "restart_tv",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Restart TV",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1033587593
+   },
+   {
+    "CNAME": "support_code",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Support Code",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2108117860
+   },
+   {
+    "CNAME": "check_for_updates",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Check for Updates",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3390014724
+   },
+   {
+    "CNAME": "factory_reset",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Reset to Factory Settings",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 2414060741
+   },
+   {
+    "CNAME": "tv_speakers_test",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Test TV Speakers",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 139521917
+   }
+  ],
+  "NAME": "Support",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "support",
+  "GROUP": "G_SUPPORT",
+  "HASHLIST": [
+   2079827679,
+   1628832932
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/privacy_and_legal": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/privacy_and_legal",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "vizio_privacy_policy",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "VIZIO Privacy Policy",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 3075144547
+   },
+   {
+    "CNAME": "vizio_viewing_data",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Viewing Data",
+    "VALUE": "Off",
+    "HASHVAL": 1289783858,
+    "INDEX": 0
+   },
+   {
+    "CNAME": "advertising",
+    "TYPE": "T_MENU_V1",
+    "NAME": "Advertising",
+    "HASHVAL": 1670776241
+   },
+   {
+    "CNAME": "license_list",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "License List",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 4209019808
+   }
+  ],
+  "NAME": "Privacy & Legal",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "privacy_and_legal",
+  "GROUP": "G_ADMIN_AND_PRIVACY",
+  "HASHLIST": [
+   1124455876,
+   2972469060
+  ]
+ },
+ "/menu_native/dynamic/tv_settings/privacy_and_legal/advertising": {
+  "STATUS": {
+   "RESULT": "SUCCESS",
+   "DETAIL": "Success"
+  },
+  "URI": "/menu_native/dynamic/tv_settings/privacy_and_legal/advertising",
+  "PARAMETERS": {
+   "HASHONLY": "FALSE",
+   "FLAT": "TRUE",
+   "HELPTEXT": "FALSE"
+  },
+  "ITEMS": [
+   {
+    "CNAME": "limit_ad_tracking",
+    "TYPE": "T_LIST_V1",
+    "NAME": "Limited Ad Tracking",
+    "VALUE": "On",
+    "HASHVAL": 1286189382,
+    "INDEX": 1
+   },
+   {
+    "CNAME": "tvad_id_reset",
+    "TYPE": "T_ACTION_V1",
+    "NAME": "Reset TV Advertiser ID",
+    "VALUE": "T_ACTION_V1",
+    "HASHVAL": 1441630638
+   }
+  ],
+  "NAME": "Advertising",
+  "TYPE": "T_MENU_V1",
+  "CNAME": "advertising",
+  "GROUP": "G_ADVERTISING",
+  "HASHLIST": [
+   3282855363,
+   2196138886,
+   851564139
+  ]
+ }
+}

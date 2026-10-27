@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Free My Vizio PoC</title>
+<style>
+  html, body { margin: 0; background: #111; color: #eee; font-family: sans-serif; }
+  body { padding: 40px 60px; }
+  h1 { margin: 0 0 10px; font-size: 40px; }
+  #grid { display: grid; grid-template-columns: repeat(4, 260px); gap: 24px; margin: 24px 0; }
+  .tile { height: 140px; background: #2a2a2a; border-radius: 12px; display: flex; align-items: center;
+          justify-content: center; font-size: 26px; border: 4px solid transparent; transition: transform .1s; }
+  .tile.focus { border-color: #4af; transform: scale(1.06); background: #234; }
+  #status { font-size: 20px; line-height: 1.5; white-space: pre-wrap; font-family: monospace; }
+  #lastkey { font-size: 32px; color: #fd4; }
+</style>
+</head>
+<body>
+<h1>Free My Vizio — PoC</h1>
+<div id="lastkey">Press a remote key…</div>
+<div id="grid"></div>
+<div id="status"></div>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var LOG_URL = params.get('log') || (location.origin + '/log');
+  var TV_IP = params.get('tv') || '';
+  var seq = 0;
+  var startedAt = Date.now();
+  var statusEl = document.getElementById('status');
+  var lines = [];
+
+  function post(type, data) {
+    var body = JSON.stringify({ type: type, seq: seq++, uptimeMs: Date.now() - startedAt, href: location.href, data: data || null });
+    try {
+      fetch(LOG_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true })
+        .catch(function (e) { note('log POST failed: ' + e); });
+    } catch (e) { note('fetch unavailable: ' + e); }
+  }
+  function note(s) { lines.unshift(new Date().toLocaleTimeString() + '  ' + s); lines = lines.slice(0, 14); statusEl.textContent = lines.join('\n'); }
+
+  // Persistence check
+  var launches = 0;
+  try { launches = Number(localStorage.getItem('fmv_launches') || 0) + 1; localStorage.setItem('fmv_launches', String(launches)); }
+  catch (e) { launches = -1; }
+
+  var env = {
+    ua: navigator.userAgent,
+    screen: [screen.width, screen.height], inner: [innerWidth, innerHeight], dpr: devicePixelRatio,
+    launches: launches,
+    features: {
+      fetch: typeof fetch === 'function', websocket: typeof WebSocket === 'function',
+      promise: typeof Promise === 'function', cssGrid: CSS && CSS.supports && CSS.supports('display', 'grid'),
+      esModules: 'noModule' in document.createElement('script'), serviceWorker: 'serviceWorker' in navigator,
+      indexedDB: typeof indexedDB !== 'undefined', localStorage: launches !== -1,
+      optionalChaining: (function () { try { return Function('return ({a:1})?.a===1')(); } catch (e) { return false; } })(),
+      VIZIO: typeof window.VIZIO !== 'undefined', VIZIO_keys: typeof window.VIZIO !== 'undefined' ? Object.keys(window.VIZIO) : null,
+      secureContext: window.isSecureContext,
+    },
+    globals: Object.keys(window).filter(function (k) { return /vizio|conjure|smartcast|tv|cast/i.test(k); }).slice(0, 40),
+  };
+  note('UA: ' + env.ua);
+  note('launch #' + launches + '  screen ' + env.screen.join('x') + ' inner ' + env.inner.join('x') + ' dpr ' + env.dpr);
+  post('env', env);
+
+  // Focus grid
+  var names = ['Netflix', 'YouTube', 'Prime Video', 'Disney+', 'HDMI 1', 'HDMI 2', 'Settings', 'Exit test'];
+  var grid = document.getElementById('grid');
+  var tiles = names.map(function (n) { var d = document.createElement('div'); d.className = 'tile'; d.textContent = n; grid.appendChild(d); return d; });
+  var COLS = 4, idx = 0;
+  function focus(i) { tiles[idx].classList.remove('focus'); idx = Math.max(0, Math.min(tiles.length - 1, i)); tiles[idx].classList.add('focus'); }
+  focus(0);
+
+  document.addEventListener('keydown', function (e) {
+    var info = { key: e.key, code: e.code, keyCode: e.keyCode, which: e.which, repeat: e.repeat };
+    document.getElementById('lastkey').textContent = 'key=' + e.key + ' code=' + e.code + ' keyCode=' + e.keyCode;
+    post('keydown', info);
+    switch (e.keyCode) {
+      case 37: focus(idx - 1); e.preventDefault(); break;
+      case 39: focus(idx + 1); e.preventDefault(); break;
+      case 38: focus(idx - COLS); e.preventDefault(); break;
+      case 40: focus(idx + COLS); e.preventDefault(); break;
+      case 13: note('SELECT ' + names[idx]); post('select', { tile: names[idx] });
+        var NATIVE = { 'Netflix': [3, '1'], 'YouTube': [5, '1'], 'Prime Video': [3, '3'], 'Disney+': [2, '75'] };
+        if (window.__fmvNativeLaunch && window.VIZIO && window.VIZIO.launchApp && NATIVE[names[idx]]) {
+          var n = NATIVE[names[idx]];
+          try {
+            window.VIZIO.launchApp(n[0], n[1], null, function (status) { post('native-launch', { tile: names[idx], status: status }); });
+            post('native-launch', { tile: names[idx], called: true });
+          } catch (err) { post('native-launch', { tile: names[idx], error: String(err) }); }
+          break;
+        }
+        if (window.__fmvNativeLaunch && names[idx] === 'Exit test' && window.VIZIO && window.VIZIO.exitApplication) {
+          post('native-exit', { called: true }); window.VIZIO.exitApplication(); break;
+        }
+        fetch(location.origin + '/api/action', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tile: names[idx] }) })
+          .then(function (r) { return r.json(); }).then(function (j) { note('action ' + names[idx] + ' -> ' + JSON.stringify(j)); })
+          .catch(function (err) { note('action failed: ' + err); });
+        break;
+      case 8: note('BACK pressed (handled by page; not exiting)'); e.preventDefault(); break;
+    }
+  }, true);
+  document.addEventListener('keyup', function (e) { post('keyup', { key: e.key, keyCode: e.keyCode }); }, true);
+
+  ['visibilitychange', 'pagehide', 'pageshow', 'freeze', 'resume', 'beforeunload', 'unload'].forEach(function (ev) {
+    (ev === 'visibilitychange' || ev === 'freeze' || ev === 'resume' ? document : window).addEventListener(ev, function () {
+      post('lifecycle', { event: ev, visibility: document.visibilityState, hidden: document.hidden });
+      note('lifecycle ' + ev + ' ' + document.visibilityState);
+    });
+  });
+  window.addEventListener('blur', function () { post('lifecycle', { event: 'blur' }); });
+  window.addEventListener('focus', function () { post('lifecycle', { event: 'focus' }); });
+  window.addEventListener('error', function (e) { post('error', { message: e.message, src: e.filename, line: e.lineno }); });
+
+  setInterval(function () { post('heartbeat', { visibility: document.visibilityState }); }, 15000);
+
+  // Can the page reach the TV's own API directly? (expected to fail on CORS/cert; recorded for evidence)
+  var targets = ['https://127.0.0.1:7345/state/device/deviceinfo'];
+  if (TV_IP) targets.push('https://' + TV_IP + ':7345/state/device/deviceinfo');
+  targets.forEach(function (u) {
+    fetch(u).then(function (r) { return r.text().then(function (t) { post('tvapi-probe', { url: u, ok: true, status: r.status, len: t.length }); note('TV API ' + u + ' -> ' + r.status); }); })
+      .catch(function (err) { post('tvapi-probe', { url: u, ok: false, error: String(err) }); note('TV API ' + u + ' failed: ' + err); });
+  });
+
+  // Optional: load the VIZIO companion library if a URL is supplied via ?companion=<url>
+  // (on-TV path: http://127.0.0.1:12345/scfs/cl/js/vizio-companion-lib.js)
+  var companion = params.get('companion');
+  function reportCompanion(evName) {
+    var V = window.VIZIO, M = window.VIZIO_MODULES, A = window.VIZIO_APPS;
+    var rep = {
+      event: evName,
+      VIZIO: V ? Object.keys(V) : null,
+      VIZIO_MODULES: M ? Object.keys(M) : null,
+      VIZIO_APPS_len: A && A.length, VIZIO_APPS_sample: A ? JSON.stringify(A).slice(0, 4000) : null,
+      vizioGlobals: Object.keys(window).filter(function (k) { return /vizio/i.test(k); }),
+    };
+    post('companion', rep);
+    note(evName + ': VIZIO=' + (rep.VIZIO ? rep.VIZIO.length + ' keys' : 'none') + ' APPS=' + rep.VIZIO_APPS_len);
+  }
+  if (companion) {
+    document.addEventListener('VIZIO_LIBRARY_DID_LOAD', function () { reportCompanion('VIZIO_LIBRARY_DID_LOAD'); });
+    document.addEventListener('VIZIO_MODULES_READY', function () { reportCompanion('VIZIO_MODULES_READY'); });
+    var s = document.createElement('script'); s.src = companion;
+    s.onload = function () { reportCompanion('script-onload'); setTimeout(function () { reportCompanion('after-3s'); }, 3000); };
+    s.onerror = function () { post('companion', { loaded: false, url: companion }); note('companion lib failed to load'); };
+    document.head.appendChild(s);
+  }
+  window.__fmvNativeLaunch = params.get('native') === '1';
+})();
+</script>
+</body>
+</html>

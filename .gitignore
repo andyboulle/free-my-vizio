@@ -1,0 +1,9 @@
+# Secrets / local state — never commit
+.free-my-vizio/
+*.credentials.json
+poc-credentials.json
+poc-events.jsonl
+.env
+.env.*
+node_modules/
+.DS_Store
