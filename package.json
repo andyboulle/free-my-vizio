@@ -1,0 +1,20 @@
+{
+  "name": "free-my-vizio",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/main.ts",
+    "cli": "node src/cli.ts",
+    "test": "node --test \"test/**/*.test.ts\" \"test/**/*.test.js\"",
+    "typecheck": "tsc -p .",
+    "check:web": "node scripts/check-web.mjs",
+    "verify": "npm run typecheck && npm run check:web && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5.8"
+  }
+}
