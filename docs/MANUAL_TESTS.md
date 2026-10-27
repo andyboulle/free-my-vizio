@@ -8,3 +8,12 @@ Run against a real TV; do not mark these passed from mocks.
 | MT-4.2 | 2026-10-27 | 86.910.19.2-1 | Pass | Arrows reached every tile; app launch and HDMI 1 switching passed. |
 | MT-4.3 | 2026-10-27 | 86.910.19.2-1 | Pass | Backspace did not exit the UI. |
 | MT-4.4 | 2026-10-27 | 86.910.19.2-1 | Pass | Offline banner and restart recovery passed. |
+| MT-5.1 | 2026-10-27 | 86.910.19.2-1 | Pass | Initial run exposed URL and current-app envelope bugs; after fixes, Home returned to our UI in the retest. |
+| MT-5.2 | 2026-10-27 | 86.910.19.2-1 | Pass | Netflix → Home returned to our UI after fixes. |
+| MT-5.3 | 2026-10-27 | 86.910.19.2-1 | Pass | HDMI input remained selected and takeover returned to our UI after fixes. |
+| MT-5.4 | 2026-10-27 | 86.910.19.2-1 | Pass | 30-second standby/on returned to our UI after fixes. |
+| MT-5.5 | 2026-10-27 | 86.910.19.2-1 | Pass | 10-minute standby/on returned to our UI after fixes. |
+| MT-5.6 | 2026-10-27 | 86.910.19.2-1 | Pass | Native home escape remained available and takeover behavior passed after fixes. |
+| MT-5.7 | 2026-10-27 | 86.910.19.2-1 | Pass | Cast YouTube did not trigger relaunch; our UI returned after casting stopped. |
+| MT-5.8 |  |  | Not run | Overnight standby (≥8 hours) → on; user will test tomorrow. |
+| MT-5.9 | 2026-10-27 | 86.910.19.2-1 | Pass | TV restart test passed using the available on-screen TV control. |

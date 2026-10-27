@@ -23,7 +23,7 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
   return http.createServer(async (req, res) => {
     if (!hostAllowed(req.headers.host, allowed)) return json(res, 421, { error: 'misdirected request' });
     const rawPath = (req.url ?? '/').split('?')[0]; const url = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`); const pathname = rawPath;
-    if (pathname === '/healthz' && req.method === 'GET') return json(res, 200, { ok: true, version: options.version ?? 'dev', paired: Boolean(options.secrets.tvAuthToken), tvReachable: false, takeover: { state: 'IDLE' } });
+    if (pathname === '/healthz' && req.method === 'GET') return json(res, 200, { ok: true, version: options.version ?? 'dev', paired: Boolean(options.secrets.tvAuthToken), tvReachable: false, takeover: options.tv?.takeoverStatus?.() ?? { state: 'IDLE' } });
     if (pathname.startsWith('/tv/')) { if (serveStatic(res, roots.tv, pathname.slice(3) || '/index.html')) return; return json(res, pathname.includes('..') || pathname.includes('%') ? 400 : 404, { error: 'not found' }); }
     if (pathname.startsWith('/admin/')) { if (serveStatic(res, roots.admin, pathname.slice(6) || '/index.html')) return; return json(res, 404, { error: 'not found' }); }
     if (pathname.startsWith('/icons/')) { if (/^\/icons\/[0-9]+\.png$/.test(pathname) && serveStatic(res, roots.icons, pathname.slice(6))) return; return json(res, 404, { error: 'not found' }); }
@@ -33,7 +33,7 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
       if (pathname === '/api/tv/home' && req.method === 'GET' && options.tv) return json(res, 200, tvHome(options.tv));
       if (pathname === '/api/tv/activate' && req.method === 'POST' && options.tv) { const data = await body(req) as { shortcutId?: string }; await activateShortcut(options.tv, String(data.shortcutId ?? '')); return json(res, 200, { ok: true }); }
       if (pathname === '/api/tv/native-home' && req.method === 'POST' && options.tv) { await options.tv.nativeHome(); return json(res, 200, { ok: true }); }
-      if (pathname === '/api/tv/status' && req.method === 'GET') return json(res, 200, { power: null, appClass: null, takeoverState: 'IDLE' });
+      if (pathname === '/api/tv/status' && req.method === 'GET') { const status = options.tv?.takeoverStatus?.(); return json(res, 200, status ? { ...status, takeoverState: status.state } : { power: null, appClass: null, takeoverState: 'IDLE' }); }
       return json(res, 404, { error: 'not found' });
     } catch (error) { const status = (error as { status?: number; code?: string }).status ?? ((error as { code?: string }).code === 'NOT_FOUND' ? 404 : 502); return json(res, status, { ok: false, error: { code: 'TV_ERROR', message: 'request failed' } }); }
   });

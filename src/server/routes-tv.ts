@@ -3,8 +3,9 @@ import type { Catalog } from '../catalog/catalog.ts';
 import type { SmartCastClient } from '../tv/smartcast-client.ts';
 import type { TvProfile } from '../tv/profiles/types.ts';
 import type { DeviceInfo } from '../tv/smartcast-client.ts';
+import type { TakeoverStatus } from '../supervisor/takeover.ts';
 
-export interface TvRouteDeps { config: Config; catalog?: Catalog; client?: SmartCastClient; profile?: TvProfile; device?: DeviceInfo; nativeHome: () => Promise<void>; }
+export interface TvRouteDeps { config: Config; catalog?: Catalog; client?: SmartCastClient; profile?: TvProfile; device?: DeviceInfo; nativeHome: () => Promise<void>; takeoverStatus?: () => TakeoverStatus; }
 export function tvHome(deps: TvRouteDeps) {
   return { title: deps.config.home.title, theme: deps.config.home.theme, accent: deps.config.home.accent, showClock: deps.config.home.showClock,
     sections: deps.config.home.sections.map(section => ({ id: section.id, title: section.title, shortcuts: section.shortcuts.filter(s => !s.hidden).map(s => ({ id: s.id, label: s.label, kind: s.kind, icon: s.catalogId ? `/icons/${s.catalogId}.png` : undefined })) })) };

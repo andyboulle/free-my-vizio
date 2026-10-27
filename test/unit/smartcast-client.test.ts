@@ -17,3 +17,8 @@ test('client creates exact launch, URL, and key payloads', async () => {
   assert.deepEqual((f.calls[1] as unknown[])[2], { VALUE: { NAME_SPACE: 4, APP_ID: '17', MESSAGE: 'https://example.test' } });
   assert.deepEqual((f.calls[2] as unknown[])[2], { KEYLIST: [{ CODESET: 11, CODE: 1, ACTION: 'KEYPRESS' }] });
 });
+test('client unwraps current app VALUE envelopes', async () => {
+  const f = fake([{ STATUS: { RESULT: 'SUCCESS' }, ITEM: { TYPE: 'T_APP_V1', VALUE: { NAME_SPACE: 4, APP_ID: '1', MESSAGE: null } } }]);
+  const client = new SmartCastClient({ connection: { host: 'x' } as never, transport: f.transport });
+  assert.deepEqual(await client.getCurrentApp(), { nameSpace: 4, appId: '1', message: null });
+});

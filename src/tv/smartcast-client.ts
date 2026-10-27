@@ -51,7 +51,13 @@ export class SmartCastClient {
     const v = (r.ITEM as JsonRecord | undefined) ?? ((r.ITEMS as JsonRecord[] | undefined)?.[0]?.VALUE as JsonRecord) ?? r; return String(v.AUTH_TOKEN ?? v.AUTH ?? v);
   }
   async cancelPairing(deviceId: string, challenge?: { pairingReqToken: number; challengeType: number }, o?: CallOptions) { await this.request('PUT', '/pairing/cancel', { DEVICE_ID: deviceId, ...(challenge ? { PAIRING_REQ_TOKEN: challenge.pairingReqToken, CHALLENGE_TYPE: challenge.challengeType } : {}) }, { ...o, auth: false }); }
-  async getCurrentApp(o?: CallOptions): Promise<AppRef | null> { const r = await this.request('GET', '/app/current', undefined, o); const v = (r.ITEM as JsonRecord | undefined) ?? ((r.ITEMS as JsonRecord[] | undefined)?.[0]?.VALUE as JsonRecord | undefined); return v ? { nameSpace: Number(v.NAME_SPACE ?? v.NAMESPACE), appId: String(v.APP_ID ?? v.APPID), message: v.MESSAGE == null ? null : String(v.MESSAGE) } : null; }
+  async getCurrentApp(o?: CallOptions): Promise<AppRef | null> {
+    const r = await this.request('GET', '/app/current', undefined, o);
+    const item = r.ITEM as JsonRecord | undefined;
+    const v = (item?.VALUE as JsonRecord | undefined) ?? item ??
+      ((r.ITEMS as JsonRecord[] | undefined)?.[0]?.VALUE as JsonRecord | undefined);
+    return v ? { nameSpace: Number(v.NAME_SPACE ?? v.NAMESPACE), appId: String(v.APP_ID ?? v.APPID), message: v.MESSAGE == null ? null : String(v.MESSAGE) } : null;
+  }
   async launchApp(app: AppRef, o?: CallOptions) { await this.request('PUT', '/app/launch', { VALUE: { NAME_SPACE: app.nameSpace, APP_ID: app.appId, MESSAGE: app.message } }, o); }
   async launchUrl(url: string, appId = '17', o?: CallOptions) { await this.launchApp({ nameSpace: 4, appId, message: url }, o); }
   async sendKey(key: KeyName, action: 'KEYPRESS' | 'KEYDOWN' | 'KEYUP' = 'KEYPRESS', o?: CallOptions) { const [codeset, code] = KEY_CODES[key]; await this.request('PUT', '/key_command/', { KEYLIST: [{ CODESET: codeset, CODE: code, ACTION: action }] }, o); }
