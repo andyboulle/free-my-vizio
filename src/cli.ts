@@ -5,6 +5,8 @@ import { scanSubnet } from './tv/discovery.ts';
 import { TvConnection } from './tv/transport.ts';
 import { SmartCastClient } from './tv/smartcast-client.ts';
 import { pickLanAddress } from './util/net.ts';
+import { selectProfile } from './tv/profiles/index.ts';
+import { classifyApp } from './tv/app-identity.ts';
 
 async function pinPrompt(): Promise<string> {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -30,8 +32,12 @@ async function main(args: string[]): Promise<void> {
   }
   if (command === 'status' || command === 'doctor') {
     if (!config.tv.host) throw new Error('TV is not configured'); const s = loadSecrets(dir); const client = new SmartCastClient({ connection: new TvConnection({ host: config.tv.host, port: config.tv.port, authToken: s.tvAuthToken }) }); const info = await client.getDeviceInfo();
-    if (command === 'status') { const power = await client.getPowerState(); const app = await client.getCurrentApp(); console.log(JSON.stringify({ power, app, paired: Boolean(s.tvAuthToken) })); }
-    else console.log(JSON.stringify({ model: info.model, firmware: info.firmware, apiVersion: info.apiVersion, conjureVersion: info.conjureVersion, capabilities: info.capabilities, reachable: true, paired: Boolean(s.tvAuthToken) }));
+    const selection = selectProfile(info);
+    if (command === 'status') {
+      const power = await client.getPowerState(); const app = await client.getCurrentApp();
+      const prefix = `${config.server.publicBaseUrl ?? ''}/tv/`;
+      console.log(JSON.stringify({ power, app, appClass: classifyApp(power, app, { tvUiUrlPrefix: prefix, profile: selection.profile }), profile: selection.profile.id, verified: selection.verified, paired: Boolean(s.tvAuthToken) }));
+    } else console.log(JSON.stringify({ model: info.model, firmware: info.firmware, apiVersion: info.apiVersion, conjureVersion: info.conjureVersion, capabilities: info.capabilities, profile: selection.profile.id, verified: selection.verified, reachable: true, paired: Boolean(s.tvAuthToken) }));
     return;
   }
   throw new Error(`Unknown command: ${command ?? ''}`);

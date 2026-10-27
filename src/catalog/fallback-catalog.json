@@ -1,0 +1,12 @@
+[
+  {"catalogId":"34","name":"Netflix","iconUrl":"https://scfs.vizio.com/icons/34.png","payload":{"nameSpace":3,"appId":"1","message":null},"verifiedOnTarget":true},
+  {"catalogId":"44","name":"YouTube","iconUrl":"https://scfs.vizio.com/icons/44.png","payload":{"nameSpace":5,"appId":"1","message":null},"verifiedOnTarget":true},
+  {"catalogId":"33","name":"Prime Video","iconUrl":"https://scfs.vizio.com/icons/33.png","payload":{"nameSpace":3,"appId":"3","message":null},"verifiedOnTarget":true},
+  {"catalogId":"76","name":"Disney+","payload":{"nameSpace":2,"appId":"75","message":null},"verifiedOnTarget":false},
+  {"catalogId":"19","name":"Hulu","payload":{"nameSpace":2,"appId":"3","message":null},"verifiedOnTarget":false},
+  {"catalogId":"40","name":"Plex","payload":{"nameSpace":2,"appId":"9","message":null},"verifiedOnTarget":false},
+  {"catalogId":"88","name":"Peacock","payload":{"nameSpace":2,"appId":"88","message":null},"verifiedOnTarget":false},
+  {"catalogId":"9","name":"Paramount+","payload":{"nameSpace":2,"appId":"37","message":null},"verifiedOnTarget":false},
+  {"catalogId":"90","name":"Tubi","payload":{"nameSpace":2,"appId":"61","message":null},"verifiedOnTarget":false},
+  {"catalogId":"91","name":"Apple TV+","payload":{"nameSpace":3,"appId":"4","message":null},"verifiedOnTarget":false}
+]
