@@ -32,6 +32,13 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
       const tvReachable = Number.isFinite(lastTvContactAt) ? Date.now() - lastTvContactAt < 10_000 : null;
       return json(res, 200, { ok: true, version: options.version ?? 'dev', paired: Boolean(options.secrets.tvAuthToken), tvReachable, takeover });
     }
+    if (pathname === '/tv/accent.css' && req.method === 'GET') {
+      const accent = /^#[0-9a-f]{6}$/i.test(options.config.home.accent) ? options.config.home.accent : '#f0f2f1';
+      const css = `:root{--accent:${accent};--focus-ring:${accent};--brand:${accent}}\n`;
+      res.writeHead(200, { 'Content-Type': 'text/css; charset=utf-8', 'Cache-Control': 'no-store', 'Content-Length': Buffer.byteLength(css), 'X-Content-Type-Options': 'nosniff' });
+      res.end(css);
+      return;
+    }
     if (pathname.startsWith('/tv/')) { if (serveStatic(res, roots.tv, pathname.slice(3) || '/index.html', pathname === '/tv/preview.html' ? "'self'" : "'none'")) return; return json(res, pathname.includes('..') || pathname.includes('%') ? 400 : 404, { error: 'not found' }); }
     if (pathname.startsWith('/admin/')) { if (serveStatic(res, roots.admin, pathname.slice(6) || '/index.html')) return; return json(res, 404, { error: 'not found' }); }
     if (pathname.startsWith('/shared/')) { if (serveStatic(res, roots.shared, pathname.slice(7))) return; return json(res, 404, { error: 'not found' }); }

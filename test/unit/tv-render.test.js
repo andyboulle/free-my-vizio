@@ -30,7 +30,7 @@ test('renderHome applies the configured accent and clock visibility', () => {
   const home = {theme: 'dark', title: 'Living Room', accent: '#123456', showClock: true, sections: []};
   renderHome(home, () => {});
 
-  assert.equal(document.documentElement.properties['--accent'], '#123456');
+  assert.equal(document.documentElement.dataset.accent, '#123456');
   assert.equal(elements['#clock'].hidden, false);
   assert.equal(elements['#clock'].textContent, formatClock());
 

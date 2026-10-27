@@ -53,10 +53,10 @@ All values are CSS custom properties on `:root`. Never hard-code a colour, size,
 --text-1: rgb(255 255 255 / .96);  /* primary */
 --text-2: rgb(255 255 255 / .66);  /* secondary */
 --text-3: rgb(255 255 255 / .42);  /* tertiary / hints */
---accent: #4aa8ff;          /* user configurable (config.home.accent) */
+--accent: #f0f2f1;          /* user configurable (config.home.accent) */
 --focus-ring: rgb(255 255 255 / .92);
 --ok: #3ddc97; --warn: #ffb547; --err: #ff5d5d;
---brand: #4aa8ff;           /* set at runtime to the focused shortcut's brand colour */
+--brand: #f0f2f1;           /* set at runtime to the focused shortcut's brand colour */
 ```
 
 Contrast: `--text-1/--text-2` on `--bg-0` ≥ 7:1 / ≥ 4.5:1. On the ambient backdrop, text sits over the legibility
@@ -369,7 +369,7 @@ Goal: a polished control app you'd be happy to open on your phone every day. Sam
 **Appearance**
 - Theme: Cinematic (dark ambient, default) · OLED (pure black, no backdrop blobs, static) · Light (soft daylight gradient,
   dark text). Live preview card.
-- Accent: 8 swatches (`#4AA8FF #7C8CFF #B07CFF #FF6FAE #FF7A59 #FFB547 #3DDC97 #2BD4C9`) + custom hex input.
+- Accent: 8 swatches (`#f0f2f1 #7C8CFF #B07CFF #FF6FAE #FF7A59 #FFB547 #3DDC97 #2BD4C9`) + custom hex input.
 - Backdrop: Ambient (animated) · Still (no drift) · Off.
 - Clock: 12h / 24h / Auto, Show date, Greeting.
 - Card labels: Focused only (default) · Always.
@@ -397,7 +397,7 @@ no layout shift on load (reserve skeleton space).
 
 ```jsonc
 "home": {
-  "title": "Living Room", "theme": "cinematic" /* cinematic | oled | light */, "accent": "#4aa8ff",
+  "title": "Living Room", "theme": "cinematic" /* cinematic | oled | light */, "accent": "#f0f2f1",
   "clock": { "format": "auto" /* auto|12h|24h */, "showDate": true, "greeting": false },
   "appearance": { "backdrop": "ambient" /* ambient|still|off */, "labels": "focused" /* focused|always */, "reduceMotion": false },
   "sections": [ /* unchanged shape; Shortcut gains optional "brandColor": "#RRGGBB" */ ]

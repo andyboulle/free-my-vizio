@@ -1,0 +1,6 @@
+services:
+  free-my-vizio:
+    volumes:
+      - free-my-vizio-data:/data
+      - ../../web:/opt/free-my-vizio/web:ro
+      - ../../src:/opt/free-my-vizio/src:ro

@@ -4,6 +4,12 @@ body.fx-low .backdrop-grain,.reduce-motion .backdrop-grain{display:none}
 body.fx-low #offline,body.fx-low #toast,.reduce-motion #offline,.reduce-motion #toast{backdrop-filter:none}
 body.fx-low .row{mask-image:none}
 #debug-overlay{position:fixed;top:12px;right:16px;z-index:20;padding:8px 12px;border:1px solid var(--stroke-strong);border-radius:var(--r-pill);background:rgb(0 0 0/.78);color:var(--text-1);font:16px/1.2 ui-monospace,monospace;pointer-events:none}
+html[data-accent="#f0f2f1"]{--accent:#f0f2f1}html[data-accent="#7c8cff"]{--accent:#7c8cff}html[data-accent="#b07cff"]{--accent:#b07cff}html[data-accent="#ff6fae"]{--accent:#ff6fae}html[data-accent="#ff7a59"]{--accent:#ff7a59}html[data-accent="#ffb547"]{--accent:#ffb547}html[data-accent="#3ddc97"]{--accent:#3ddc97}html[data-accent="#2bd4c9"]{--accent:#2bd4c9}
+header h1,.wordmark{display:none}
+.rail h2{display:none}
+.tile-app img{transform:scale(2.2)}
+#rails{position:absolute;left:64px;right:64px;bottom:40px}
+.tile-app img{transform:scale(3)}
 #rails{transition:transform var(--d-scroll) var(--ease-in-out);transform:translateY(var(--rail-shift, 0px))}
 #rails[data-focus-row="0"]{transform:translateY(0)}
 #hero{transition:height var(--d-scroll) var(--ease-in-out)}
@@ -11,7 +17,7 @@ body.focus-mode #hero{height:180px}
 body.focus-mode .hero-clock,body.focus-mode #clock{position:absolute;top:40px;right:64px;font-size:72.6px;transform-origin:top right}
 body.focus-mode #caption{margin-top:24px}
 .row{transition:transform var(--d-scroll) var(--ease-in-out);mask-image:none}
-.row[data-overflow="true"]{mask-image:linear-gradient(90deg,#000 0 calc(100% - 48px),transparent)}
+.row[data-overflow="true"]{mask-image:none}
 #backdrop{position:fixed;inset:0;pointer-events:none;background:var(--bg-0);z-index:0;overflow:hidden}
 .backdrop-layer{position:absolute;inset:-30px;background:radial-gradient(circle at 76% 18%,color-mix(in srgb,var(--brand) 55%,transparent) 0 32%,transparent 68%),radial-gradient(circle at 20% 86%,color-mix(in srgb,var(--brand) 35%,transparent) 0 28%,transparent 64%),radial-gradient(circle at 92% 88%,color-mix(in srgb,var(--accent) 18%,transparent) 0 24%,transparent 62%);opacity:0;transform:scale(1);transition:opacity var(--d-backdrop) var(--ease-in-out);animation:backdrop-drift 52s var(--ease-in-out) infinite alternate;will-change:transform}
 .backdrop-layer[data-layer="b"]{animation-delay:-26s}
@@ -31,7 +37,7 @@ body.fx-low .backdrop-layer{animation:none}.reduce-motion .backdrop-layer{animat
 body.focus-mode #hero{height:312px;transform:translateY(-92px);transition:transform 140ms var(--ease-in-out)}
 body.focus-mode .hero-clock,body.focus-mode #clock{transform:translate(0) scale(.55);transition:transform 140ms var(--ease-in-out)}
 .row{mask-image:none!important;will-change:transform}.rail{position:relative}
-.rail-fade{position:absolute;right:0;top:28px;width:64px;height:148px;background:linear-gradient(90deg,transparent,rgb(7 8 11/.9));pointer-events:none}
+.rail-fade{display:none}
 #backdrop .backdrop-layer,#backdrop .backdrop-scrim,#backdrop .backdrop-grain{display:none}
 .bg-tint{position:absolute;inset:0;opacity:0;transition:opacity 400ms var(--ease-in-out)}
 #backdrop[data-active="a"] .bg-tint[data-layer="a"],#backdrop[data-active="b"] .bg-tint[data-layer="b"]{opacity:1}

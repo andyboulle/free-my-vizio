@@ -37,7 +37,7 @@ function deriveIconColor(icon, shortcut, tile) {
 
 export function renderHome(home, activate, backdrop) {
   document.body.className = home?.theme || 'cinematic';
-  document.documentElement.style.setProperty('--accent', home?.accent || '#4aa8ff');
+  document.documentElement.dataset.accent = (home?.accent || '#f0f2f1').toLowerCase();
   const title = document.querySelector('#title');
   if (title) title.textContent = home?.title || 'Living Room';
   renderClock(home);
@@ -66,8 +66,8 @@ export function renderHome(home, activate, backdrop) {
       tile.dataset.id = shortcut.id;
       tile.dataset.kind = shortcut.kind || 'system';
       tile.dataset.available = String(shortcut.available !== false);
-      tile.style?.setProperty('--brand', resolveBrandColor(shortcut, home?.accent || '#4aa8ff'));
-      const brand = resolveBrandColor(shortcut, home?.accent || '#4aa8ff').replace('#', '');
+      tile.style?.setProperty('--brand', resolveBrandColor(shortcut, home?.accent || '#f0f2f1'));
+      const brand = resolveBrandColor(shortcut, home?.accent || '#f0f2f1').replace('#', '');
       const rgb = [0,2,4].map(i => Number.parseInt(brand.slice(i, i + 2), 16)).join(' ');
       tile.style?.setProperty('--brand-glow', `rgb(${rgb} / .55)`);
       if (shortcut.available === false) {

@@ -12,7 +12,7 @@ let active = 'a', timer;
 export function createBackdrop(root = document.querySelector('#backdrop')) {
   if (!root) return {setBrand() {}};
   const layers = [...root.querySelectorAll('.bg-tint')];
-  function setBrand(shortcut, accent = '#4aa8ff') {
+  function setBrand(shortcut, accent = '#f0f2f1') {
     clearTimeout(timer);
     timer = setTimeout(() => {
       const layer = layers.find(item => item.dataset.layer !== active);

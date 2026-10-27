@@ -13,7 +13,7 @@ export const DEFAULT_CONFIG: Config = {
   schemaVersion: 2, tv: { host: null, port: 7345, deviceId: null },
   server: { port: 8730, bindHost: '0.0.0.0', publicBaseUrl: null },
   takeover: { enabled: true, mode: 'always', pollMs: 1000, requestTimeoutMs: 2500, confirmDelayMs: 400, cooldownMs: 5000, suppressMinutes: 10, suppressUntilStandby: true, loopGuard: { maxLaunches: 3, windowMs: 60000, pauseMinutes: 10 } },
-  home: { title: 'Living Room', theme: 'cinematic', accent: '#4aa8ff', clock: { format: 'auto', showDate: true, greeting: false }, appearance: { backdrop: 'ambient', labels: 'focused', reduceMotion: false, effects: 'lite' }, sections: [
+  home: { title: 'Living Room', theme: 'cinematic', accent: '#f0f2f1', clock: { format: 'auto', showDate: true, greeting: false }, appearance: { backdrop: 'ambient', labels: 'focused', reduceMotion: false, effects: 'lite' }, sections: [
     { id: 'apps', title: 'Apps', shortcuts: [{ id: 'netflix', kind: 'app', label: 'Netflix', catalogId: '34', hidden: false }, { id: 'youtube', kind: 'app', label: 'YouTube', catalogId: '44', hidden: false }] },
     { id: 'inputs', title: 'Inputs', shortcuts: [{ id: 'hdmi1', kind: 'input', label: 'HDMI 1', cname: 'hdmi1', hidden: false }] },
     { id: 'system', title: 'System', shortcuts: [{ id: 'native-home', kind: 'system', label: 'SmartCast Home', action: 'native-home', hidden: false }] },

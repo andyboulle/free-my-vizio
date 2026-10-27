@@ -52,7 +52,7 @@ export function curatedBrandColor(catalogId) {
   return CURATED[String(catalogId)] || null;
 }
 
-export function resolveBrandColor(shortcut, fallback = '#4aa8ff') {
+export function resolveBrandColor(shortcut, fallback = '#f0f2f1') {
   if (shortcut?.brandColor) return shortcut.brandColor;
   return curatedBrandColor(shortcut?.catalogId ?? shortcut?.appId) ||
     (shortcut?.kind === 'input' ? '#7C8CFF' : shortcut?.kind === 'system' ? '#9AA3B2' : fallback);

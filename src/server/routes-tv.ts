@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import type { Config } from '../config/schema.ts';
 import type { Catalog } from '../catalog/catalog.ts';
 import type { SmartCastClient } from '../tv/smartcast-client.ts';
@@ -7,15 +9,22 @@ import type { TakeoverStatus } from '../supervisor/takeover.ts';
 import type { DeviceContext } from '../tv/device-context.ts';
 
 export interface TvRouteDeps { config: Config; catalog?: Catalog; client?: SmartCastClient; profile?: TvProfile; device?: DeviceInfo; context?: DeviceContext; nativeHome: () => Promise<void>; takeoverStatus?: () => TakeoverStatus; }
+function customAppIcon(shortcutId: string): string | null {
+  const root = path.resolve('web/tv/img/apps');
+  for (const extension of ['png', 'webp', 'jpeg']) {
+    if (fs.existsSync(path.join(root, `${shortcutId}.${extension}`))) return `/tv/img/apps/${shortcutId}.${extension}`;
+  }
+  return null;
+}
 export function tvHome(deps: TvRouteDeps) {
   const device = deps.context?.device ?? deps.device;
   return { title: deps.config.home.title, theme: deps.config.home.theme, accent: deps.config.home.accent, clock: deps.config.home.clock, appearance: deps.config.home.appearance,
-    sections: deps.config.home.sections.map(section => ({ id: section.id, title: section.title, shortcuts: section.shortcuts.filter(s => !s.hidden).map(s => ({
+    sections: deps.config.home.sections.filter(section => section.id === 'apps').map(section => ({ id: section.id, title: section.title, shortcuts: section.shortcuts.filter(s => !s.hidden).map(s => ({
       id: s.id, label: s.label, kind: s.kind, ...(s.action ? { action: s.action } : {}),
       subtitle: s.kind === 'input' ? (s.cname?.toUpperCase() ?? s.label) : s.kind === 'system' ? (s.action === 'power-off' ? 'Turn off the TV' : 'Return to SmartCast') : (deps.catalog?.listAvailableApps(device ?? ({ chipsetKey: '*', firmware: '' } as DeviceInfo)).find(app => app.catalogId === s.catalogId)?.description ?? ''),
       available: s.kind !== 'app' || Boolean(s.payload ?? (s.catalogId && deps.catalog?.resolvePayload(s.catalogId, device))),
       ...(s.brandColor ? { brandColor: s.brandColor } : {}),
-      ...(s.catalogId && deps.catalog?.hasCachedIcon(s.catalogId) ? { icon: `/icons/${s.catalogId}.${deps.catalog.iconExtension(s.catalogId)}` } : {}),
+      ...(customAppIcon(s.id) ? { icon: customAppIcon(s.id) } : s.catalogId && deps.catalog?.hasCachedIcon(s.catalogId) ? { icon: `/icons/${s.catalogId}.${deps.catalog.iconExtension(s.catalogId)}` } : {}),
     })) })) };
 }
 export async function activateShortcut(deps: TvRouteDeps, id: string): Promise<void> {

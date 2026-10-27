@@ -32,16 +32,11 @@ test('TV home omits uncached icons and includes cached icons', async () => {
   }
 });
 
-test('TV home preserves system actions for client-side confirmation', () => {
+test('TV home exposes only the apps rail', () => {
   const config = structuredClone(DEFAULT_CONFIG);
-  config.home.sections[2].shortcuts.push({
-    id: 'power-off',
-    kind: 'system',
-    label: 'Turn off TV',
-    action: 'power-off',
-    hidden: false
-  });
+  config.home.sections[0].shortcuts.push({ id: 'app-76', kind: 'app', label: 'Disney+', catalogId: '76', hidden: false });
   const home = tvHome({ config, nativeHome: async () => {} });
-  const power = home.sections[2].shortcuts.find(shortcut => shortcut.id === 'power-off');
-  assert.equal(power?.action, 'power-off');
+  assert.deepEqual(home.sections.map(section => section.id), ['apps']);
+  assert.equal(home.sections[0].shortcuts.find(shortcut => shortcut.id === 'youtube')?.icon, '/tv/img/apps/youtube.png');
+  assert.equal(home.sections[0].shortcuts.find(shortcut => shortcut.label === 'Disney+')?.icon, '/tv/img/apps/app-76.png');
 });

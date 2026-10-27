@@ -421,7 +421,7 @@ Data dir: `$FMV_DATA_DIR` or `~/.free-my-vizio/` (0700). Files: `config.json`, `
   "server": { "port": 8730, "bindHost": "0.0.0.0", "publicBaseUrl": null /* auto: LAN IP on TV subnet */ },
   "takeover": { /* §5.1 */ },
   "home": {
-    "title": "Living Room", "theme": "dark" /* dark|light|oled */, "accent": "#4aa8ff", "showClock": true,
+    "title": "Living Room", "theme": "dark" /* dark|light|oled */, "accent": "#f0f2f1", "showClock": true,
     "sections": [
       { "id": "apps", "title": "Apps", "shortcuts": [
         { "id": "netflix", "kind": "app", "label": "Netflix", "catalogId": "34", "hidden": false },
