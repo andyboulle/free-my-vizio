@@ -1,0 +1,8 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Free My Vizio Admin</title><link rel="stylesheet" href="/admin/admin.css"></head>
+<body><main><h1>Free My Vizio</h1><p id="message"></p>
+<section><h2>Status</h2><pre id="status">Loading…</pre><button id="open">Open TV UI</button></section>
+<section><h2>Pairing</h2><button id="pair">Start pairing</button><label>PIN <input id="pin" inputmode="numeric" autocomplete="one-time-code"></label><button id="finish">Finish pairing</button></section>
+<section><h2>Home layout</h2><p>Hidden here only — apps are not removed from the TV.</p><div id="layout"></div><button id="save">Save layout</button></section>
+<section><h2>Takeover</h2><label><input id="enabled" type="checkbox"> Enabled</label><select id="mode"><option>always</option><option>power-on-only</option><option>off</option></select><button id="takeover">Apply</button></section>
+<section><h2>Diagnostics</h2><pre id="diagnostics"></pre></section></main><script type="module" src="/admin/admin.js"></script></body></html>

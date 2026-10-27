@@ -8,3 +8,6 @@ export async function scanSubnet(baseIp: string, options: DiscoveryOptions = {})
   async function worker(): Promise<void> { while (next < hosts.length) { const host = hosts[next++]; const found = await probe(host, options.port ?? 7345, options.timeoutMs ?? 1500); if (found) out.push(found); } }
   await Promise.all(Array.from({ length: Math.min(options.concurrency ?? 32, hosts.length) }, () => worker())); return out;
 }
+export function matchByDeviceId(tvs: DiscoveredTv[], deviceId: string): DiscoveredTv | undefined {
+  return tvs.find(tv => tv.deviceId === deviceId);
+}

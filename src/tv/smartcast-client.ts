@@ -18,8 +18,10 @@ const detailOf = (r: TvResponse) => typeof r.json === 'object' && r.json && type
 
 export class SmartCastClient {
   private readonly transport: TvTransport;
+  private readonly connection: TvConnection;
   private lock: Promise<void> = Promise.resolve();
-  constructor(opts: { connection: TvConnection; transport?: TvTransport }) { this.transport = opts.transport ?? createTvTransport(opts.connection); }
+  constructor(opts: { connection: TvConnection; transport?: TvTransport }) { this.connection = opts.connection; this.transport = opts.transport ?? createTvTransport(opts.connection); }
+  updateConnection(patch: { host?: string; port?: number; authToken?: string }): void { this.connection.update(patch); }
   private async request(method: string, path: string, body?: unknown, options?: CallOptions & { auth?: boolean }): Promise<JsonRecord> {
     const response = await this.transport.request(method, path, body, { auth: options?.auth, timeoutMs: options?.timeoutMs });
     const result = resultOf(response).toUpperCase();

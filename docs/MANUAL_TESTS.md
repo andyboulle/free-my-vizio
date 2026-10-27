@@ -17,3 +17,6 @@ Run against a real TV; do not mark these passed from mocks.
 | MT-5.7 | 2026-10-27 | 86.910.19.2-1 | Pass | Cast YouTube did not trigger relaunch; our UI returned after casting stopped. |
 | MT-5.8 |  |  | Not run | Overnight standby (≥8 hours) → on; user will test tomorrow. |
 | MT-5.9 | 2026-10-27 | 86.910.19.2-1 | Pass | TV restart test passed using the available on-screen TV control. |
+| MT-6.1 | 2026-10-27 | 86.910.19.2-1 | Pass | Hide and explicit Save removed Netflix from the TV UI; Unhide and Save restored it. |
+| MT-6.2 | 2026-10-27 | 86.910.19.2-1 | Pass | Reordered shortcuts in the admin UI, saved, and confirmed the TV UI order changed. |
+| MT-6.3 | 2026-10-27 | 86.910.19.2-1 | Pass | Edited layout persisted after restarting the server and reopening the TV UI. |

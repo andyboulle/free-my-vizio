@@ -5,10 +5,11 @@ import { URL } from 'node:url';
 import { adminAuthorized, hostAllowed, tvAuthorized, unauthorized } from './auth.ts';
 import { serveStatic } from './static.ts';
 import { activateShortcut, tvHome, type TvRouteDeps } from './routes-tv.ts';
+import { handleAdminRoute, type AdminRouteDeps } from './routes-admin.ts';
 import type { Config } from '../config/schema.ts';
 import type { Secrets } from '../config/schema.ts';
 
-export interface HttpServerOptions { config: Config; secrets: Secrets; tv?: TvRouteDeps; version?: string; }
+export interface HttpServerOptions { config: Config; secrets: Secrets; tv?: TvRouteDeps; admin?: Omit<AdminRouteDeps, 'config' | 'secrets' | 'readBody'>; version?: string; }
 function json(res: http.ServerResponse, status: number, value: unknown): void { res.writeHead(status, { 'Content-Type': 'application/json', 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(value)); }
 async function body(req: http.IncomingMessage): Promise<unknown> {
   if (req.headers['content-type']?.split(';')[0] !== 'application/json') throw Object.assign(new Error('json required'), { status: 415 });
@@ -30,6 +31,10 @@ export function createHttpServer(options: HttpServerOptions): http.Server {
     if (pathname.startsWith('/api/admin/')) { if (!adminAuthorized(req, options.secrets.adminToken)) return unauthorized(res); }
     if (pathname.startsWith('/api/tv/')) { if (!tvAuthorized(req, options.secrets.tvUiToken)) return unauthorized(res); }
     try {
+      if (pathname.startsWith('/api/admin/') && options.admin) {
+        await handleAdminRoute(pathname, req.method ?? 'GET', req, res, { ...options.admin, config: options.config, secrets: options.secrets, readBody: body });
+        return;
+      }
       if (pathname === '/api/tv/home' && req.method === 'GET' && options.tv) return json(res, 200, tvHome(options.tv));
       if (pathname === '/api/tv/activate' && req.method === 'POST' && options.tv) { const data = await body(req) as { shortcutId?: string }; await activateShortcut(options.tv, String(data.shortcutId ?? '')); return json(res, 200, { ok: true }); }
       if (pathname === '/api/tv/native-home' && req.method === 'POST' && options.tv) { await options.tv.nativeHome(); return json(res, 200, { ok: true }); }
