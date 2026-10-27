@@ -22,3 +22,4 @@ Run against a real TV; do not mark these passed from mocks.
 | MT-6.3 | 2026-10-27 | 86.910.19.2-1 | Pass | Edited layout persisted after restarting the server and reopening the TV UI. |
 | MT-7.1 | 2026-10-27 | 86.910.19.2-1 | Pass | Docker Desktop bridge deployment survived Mac reboot; container restarted, pairing/config persisted, health and takeover passed. |
 | MT-7.2 |  |  | Not run | 48-hour soak: no crash, memory under 120 MB, and default info logs under 10 MB per 24 hours. |
+| MT-UI4.1 |  |  | Not run | Configure at least 12 app shortcuts in one rail. Focus row 1, then row 2: confirm the clock compresses to the upper-right, the focused row remains visible, and the rail scrolls right/left with one-card lead and a 48 px right-edge fade. |

@@ -12,7 +12,7 @@ export function tvHome(deps: TvRouteDeps) {
   return { title: deps.config.home.title, theme: deps.config.home.theme, accent: deps.config.home.accent, clock: deps.config.home.clock, appearance: deps.config.home.appearance, screensaver: deps.config.screensaver,
     sections: deps.config.home.sections.map(section => ({ id: section.id, title: section.title, shortcuts: section.shortcuts.filter(s => !s.hidden).map(s => ({
       id: s.id, label: s.label, kind: s.kind,
-      subtitle: s.kind === 'input' ? s.label : s.kind === 'system' ? (s.action === 'fireplace' ? 'Ambient fire' : 'Return to SmartCast') : (deps.catalog?.listAvailableApps(device ?? ({ chipsetKey: '*', firmware: '' } as DeviceInfo)).find(app => app.catalogId === s.catalogId)?.description ?? ''),
+      subtitle: s.kind === 'input' ? (s.cname?.toUpperCase() ?? s.label) : s.kind === 'system' ? (s.action === 'fireplace' ? 'Ambient fire' : s.action === 'power-off' ? 'Turn off the TV' : 'Return to SmartCast') : (deps.catalog?.listAvailableApps(device ?? ({ chipsetKey: '*', firmware: '' } as DeviceInfo)).find(app => app.catalogId === s.catalogId)?.description ?? ''),
       available: s.kind !== 'app' || Boolean(s.payload ?? (s.catalogId && deps.catalog?.resolvePayload(s.catalogId, device))),
       ...(s.brandColor ? { brandColor: s.brandColor } : {}),
       ...(s.catalogId && deps.catalog?.hasCachedIcon(s.catalogId) ? { icon: `/icons/${s.catalogId}.${deps.catalog.iconExtension(s.catalogId)}` } : {}),
