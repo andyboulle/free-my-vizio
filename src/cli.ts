@@ -12,15 +12,29 @@ async function pinPrompt(): Promise<string> {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   return await new Promise((resolve, reject) => { rl.question('PIN: ', answer => { rl.close(); resolve(answer.trim()); }); rl.on('SIGINT', () => { rl.close(); reject(new Error('cancelled')); }); });
 }
+const USAGE = `Usage: fmv <command> [options]
+
+Commands:
+  discover                 Find Vizio TVs on this computer's local network
+  pair --host <tv-ip>      Pair with the TV (a PIN appears on the TV screen)
+  status                   Show TV power, current app and pairing state
+  doctor                   Show model, firmware and compatibility details
+  open [--debug]           Open the Free My Vizio home screen on the TV now
+  admin-url                Print the private admin link (interactive terminal only)
+  rotate-tokens            Invalidate and regenerate the admin and TV links
+  config-path              Print the data directory
+
+Data directory: $FMV_DATA_DIR or ~/.free-my-vizio`;
 async function main(args: string[]): Promise<void> {
   const command = args[0]; const dir = resolveDataDir();
+  if (!command || command === 'help' || command === '--help' || command === '-h') { console.log(USAGE); return; }
   if (command === 'config-path') { console.log(dir); return; }
   if (command === 'rotate-tokens') { const s = loadSecrets(dir); s.adminToken = generateToken(); s.tvUiToken = generateToken(); saveSecrets(s, dir); return; }
   const config = loadConfig(dir);
   if (command === 'discover') { const host = config.tv.host ?? pickLanAddress('0.0.0.0'); for (const tv of await scanSubnet(host)) console.log(`${tv.host} ${tv.model}`); return; }
   if (command === 'admin-url') {
-    if (!process.stdout.isTTY) { process.exitCode = 1; return; }
-    const s = loadSecrets(dir); const host = config.server.publicBaseUrl ?? `http://${pickLanAddress(config.tv.host ?? '0.0.0.0')}`; console.log(`${host}:${config.server.port}/admin/#t=${s.adminToken}`); return;
+    if (!process.stdout.isTTY) { console.error('admin-url prints a secret link and only runs in an interactive terminal (use `docker compose exec` or `docker exec -it`).'); process.exitCode = 1; return; }
+    const s = loadSecrets(dir); const base = (config.server.publicBaseUrl ?? `http://${pickLanAddress(config.tv.host ?? '0.0.0.0')}:${config.server.port}`).replace(/\/+$/, ''); console.log(`${base}/admin/#t=${s.adminToken}`); return;
   }
   if (command === 'open') {
     if (!config.tv.host) throw new Error('TV is not configured');
@@ -48,6 +62,6 @@ async function main(args: string[]): Promise<void> {
     } else console.log(JSON.stringify({ model: info.model, firmware: info.firmware, apiVersion: info.apiVersion, conjureVersion: info.conjureVersion, capabilities: info.capabilities, profile: selection.profile.id, verified: selection.verified, reachable: true, paired: Boolean(s.tvAuthToken) }));
     return;
   }
-  throw new Error(`Unknown command: ${command ?? ''}`);
+  throw new Error(`Unknown command: ${command}\n\n${USAGE}`);
 }
 if (import.meta.url === `file://${process.argv[1]}`) main(process.argv.slice(2)).catch(error => { console.error(error instanceof Error ? error.message : error); process.exitCode = 1; });

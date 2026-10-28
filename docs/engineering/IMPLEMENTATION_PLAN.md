@@ -6,7 +6,7 @@ Read first: [ARCHITECTURE.md](ARCHITECTURE.md) (binding contracts), [PRODUCT_REQ
 Conventions for every milestone:
 - Work only in the files listed; create others only if the architecture names them.
 - `npm run verify` (typecheck + web syntax check + all tests) must pass at the end of each milestone.
-- "Manual" tests need the real TV and a human; record results in `docs/MANUAL_TESTS.md` (from M4) with date,
+- "Manual" tests need the real TV and a human; record results in `docs/engineering/MANUAL_TESTS.md` (from M4) with date,
   firmware, pass/fail, notes. Never mark a manual test passed based on mocks.
 - Update `README.md` usage sections when commands change. Commit per milestone (no secrets; run the secret check).
 
@@ -175,7 +175,7 @@ Acceptance tests pass; `npm run cli -- doctor` on the real TV reports `profile=v
 **Prerequisites** M3. **Files** `src/server/{http-server,static,routes-tv,auth}.ts`, `src/main.ts`,
 `web/tv/index.html`, `web/tv/css/{base,themes}.css`, `web/tv/js/{main,api,focus,render,keys}.js`,
 add CLI `open`, tests `test/unit/focus.test.js` (plain JS, imports `web/tv/js/focus.js`), `test/unit/{auth,static,host}.test.ts`, `test/integration/server-tv-api.test.ts`,
-`docs/MANUAL_TESTS.md`.
+`docs/engineering/MANUAL_TESTS.md`.
 
 Instructions
 1. Server per ARCHITECTURE §7–§8: router (method+path map), Host allow-list (421), JSON body parser (64 KB, 415 on
@@ -193,7 +193,7 @@ Instructions
    `buildGrid(sections)` and `moveFocus(grid, pos, dir)` (left/right within row, clamp; up/down to nearest column by x-center,
    skipping empty rows); keys per ARCHITECTURE §10; activation via `POST /api/tv/activate` with spinner/toast; clock if enabled;
    offline banner with backoff retries; re-fetch home on `visibilitychange` and every 30 s.
-7. `docs/MANUAL_TESTS.md`: create with the checklist below and a results table.
+7. `docs/engineering/MANUAL_TESTS.md`: create with the checklist below and a results table.
 
 Tests focus model (grid edges, uneven rows, empty sections), auth (missing/wrong token 401, constant-time compare used),
 Host header parsing (`<LAN-IP>:8730` accepted, `evil.example:8730` → 421, `[::1]:8730` accepted), static traversal on
@@ -263,7 +263,7 @@ Acceptance automated + MT-6.1–6.3 pass.
 
 **Objective** Run unattended on an always-on host.
 **Prerequisites** M6. **Files** `deploy/systemd/free-my-vizio.service`, `deploy/launchd/com.freemyvizio.server.plist`,
-`deploy/docker/{Dockerfile,compose.yaml}`, `docs/DEPLOYMENT.md`, rediscovery in `src/main.ts`/`discovery.ts`, tests.
+`deploy/docker/{Dockerfile,compose.yaml}`, `docs/INSTALL.md`, rediscovery in `src/main.ts`/`discovery.ts`, tests.
 
 Instructions
 1. systemd: `User=fmv`, `Environment=FMV_DATA_DIR=/var/lib/free-my-vizio`, `ExecStart=/usr/bin/node /opt/free-my-vizio/src/main.ts`,
@@ -271,13 +271,13 @@ Instructions
 2. launchd plist with `KeepAlive`, `RunAtLoad`, log paths in `~/Library/Logs/free-my-vizio/`.
 3. Docker: `node:22-alpine`, copy `src web package.json`, `USER node`, volume `/data`, `FMV_DATA_DIR=/data`; compose with `network_mode: host`.
 4. Rediscovery: if TV unreachable > 10 min while `config.tv.deviceId` known, scan /24 every 10 min; on match update `tv.host`.
-5. `docs/DEPLOYMENT.md`: install steps (Pi OS / Ubuntu / macOS), DHCP reservation advice, firewall note, upgrade, backup of data dir,
+5. `docs/INSTALL.md`: install steps (Pi OS / Ubuntu / macOS), DHCP reservation advice, firewall note, upgrade, backup of data dir,
    "never port-forward", how to migrate pairing (copy data dir).
 
 Tests rediscovery with mock TV moved to another port/host alias; graceful shutdown on SIGTERM (server closes, loop stops).
 Manual MT-7.1 install on the always-on host, reboot host → service up and takeover works. MT-7.2 48 h soak: no crash, memory < 120 MB,
 log output < 10 MB per 24 h at the default `info` level (journald/launchd handle storage; document `newsyslog`
-rotation for the launchd log path in DEPLOYMENT.md).
+rotation for the launchd log path in docs/INSTALL.md).
 Acceptance MT-7.1/7.2 pass; product acceptance criteria (PRD §10) evaluated and recorded.
 
 ---
@@ -305,7 +305,7 @@ Acceptance tests pass; MT-8.1 recorded.
 **Prerequisites** M5. Behind config flag `tvUi.companionLibrary=false` by default.
 Instructions build `web/tv/js/vizio.js` wrapper loading `http://127.0.0.1:12345/scfs/cl/js/vizio-companion-lib.js` only when enabled;
 expose only `registerKeyEvents` experiment, `setVisibilityChangeHandler`, `getCurrentApp`. Add `http://127.0.0.1:12345` to `script-src`
-only when enabled. Record findings in `docs/TECHNICAL_FEASIBILITY.md` §12 items 6.
+only when enabled. Record findings in `docs/engineering/TECHNICAL_FEASIBILITY.md` §12 items 6.
 Acceptance documented results; no prohibited functions referenced (`grep` test over `web/`).
 
 ## Not scheduled (P3)

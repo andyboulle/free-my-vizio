@@ -7,3 +7,4 @@ poc-events.jsonl
 .env.*
 node_modules/
 .DS_Store
+unused/

@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
 import { Catalog, loadCatalog } from '../../src/catalog/catalog.ts';
 import { DeviceContext } from '../../src/tv/device-context.ts';
@@ -9,12 +11,12 @@ import availability from '../../docs/evidence/catalog/app_availability_prod.samp
 
 const catalog = (name: string) => new Catalog([{
   catalogId: name, name, payload: { nameSpace: 3, appId: name, message: null }, verifiedOnTarget: false,
-}], { cacheDir: 'unused' });
+}], { cacheDir: path.join(os.tmpdir(), 'fmv-test-catalog') });
 
 test('catalog refresh keeps the current catalog when fetch fails and replaces it when fetch succeeds', async () => {
   const client = {} as SmartCastClient;
   const context = new DeviceContext(client, catalog('old'));
-  const cacheDir = 'unused/r12-catalog-test';
+  const cacheDir = path.join(os.tmpdir(), `fmv-r12-catalog-test-${process.pid}`);
   await fs.rm(cacheDir, { recursive: true, force: true });
 
   try {

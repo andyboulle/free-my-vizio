@@ -17,7 +17,7 @@ on the actual target. Remaining open items are listed in §12.
 | Other runtimes | Cobalt 25 LTS (YouTube), Cast built-in (`castshell 0.910.0.20`, cast build 1.68 / 2025-08-29), AirPlay (`vzairplayd 35.910.31`), Apple TV app | `deviceinfo.BINARIES`, `:8008/setup/eureka_info` — **VERIFIED** (presence only) |
 | Dev machine | macOS, Node v23.7.0, same /24 Wi-Fi LAN as the TV | — |
 
-Sanitized raw captures: [`docs/evidence/`](evidence/README.md).
+Sanitized raw captures: [`docs/evidence/`](../evidence/README.md).
 
 ## 2. Evidence classes used
 
@@ -172,7 +172,7 @@ ARCHITECTURE §5.
 
 ## 9. Proof-of-concept record (reproducible)
 
-Tooling: [`poc/`](../poc/README.md). Environment: §1. All steps were run 2026-10-26 with the user at the TV.
+Tooling: [`poc/`](../../poc/README.md). Environment: §1. All steps were run 2026-10-26 with the user at the TV.
 
 | # | Experiment | Command(s) | Result |
 |---|---|---|---|

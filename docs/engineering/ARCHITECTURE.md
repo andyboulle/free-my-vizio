@@ -479,7 +479,7 @@ The `native-home` shortcut is mandatory and cannot be hidden (validation rule) â
 |---|---|---|
 | Unit | `node:test`, fake transport + fake clock | Payload shapes, key codes, classification, state machine, HASHVAL retry, catalog selection, config validation, redaction, focus logic |
 | Integration | `test/mock-tv/mock-tv.ts` HTTPS server (test-only cert) serving `docs/evidence` fixtures; scenario API to set power/app/unreachable | Client against TLS, pairing flow, supervisor end-to-end, HTTP API auth/host checks |
-| Manual (hardware) | Checklists in `docs/MANUAL_TESTS.md` (created in M4) | Real TV behavior. **Simulated tests never establish hardware compatibility** |
+| Manual (hardware) | Checklists in `docs/engineering/MANUAL_TESTS.md` (created in M4) | Real TV behavior. **Simulated tests never establish hardware compatibility** |
 
 ## 14. Rejected alternatives
 

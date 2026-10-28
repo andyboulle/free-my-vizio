@@ -7,7 +7,7 @@ backdrop tinted by the focused app, **large clock + date**, **fireplace screensa
 admin page**. Product name stays **Free My Vizio**.
 
 This document is binding for the UI work in the same way `ARCHITECTURE.md` is for the backend. Read
-`docs/IMPLEMENTATION_AGENT_PROMPT.md` first (safety, deviations, stop conditions still apply), then this file, then do
+`docs/engineering/IMPLEMENTATION_AGENT_PROMPT.md` first (safety, deviations, stop conditions still apply), then this file, then do
 milestones **UI0 → UI7** in §12.
 
 ---
@@ -491,7 +491,7 @@ visual review; save to `docs/screenshots/<milestone>/`, gitignored if large) →
 | **UI6** | Admin shell + Home dashboard + Remote + Settings (takeover cards, pairing wizard, diagnostics timeline) + new admin endpoints (§8.2) | Admin endpoint tests (auth, validation, pause/resume semantics, preview flag); manual: works on an iPhone-size viewport (360–430 px) and desktop; Lighthouse-style checks: no console errors, contrast AA |
 | **UI7** | Admin Layout editor (live preview iframe, drag & drop + accessible move, add sheet with search, autosave + undo) and Appearance view | MT-UI7.1 reorder by drag on a phone → TV reflects within 35 s (or immediately on next visibility); MT-UI7.2 hide/unhide with Undo; MT-UI7.3 change accent/theme → preview updates instantly and TV after refresh |
 
-Record all MT results in `docs/MANUAL_TESTS.md`. Stop-and-report conditions from the agent prompt still apply; in addition,
+Record all MT results in `docs/engineering/MANUAL_TESTS.md`. Stop-and-report conditions from the agent prompt still apply; in addition,
 stop and report if the home screen cannot reach ≥ 45 fps even with `fx-low` (the design must then be simplified with the owner).
 
 ## 13. Out of scope (do not build)
@@ -638,13 +638,13 @@ migration, `/api/tv/debug-metrics` auth + size limit + "debug only" gating.
 3. Run T0 (`open --debug` with the `fx=none` flag added by the CLI option `--baseline`), then T1–T4, then trigger the
    Fireplace pill and wait 10 min for T5.
 4. Agent collects `docker logs docker-free-my-vizio-1 | grep tv_perf` and records the numbers per test in
-   `docs/MANUAL_TESTS.md` (scenario, median, min 1-s, p95, long frames, pass/fail).
+   `docs/engineering/MANUAL_TESTS.md` (scenario, median, min 1-s, p95, long frames, pass/fail).
 5. If T1 fails after all 12 changes: stop and report with the logs; do not add more effects or try new techniques without
    design review.
 
 ### 14.7 Governance
 
-- This section is recorded as a formal deviation in `docs/DEVIATIONS.md` (2026-10-27, "UI performance: Cinematic Lite").
+- This section is recorded as a formal deviation in `docs/engineering/DEVIATIONS.md` (2026-10-27, "UI performance: Cinematic Lite").
 - It is a simplification within the approved direction and preserves all functional requirements (navigation, focus
   visibility, activation feedback, offline behaviour, SmartCast Home reachability, no TV setting changes, no new
   dependencies). **Owner approved 2026-10-27 — implementation may proceed immediately.**
@@ -655,4 +655,4 @@ The T5 real-TV validation failed its sustained performance budget. **Owner appro
 screensaver on 2026-10-27.** The Fireplace system shortcut, idle trigger, preview endpoint/status payload, canvas
 simulation, embers, logs, fireplace styling, and optional sound setting are no longer part of the product. The normal
 Home screen remains the only FMV idle surface; Cinematic Lite and UI0–UI7 functionality are preserved. T5 is tracked as
-Removed (not Not run) in `docs/MANUAL_TESTS.md`, and the detailed deviation is recorded in `docs/DEVIATIONS.md`.
+Removed (not Not run) in `docs/engineering/MANUAL_TESTS.md`, and the detailed deviation is recorded in `docs/engineering/DEVIATIONS.md`.

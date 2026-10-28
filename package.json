@@ -1,6 +1,27 @@
 {
   "name": "free-my-vizio",
+  "version": "0.1.0",
+  "description": "A privacy-friendly, customizable home screen for Vizio SmartCast TVs — runs on your own home server, no firmware changes.",
   "private": true,
+  "license": "MIT",
+  "author": "Andy Boulle",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andyboulle/free-my-vizio.git"
+  },
+  "homepage": "https://github.com/andyboulle/free-my-vizio#readme",
+  "bugs": {
+    "url": "https://github.com/andyboulle/free-my-vizio/issues"
+  },
+  "keywords": [
+    "vizio",
+    "smartcast",
+    "tv",
+    "home-screen",
+    "launcher",
+    "raspberry-pi",
+    "self-hosted"
+  ],
   "type": "module",
   "engines": {
     "node": ">=22.18"

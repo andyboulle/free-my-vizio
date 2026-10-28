@@ -2,7 +2,7 @@
 
 This directory holds the **disposable** diagnostic tool used during the research phase.
 It is **not** production code and must not be imported by the production implementation.
-It is kept so the experiments in [`docs/TECHNICAL_FEASIBILITY.md`](../docs/TECHNICAL_FEASIBILITY.md) §9 can be reproduced.
+It is kept so the experiments in [`docs/engineering/TECHNICAL_FEASIBILITY.md`](../docs/engineering/TECHNICAL_FEASIBILITY.md) §9 can be reproduced.
 
 - `fmv-poc.mjs` — zero-dependency Node CLI: pairing, read-only queries, app launch, key presses,
   a static/log server for the test page, and a `watch` loop with an optional watchdog relaunch.
@@ -54,7 +54,7 @@ node poc/fmv-poc.mjs get /menu_native/dynamic/tv_settings/system/power
 
 Then, at the TV: press arrows/OK/Back on the page, select tiles, press Home, switch inputs,
 power-cycle (short and ≥ 2 minute standby), and compare the server/watch output with the
-results recorded in `docs/TECHNICAL_FEASIBILITY.md` §9.
+results recorded in `docs/engineering/TECHNICAL_FEASIBILITY.md` §9.
 
 ## Cleanup / reversal
 

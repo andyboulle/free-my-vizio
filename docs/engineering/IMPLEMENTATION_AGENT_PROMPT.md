@@ -6,7 +6,7 @@ Copy everything below the line into the implementation agent.
 
 You are the implementation engineer for **Free My Vizio**, an open-source, privacy-conscious custom home screen
 for a Vizio SmartCast TV. Research and architecture are complete. Your job is to implement the milestones in
-`docs/IMPLEMENTATION_PLAN.md` exactly, with tests, without repeating research or making new architectural decisions.
+`docs/engineering/IMPLEMENTATION_PLAN.md` exactly, with tests, without repeating research or making new architectural decisions.
 
 ## 1. Product in one paragraph
 
@@ -24,11 +24,11 @@ Vizio **M65Q6-L4**, firmware **86.910.19.2-1** (software 86.910.19.2-1.7), Smart
 
 ## 3. Read these first (in order), then stop researching
 
-1. `docs/RESEARCH_SUMMARY.md` — 2-minute overview.
-2. `docs/ARCHITECTURE.md` — **binding** stack, file layout, interfaces, state machine, security rules.
-3. `docs/IMPLEMENTATION_PLAN.md` — milestones M0–M9 with acceptance criteria.
-4. `docs/TECHNICAL_FEASIBILITY.md` §5–§8 — verified TV behavior (consult when implementing TV calls).
-5. `docs/PRODUCT_REQUIREMENTS.md` — FR/NFR IDs.
+1. `docs/engineering/RESEARCH_SUMMARY.md` — 2-minute overview.
+2. `docs/engineering/ARCHITECTURE.md` — **binding** stack, file layout, interfaces, state machine, security rules.
+3. `docs/engineering/IMPLEMENTATION_PLAN.md` — milestones M0–M9 with acceptance criteria.
+4. `docs/engineering/TECHNICAL_FEASIBILITY.md` §5–§8 — verified TV behavior (consult when implementing TV calls).
+5. `docs/engineering/PRODUCT_REQUIREMENTS.md` — FR/NFR IDs.
 6. `docs/evidence/*.json` — sanitized real responses from the target TV; use as test fixtures.
 
 Do **not** browse the web or re-investigate the SmartCast API. Everything needed is in these files. `poc/` is a
@@ -67,9 +67,9 @@ DIAL launching, DNS filtering systems.
 ## 6. Milestones
 
 Implement in order: **M0 → M1 → M2 → M3 → M4 → M5 → M6 → M7**, then M8 and M9 (P2) only if asked.
-Each milestone in `docs/IMPLEMENTATION_PLAN.md` lists objective, files, instructions, automated tests, manual tests,
+Each milestone in `docs/engineering/IMPLEMENTATION_PLAN.md` lists objective, files, instructions, automated tests, manual tests,
 and acceptance criteria. A milestone is done only when its acceptance criteria are met. Manual tests require the user
-at the TV: write the exact steps for the user, ask them to run them, and record results in `docs/MANUAL_TESTS.md`.
+at the TV: write the exact steps for the user, ask them to run them, and record results in `docs/engineering/MANUAL_TESTS.md`.
 
 ## 7. Coding and testing standards
 
@@ -87,7 +87,7 @@ at the TV: write the exact steps for the user, ask them to run them, and record 
 ## 8. Deviations
 
 If a binding decision blocks you or appears wrong: **stop**, do not work around it silently. Write a short note in
-`docs/DEVIATIONS.md` (date, milestone, decision, problem, evidence, proposed change, impact) and ask the user. Small
+`docs/engineering/DEVIATIONS.md` (date, milestone, decision, problem, evidence, proposed change, impact) and ask the user. Small
 implementation details not covered by the docs (helper names, internal structure) are your call; keep them consistent.
 
 ## 9. Stop-and-report conditions (critical assumptions)

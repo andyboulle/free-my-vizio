@@ -21,6 +21,8 @@ test('TV home omits uncached icons and includes cached icons', async () => {
   try {
     const catalog = new Catalog([{ catalogId: '34', name: 'Netflix', iconUrl: 'https://example.test/34.png', payload: { nameSpace: 3, appId: '1', message: null }, verifiedOnTarget: true }], { cacheDir });
     const config = structuredClone(DEFAULT_CONFIG);
+    // Use an id without a bundled logo in web/tv/img/apps so only the catalog icon cache is exercised.
+    config.home.sections[0].shortcuts[0].id = 'catalog-icon-test';
     const homeWithoutIcon = tvHome({ config, catalog, nativeHome: async () => {} });
     assert.equal('icon' in homeWithoutIcon.sections[0].shortcuts[0], false);
     await fs.mkdir(path.join(cacheDir, 'icons'), { recursive: true });

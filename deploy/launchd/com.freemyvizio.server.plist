@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Free My Vizio LaunchAgent (macOS).
+  Replace every REPLACE_* value before installing; launchd does not expand "~" or "$HOME".
+    REPLACE_NODE  -> output of `which node` (e.g. /opt/homebrew/bin/node)
+    REPLACE_REPO  -> absolute path of your free-my-vizio checkout
+    REPLACE_HOME  -> your home directory (e.g. /Users/alex)
+  See docs/INSTALL.md.
+-->
 <plist version="1.0">
 <dict>
   <key>Label</key>
   <string>com.freemyvizio.server</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/usr/local/bin/node</string>
-    <string>/opt/free-my-vizio/src/main.ts</string>
+    <string>REPLACE_NODE</string>
+    <string>REPLACE_REPO/src/main.ts</string>
   </array>
   <key>WorkingDirectory</key>
-  <string>/opt/free-my-vizio</string>
+  <string>REPLACE_REPO</string>
   <key>EnvironmentVariables</key>
   <dict>
     <key>NODE_ENV</key>
     <string>production</string>
+    <key>FMV_DATA_DIR</key>
+    <string>REPLACE_HOME/.free-my-vizio</string>
   </dict>
   <key>RunAtLoad</key>
   <true/>
   <key>KeepAlive</key>
   <true/>
   <key>StandardOutPath</key>
-  <string>~/Library/Logs/free-my-vizio/server.log</string>
+  <string>REPLACE_HOME/Library/Logs/free-my-vizio/server.log</string>
   <key>StandardErrorPath</key>
-  <string>~/Library/Logs/free-my-vizio/server.error.log</string>
+  <string>REPLACE_HOME/Library/Logs/free-my-vizio/server.error.log</string>
 </dict>
 </plist>

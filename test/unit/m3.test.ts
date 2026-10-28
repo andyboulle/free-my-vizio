@@ -1,3 +1,5 @@
+import path from 'node:path';
+import os from 'node:os';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { Catalog, loadCatalog } from '../../src/catalog/catalog.ts';
@@ -19,7 +21,7 @@ test('firmware versions compare numerically and support open bounds', () => {
 });
 
 test('catalog chooses exact chipset before wildcard', () => {
-  const catalog = new Catalog([{ catalogId: '34', name: 'Netflix', payload: { nameSpace: 0, appId: 'fallback', message: null }, verifiedOnTarget: true }], { cacheDir: 'unused' }, new Map([
+  const catalog = new Catalog([{ catalogId: '34', name: 'Netflix', payload: { nameSpace: 0, appId: 'fallback', message: null }, verifiedOnTarget: true }], { cacheDir: path.join(os.tmpdir(), 'fmv-m3-test') }, new Map([
     ['34', [
       { chipset: '*', payload: { nameSpace: 2, appId: 'wild', message: null }, minimum: null, maximum: null },
       { chipset: 'MT5586', payload: { nameSpace: 3, appId: 'exact', message: null }, minimum: null, maximum: null },
@@ -30,7 +32,7 @@ test('catalog chooses exact chipset before wildcard', () => {
 
 test('catalog omits chipset-specific apps and selects the compatible Prime Video payload', async () => {
   const catalog = await loadCatalog({
-    cacheDir: 'unused',
+    cacheDir: path.join(os.tmpdir(), 'fmv-m3-test'),
     fetch: async url => url.includes('vizio_apps') ? apps : availability,
   });
   const listed = catalog.listAvailableApps(info());
@@ -41,7 +43,7 @@ test('catalog omits chipset-specific apps and selects the compatible Prime Video
 });
 
 test('unknown devices use wildcard-or-first payload fallback', () => {
-  const catalog = new Catalog([{ catalogId: 'x', name: 'X', payload: { nameSpace: 0, appId: 'entry', message: null }, verifiedOnTarget: false }], { cacheDir: 'unused' }, new Map([
+  const catalog = new Catalog([{ catalogId: 'x', name: 'X', payload: { nameSpace: 0, appId: 'entry', message: null }, verifiedOnTarget: false }], { cacheDir: path.join(os.tmpdir(), 'fmv-m3-test') }, new Map([
     ['x', [
       { chipset: 'OTHER', payload: { nameSpace: 2, appId: 'first', message: null }, minimum: null, maximum: null },
     ]],
